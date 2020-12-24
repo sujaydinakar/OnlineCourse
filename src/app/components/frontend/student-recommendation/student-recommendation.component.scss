@@ -1,0 +1,42 @@
+.studentRecommendation {
+  width: 100%;
+  margin: 20px 0px;
+
+  .studentRecommendation__header {
+    h2 {
+      margin: 0;
+      font-weight: 600;
+      margin-top: 50px;
+    }
+
+    p {
+      margin: 0;
+      color: grey;
+      margin-top: 10px;
+    }
+  }
+
+  // .course_navigation {
+  //   margin-top: 20px;
+
+  //   ul {
+  //     display: flex;
+  //     margin: 0;
+  //     padding: 0;
+  //     border-bottom: 1px solid grey;
+
+  //     li {
+  //       list-style-type: none;
+  //       padding: 20px 0px;
+  //       margin-left: 20px;
+  //       color: grey;
+  //     }
+
+  //     li:first-child {
+  //       color: black;
+  //       margin-left: 0px;
+  //       border-bottom: 3px solid grey;
+  //     }
+  //   }
+  // }
+}

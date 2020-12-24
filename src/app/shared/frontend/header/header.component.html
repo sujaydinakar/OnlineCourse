@@ -1,0 +1,73 @@
+<div class="headerContainer__fixed">
+
+  <div id="headerContainer">
+    <div id="imageContainer">
+      <img src='./assets/logo/logo.png' [routerLink]="['/']">
+    </div>
+
+    <div id="categoryContainer">
+      <p class="categoryContainer__title">
+        Categories</p>
+
+      <div class="mainCategoryContainer">
+
+        <div class="category_dialog">
+          <ul>
+            <li *ngFor="let item of this.categoryStore.Categories">
+              <div class="itemContainer">
+                <p>{{ item.name }}</p>
+                <span class="material-icons">
+                  keyboard_arrow_right
+                </span>
+              </div>
+
+              <div class="subcategory_dialog">
+                <ul>
+                  <li *ngFor="let item of this.categoryStore.Categories">
+                    <div class="itemContainer">
+                      <p>{{ item.name }}</p>
+                      <span class="material-icons">
+                        keyboard_arrow_right
+                      </span>
+                    </div>
+
+                    <div class="topic_dialog">
+                      <ul>
+                        <li *ngFor="let item of this.categoryStore.Categories">
+                          <div class="itemContainer">
+                            <p>{{ item.name }}</p>
+                          </div>
+                        </li>
+                        <li *ngFor="let item of this.categoryStore.Categories">
+                          <div class="itemContainer">
+                            <p>{{ item.name }}</p>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+
+    <div id="searchContainer">
+      <button>
+        <span class="material-icons">
+          search
+        </span>
+      </button>
+      <input type="text" placeholder="search for anything">
+    </div>
+
+    <div id="userAuthContainer">
+      <button class="btnLogin" [routerLink]="['/instructor']">Log in</button>
+      <button class="btnSignup">Sign up</button>
+    </div>
+  </div>
+
+</div>

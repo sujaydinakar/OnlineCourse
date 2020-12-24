@@ -1,0 +1,9 @@
+<div class="swiperContainer">
+  <swiper [config]="config">
+
+    <div class="imageContainer" *ngFor="let item of this.images">
+      <img src="{{ item }}">
+    </div>
+
+  </swiper>
+</div>

@@ -1,0 +1,21 @@
+.instructorDashboardLayoutContainer {
+  width: 100%;
+  height: auto;
+
+  .sidebarContainer {
+    width: 75px;
+    position: fixed;
+    z-index: 100;
+  }
+
+  .routerOutLetContainer {
+    width: calc(100% - 75px);
+    margin-left: 75px;
+    box-sizing: border-box;
+  }
+}
+
+.footerContainer {
+  position: relative;
+  z-index: 101;
+}

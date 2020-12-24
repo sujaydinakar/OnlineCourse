@@ -1,0 +1,16 @@
+.popularTopicsContainer {
+
+  .topicsContainer {
+    width: 100%;
+    display: grid;
+    grid-gap: 10px 10px;
+    grid-template-columns: repeat(5, 1fr);
+
+    .topicContainer {
+      padding: 20px;
+      border-radius: 5px;
+      border: 2px solid #00A8E8;
+      background-color: white;
+    }
+  }
+}

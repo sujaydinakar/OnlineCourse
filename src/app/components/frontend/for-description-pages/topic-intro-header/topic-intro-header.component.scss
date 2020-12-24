@@ -1,0 +1,32 @@
+.topicIntroHeaderContainer {
+  width: 100%;
+  padding: 20px 20%;
+  color: white;
+  background-color: #1E1E1C;
+
+  .imageContainer {
+    width: 100%;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  p {
+    margin: 0;
+    padding: 0;
+  }
+
+  .taughtBy {
+    margin-top: 30px;
+  }
+}
+
+@media screen and (max-width: 1500px) {
+  .topicIntroHeaderContainer {
+    width: 100%;
+    padding: 20px 10%;
+  }
+}

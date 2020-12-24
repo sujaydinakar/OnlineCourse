@@ -1,0 +1,153 @@
+.topicContentDescriptionContainer {
+  padding: 20px 20%;
+  padding-top: 40px;
+
+  .objectiveBlockContainer {
+    width: 100%;
+    padding: 20px 40px;
+    border: 1px solid #DCDACB;
+    background-color: #FBFBF8;
+
+    h2 {
+      margin-bottom: 40px;
+    }
+  }
+
+  .descriptionsContainer {
+    display: grid;
+    grid-gap: 20px;
+    grid-template-columns: repeat(3, 1fr);
+
+    .descriptionContainer {
+      display: flex;
+
+      p {
+        margin: 0;
+        padding: 0;
+        margin-left: 20px;
+      }
+    }
+  }
+
+  .requirementBlockContainer {
+    ul {
+      margin-left: -20px;
+
+      li {
+        margin-bottom: 10px;
+      }
+    }
+  }
+
+  .descriptionBlockContainer {
+
+    p {
+      line-height: 25px;
+    }
+  }
+
+  .instructorsContainer {
+
+    .instructorContainer {
+
+      .instructorInformationContainer {
+        display: flex;
+        align-items: center;
+
+        .imageContainer {
+          width: 200px;
+
+          img {
+            border-radius: 50%;
+            width: 100%;
+          }
+        }
+
+        .informationContainer {
+          width: calc(100% - 200px);
+          padding-left: 40px;
+
+          h2 {
+            padding: 0;
+            margin: 0;
+          }
+
+          .instructorPosition {
+            margin: 20px 0;
+            margin-top: 5px;
+          }
+
+          p {
+            margin: 0;
+            padding: 0;
+            line-height: 25px;
+            display: flex;
+            align-items: center;
+
+            span {
+              margin-right: 5px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1500px) {
+  .topicContentDescriptionContainer {
+    width: 100%;
+    padding: 20px 10%;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .topicContentDescriptionContainer {
+
+    .descriptionsContainer {
+      display: grid;
+      grid-gap: 20px;
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .topicContentDescriptionContainer {
+    width: 100%;
+    padding: 20px 5%;
+
+    .descriptionsContainer {
+      display: grid;
+      grid-gap: 20px;
+      grid-template-columns: repeat(1, 1fr);
+
+      padding-bottom: 20px;
+    }
+
+    .instructorsContainer {
+
+      .instructorContainer {
+
+        .instructorInformationContainer {
+          flex-wrap: wrap !important;
+
+          .imageContainer {
+            text-align: center;
+            width: 100% !important;
+            margin-bottom: 20px;
+
+            img {
+              width: 30% !important;
+            }
+          }
+
+          .informationContainer {
+            width: 100%;
+            padding-left: 0px;
+          }
+        }
+      }
+    }
+  }
+}

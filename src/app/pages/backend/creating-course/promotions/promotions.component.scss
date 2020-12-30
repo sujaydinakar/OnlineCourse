@@ -1,0 +1,74 @@
+.createCoursePageContent {
+  width: 100%;
+  padding: 40px;
+
+  select, input {
+    width: 100%;
+
+    padding: 10px;
+    border: 1px solid #8A92A3;
+  }
+
+  select:hover, input:hover {
+    border: 1px solid #007791;
+  }
+
+  select:focus, input:focus {
+    outline: none;
+    border: 1px solid #007791;
+  }
+
+  .referStudents {
+    padding: 20px;
+    background-color: #E6F2F5;
+
+    h2, p {
+      margin: 0;
+      padding: 0;
+    }
+
+    h2 {
+      color: #003440;
+      margin-bottom: 20px;
+    }
+
+    p {
+      color: #003440;
+      font-size: 14px;
+      line-height: 25px;
+      margin-bottom: 10px;
+    }
+  }
+
+  .titleContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    button {
+      background-color: #007791;
+      border: none;
+      outline: none;
+      color: white;
+      padding: 10px 15px;
+    }
+
+    button:hover {
+      cursor: pointer;
+      background-color: darken( #007791, 10);
+    }
+  }
+
+  .contentContainer {
+    padding: 20px;
+    border: 1px solid #DDDDDD;
+    margin-bottom: 20px;
+
+    p {
+      margin: 0;
+      padding: 0;
+
+      text-align: center;
+    }
+  }
+}

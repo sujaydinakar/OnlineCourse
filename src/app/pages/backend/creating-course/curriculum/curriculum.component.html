@@ -1,0 +1,233 @@
+<div class="createCoursePageContainer">
+  <div class="createCoursePageHeader">
+    <p>Curriculum</p>
+  </div>
+
+  <div class="createCoursePageContent">
+    <div class="messageContainer">
+      <i class="fas fa-info-circle"></i>
+      <p>
+        Here’s where you add course content—like lectures, course sections, assignments, and more. Click a + icon on the left to get started.
+      </p>
+    </div>
+
+    <p>Start putting together your course by creating sections, lectures and practice (quizzes, coding exercises and assignments).</p>
+    <p>If you’re intending to offer your course for free, the total length of video content must be less than 2 hours.</p>
+
+    <button class="btnAddSection" (click)="this.set_isShowAddSectionDialog()">
+      <i class="fas fa-plus"></i>
+      <p>Add New (Section, Lecture, Quiz, Exercise, Assignment)</p>
+    </button>
+
+    <mat-tab-group [ngStyle]="{'display': !!this.isShowAddSectionDialog ? 'block' : 'none'}">
+      <mat-tab label="Section">
+        <div class="addSectionContainer">
+          <div class="inputsContainer">
+            <div class="leftSideContainer">
+              <p>New Section:</p>
+            </div>
+
+            <div class="rightSideContainer">
+              <input type="text" placeholder="Enter a Title">
+
+              <p>What will students be able to do at the end of this section?</p>
+              <input type="text" placeholder="Enter a learning objective">
+            </div>
+          </div>
+
+          <div class="groupActionButtons">
+            <button class="btnCancel" (click)="this.set_isShowAddSectionDialog()">Cancel</button>
+            <button class="btnAddSection2">Add Section</button>
+          </div>
+        </div>
+      </mat-tab>
+      <mat-tab label="Lecture">
+        <div class="addSectionContainer">
+          <div class="inputsContainer">
+            <div class="leftSideContainer">
+              <p>New Lecture:</p>
+            </div>
+
+            <div class="rightSideContainer">
+              <input type="text" placeholder="Enter a Lecture">
+
+              <p>Which section will contain this lecture?</p>
+              <select>
+                <option>Section 1: Introduction</option>
+                <option>Section 2: Environment Setup</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="groupActionButtons">
+            <button class="btnCancel" (click)="this.set_isShowAddSectionDialog()">Cancel</button>
+            <button class="btnAddSection2">Add Lecture</button>
+          </div>
+        </div>
+      </mat-tab>
+      <mat-tab label="Quiz">
+        <div class="addSectionContainer">
+          <div class="inputsContainer">
+            <div class="leftSideContainer">
+              <p>New Quiz:</p>
+            </div>
+
+            <div class="rightSideContainer">
+              <input type="text" placeholder="Enter a Lecture">
+
+              <p>Description</p>
+              <quill-editor [styles]="{height: '200px'}"></quill-editor>
+
+              <p>Which section will contain this quiz?</p>
+              <select>
+                <option>Section 1: Introduction</option>
+                <option>Section 2: Environment Setup</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="groupActionButtons">
+            <button class="btnCancel" (click)="this.set_isShowAddSectionDialog()">Cancel</button>
+            <button class="btnAddSection2">Add Quiz</button>
+          </div>
+        </div>
+      </mat-tab>
+      <mat-tab label="Exercise">
+        <div class="addSectionContainer">
+          <div class="inputsContainer">
+            <div class="leftSideContainer">
+              <p>New Exercise:</p>
+            </div>
+
+            <div class="rightSideContainer">
+              <input type="text" placeholder="Enter a Lecture">
+
+              <p>Which section will contain this exercise?</p>
+              <select>
+                <option>Section 1: Introduction</option>
+                <option>Section 2: Environment Setup</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="groupActionButtons">
+            <button class="btnCancel" (click)="this.set_isShowAddSectionDialog()">Cancel</button>
+            <button class="btnAddSection2">Add Exercise</button>
+          </div>
+        </div>
+      </mat-tab>
+      <mat-tab label="Assignment">
+        <div class="addSectionContainer">
+          <div class="inputsContainer">
+            <div class="leftSideContainer">
+              <p>New Assignment:</p>
+            </div>
+
+            <div class="rightSideContainer">
+              <input type="text" placeholder="Enter a Assignment">
+
+              <p>Which section will contain this assignment?</p>
+              <select>
+                <option>Section 1: Introduction</option>
+                <option>Section 2: Environment Setup</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="groupActionButtons">
+            <button class="btnCancel" (click)="this.set_isShowAddSectionDialog()">Cancel</button>
+            <button class="btnAddSection2">Add Assignment</button>
+          </div>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+
+    <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
+      <div class="sectionContainer">
+        <div class="sectionHeader">
+          <div class="sectionHeader__leftSide">
+            <p><span style="font-weight: bold;">Section 1: </span>Introduction</p>
+            <button class="btnOrderList"><i class="far fa-edit"></i></button>
+            <button class="btnOrderList"><i class="far fa-trash-alt"></i></button>
+          </div>
+          <div class="sectionHeader__rightSide">
+            <button class="btnOrderList"><i class="fas fa-bars"></i></button>
+          </div>
+        </div>
+        <div class="section_elementContainer">
+          <div class="section_elementContainer__leftSide">
+            <p><span style="font-weight: bold;">Lecture 1: </span>Introduction</p>
+            <button class="btnOrderList"><i class="far fa-edit"></i></button>
+            <button class="btnOrderList"><i class="far fa-trash-alt"></i></button>
+          </div>
+          <div class="section_elementContainer__rightSide">
+            <button class="btnOrderList"><i class="fas fa-bars"></i></button>
+          </div>
+        </div>
+        <div class="section_elementContainer">
+          <div class="section_elementContainer__leftSide">
+            <p><span style="font-weight: bold;">Quiz 1: </span>Introduction</p>
+            <button class="btnOrderList"><i class="far fa-edit"></i></button>
+            <button class="btnOrderList"><i class="far fa-trash-alt"></i></button>
+          </div>
+          <div class="section_elementContainer__rightSide">
+            <button class="btnOrderList"><i class="fas fa-bars"></i></button>
+          </div>
+        </div>
+        <div class="section_elementContainer">
+          <div class="section_elementContainer__leftSide">
+            <p><span style="font-weight: bold;">Lecture 2: </span>Introduction</p>
+            <button class="btnOrderList"><i class="far fa-edit"></i></button>
+            <button class="btnOrderList"><i class="far fa-trash-alt"></i></button>
+          </div>
+          <div class="section_elementContainer__rightSide">
+            <button class="btnOrderList"><i class="fas fa-bars"></i></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="sectionContainer">
+        <div class="sectionHeader">
+          <div class="sectionHeader__leftSide">
+            <p><span style="font-weight: bold;">Section 2: </span>Introduction</p>
+            <button class="btnOrderList"><i class="far fa-edit"></i></button>
+            <button class="btnOrderList"><i class="far fa-trash-alt"></i></button>
+          </div>
+          <div class="sectionHeader__rightSide">
+            <button class="btnOrderList"><i class="fas fa-bars"></i></button>
+          </div>
+        </div>
+        <div class="section_elementContainer">
+          <div class="section_elementContainer__leftSide">
+            <p><span style="font-weight: bold;">Lecture 1: </span>Introduction</p>
+            <button class="btnOrderList"><i class="far fa-edit"></i></button>
+            <button class="btnOrderList"><i class="far fa-trash-alt"></i></button>
+          </div>
+          <div class="section_elementContainer__rightSide">
+            <button class="btnOrderList"><i class="fas fa-bars"></i></button>
+          </div>
+        </div>
+        <div class="section_elementContainer">
+          <div class="section_elementContainer__leftSide">
+            <p><span style="font-weight: bold;">Quiz 1: </span>Introduction</p>
+            <button class="btnOrderList"><i class="far fa-edit"></i></button>
+            <button class="btnOrderList"><i class="far fa-trash-alt"></i></button>
+          </div>
+          <div class="section_elementContainer__rightSide">
+            <button class="btnOrderList"><i class="fas fa-bars"></i></button>
+          </div>
+        </div>
+        <div class="section_elementContainer">
+          <div class="section_elementContainer__leftSide">
+            <p><span style="font-weight: bold;">Lecture 2: </span>Introduction</p>
+            <button class="btnOrderList"><i class="far fa-edit"></i></button>
+            <button class="btnOrderList"><i class="far fa-trash-alt"></i></button>
+          </div>
+          <div class="section_elementContainer__rightSide">
+            <button class="btnOrderList"><i class="fas fa-bars"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

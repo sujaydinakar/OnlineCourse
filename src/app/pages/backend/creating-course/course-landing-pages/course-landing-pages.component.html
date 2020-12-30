@@ -1,0 +1,80 @@
+<div class="createCoursePageContainer">
+  <div class="createCoursePageHeader">
+    <p>Course Landing Page</p>
+  </div>
+
+  <div class="createCoursePageContent">
+    <p>Course title</p>
+    <input type="text" placeholder="Enter a title">
+
+    <p>Course subtitle</p>
+    <input type="text" placeholder="Enter a course subtitle">
+
+    <p>Course description</p>
+    <quill-editor [styles]="{height: '200px'}"></quill-editor>
+
+    <p style="margin-top: 20px;">Basic Info</p>
+    <div class="basicInfoContainer">
+      <select>
+        <option>English (UK)</option>
+      </select>
+
+      <select>
+        <option>-- Select Level --</option>
+        <option>Beginner Level</option>
+        <option>Intermediate Level</option>
+        <option>Expert Level</option>
+        <option>All Level</option>
+      </select>
+
+      <select>
+        <option>-- Select Category --</option>
+        <option>Development</option>
+      </select>
+
+      <div style="grid-column-start: 1; grid-column-end: 3;"></div>
+
+      <select>
+        <option>-- Select Subcategory --</option>
+        <option>Data Science</option>
+      </select>
+    </div>
+
+    <p>What is primarily taught in your course?</p>
+    <input type="text" placeholder="e.g. Landscape Photography">
+
+    <p>Course Image</p>
+    <div class="courseImageContiner">
+      <div class="leftSideContainer">
+        <img src="./assets/images/placeholder.png">
+      </div>
+      <div class="rightSideContainer">
+        <p>
+          Upload your course image here. It must meet our course image quality standards to be accepted. Important guidelines: 750x422 pixels; .jpg, .jpeg,. gif, or
+          .png. no text on the image.
+        </p>
+        <input type="file">
+      </div>
+    </div>
+
+    <p style="margin-top: 20px;">Promotional video</p>
+    <div class="courseImageContiner">
+      <div class="leftSideContainer">
+        <img src="./assets/images/placeholder.png">
+      </div>
+      <div class="rightSideContainer">
+        <p>
+          Students who watch a well-made promo video are 5X more likely to enroll in your course. We've seen that statistic go up to 10X for exceptionally awesome
+          videos. Learn how to make yours awesome!
+        </p>
+        <input type="file">
+      </div>
+    </div>
+
+    <p style="margin-top: 20px;">Instructor profile(s)</p>
+    <div class="instructorContainer">
+      <i class="fas fa-user-circle"></i>
+      <p>Tang Seakmeng</p>
+    </div>
+  </div>
+</div>

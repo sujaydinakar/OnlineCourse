@@ -1,0 +1,83 @@
+.createCoursePageContent {
+  width: 100%;
+  padding: 20px 40px;
+
+  .questionAndAnswerBox {
+    width: 100%;
+    margin-top: 50px;
+
+    input {
+      width: calc(100% - 100px);
+      transition: 0.5s;
+      font-size: 15px;
+      padding: 10px;
+      border: 1px solid #bdbdbd;
+    }
+
+    input:hover {
+      transition: 0.5s;
+      border: 1px solid #007791;
+      outline: none;
+    }
+
+    input:focus {
+      outline: none;
+    }
+
+    .inputController {
+      display: flex;
+
+      button {
+        display: none;
+        width: 50px;
+        border: 1px solid #bdbdbd;
+        border-left: none;
+        text-align: center;
+        font-size: 15px;
+        padding: 8px;
+        margin: 0px;
+
+        i {
+          margin: 0px;
+        }
+      }
+    }
+
+    .inputController:hover {
+      button {
+        display: block;
+      }
+    }
+
+    button {
+      transition: 0.5s;
+      margin-top: 10px;
+      color: #007791;
+      background-color: transparent;
+      padding: 10px 20px;
+      border: none;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      i {
+        margin-right: 10px;
+      }
+
+      p {
+        font-weight: bold;
+      }
+    }
+
+    button:hover {
+      cursor: pointer;
+      transition: 0.5s;
+      background-color: #EFEFEF;
+    }
+
+    button:focus {
+      outline: none;
+    }
+  }
+}

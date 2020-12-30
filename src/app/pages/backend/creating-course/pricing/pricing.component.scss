@@ -1,0 +1,68 @@
+.createCoursePageContent {
+  width: 100%;
+  padding: 40px;
+
+  p {
+    margin: 0;
+    padding: 0;
+    margin-bottom: 20px;
+
+    font-size: 14px;
+    line-height: 25px;
+  }
+
+  .blockContainer {
+    display: flex;
+    width: 100%;
+
+    .leftSideContainer {
+      display: flex;
+      align-items: flex-start;
+
+      button {
+        padding: 10px 20px;
+        border: 1px solid grey;
+        background-color: #F2F3F5;
+        color: #007791;
+        font-weight: bold;
+      }
+
+      button:hover {
+        cursor: pointer;
+        background-color: #dededf;
+      }
+
+      button:focus {
+        outline: none;
+      }
+
+      input, select {
+        width: 100%;
+      }
+
+      select, input {
+        padding: 10px !important;
+        border: 1px solid #8A92A3;
+        margin-right: 10px;
+      }
+
+      select:hover, input:hover {
+        border: 1px solid #007791;
+      }
+
+      select:focus, input:focus {
+        outline: none;
+        border: 1px solid #007791;
+      }
+    }
+
+    .rightSideContainer {
+      padding-left: 20px;
+
+      p {
+        margin: 0;
+        padding: 0;
+      }
+    }
+  }
+}

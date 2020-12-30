@@ -36,10 +36,25 @@ import { TopicIntroHeaderComponent } from './components/frontend/for-description
 import { TopicContentDescriptionComponent } from './components/frontend/for-description-pages/topic-content-description/topic-content-description.component';
 import { InstructorDashboardComponent } from './layout/backend/instructor-dashboard/instructor-dashboard.component';
 import { InstructorCreatingCourseComponent } from './layout/backend/instructor-creating-course/instructor-creating-course.component';
-import { InstructorCourseConfigurationComponent } from './layout/backend/instructor-course-configuration/instructor-course-configuration.component';
 import { InstructorSidebarComponent } from './shared/backend/instructor-sidebar/instructor-sidebar.component';
 import { InstructorFooterComponent } from './shared/backend/instructor-footer/instructor-footer.component';
 import { InstructorHeaderComponent } from './shared/backend/instructor-header/instructor-header.component';
+import { InstructorHomeComponent } from './pages/backend/instructor-home/instructor-home.component';
+import { CreatingNewCourseHeaderComponent } from './shared/backend/creating-new-course-header/creating-new-course-header.component';
+
+import { TargetYourStudentsComponent } from './pages/backend/creating-course/target-your-students/target-your-students.component';
+import { CourseStructureComponent } from './pages/backend/creating-course/course-structure/course-structure.component';
+import { SetupAndTestVideoComponent } from './pages/backend/creating-course/setup-and-test-video/setup-and-test-video.component';
+import { FilmAndEditComponent } from './pages/backend/creating-course/film-and-edit/film-and-edit.component';
+import { CurriculumComponent } from './pages/backend/creating-course/curriculum/curriculum.component';
+import { CourseLandingPagesComponent } from './pages/backend/creating-course/course-landing-pages/course-landing-pages.component';
+import { CaptionsComponent } from './pages/backend/creating-course/captions/captions.component';
+import { PricingComponent } from './pages/backend/creating-course/pricing/pricing.component';
+import { PromotionsComponent } from './pages/backend/creating-course/promotions/promotions.component';
+import { CourseMessagesComponent } from './pages/backend/creating-course/course-messages/course-messages.component';
+import { CreatingNewCourseSidebarComponent } from './shared/backend/creating-new-course-sidebar/creating-new-course-sidebar.component';
+import { QuillModule } from 'ngx-quill'
+
 
 const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
   direction: 'horizontal',
@@ -71,10 +86,22 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     TopicContentDescriptionComponent,
     InstructorDashboardComponent,
     InstructorCreatingCourseComponent,
-    InstructorCourseConfigurationComponent,
     InstructorSidebarComponent,
     InstructorFooterComponent,
     InstructorHeaderComponent,
+    InstructorHomeComponent,
+    CreatingNewCourseHeaderComponent,
+    TargetYourStudentsComponent,
+    CourseStructureComponent,
+    SetupAndTestVideoComponent,
+    FilmAndEditComponent,
+    CurriculumComponent,
+    CaptionsComponent,
+    CourseLandingPagesComponent,
+    PricingComponent,
+    PromotionsComponent,
+    CourseMessagesComponent,
+    CreatingNewCourseSidebarComponent
   ],
   imports: [
     BrowserModule,
@@ -84,7 +111,8 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     MobxAngularModule,
     SwiperModule,
     BarRatingModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    QuillModule.forRoot()
   ],
   providers: [
     {

@@ -1,0 +1,17 @@
+<h2 mat-dialog-title>Course Category</h2>
+
+<mat-dialog-content class="mat-typography">
+  <div class="addCategoryContainer">
+    <p>
+      <mat-form-field appearance="outline" class="matInputForm">
+        <mat-label>Category</mat-label>
+        <input matInput placeholder="category name">
+      </mat-form-field>
+    </p>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button [mat-dialog-close]="true" cdkFocusInitial class="matSubmitForm">Add Category</button>
+</mat-dialog-actions>

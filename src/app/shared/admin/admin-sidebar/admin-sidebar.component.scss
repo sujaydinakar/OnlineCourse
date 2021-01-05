@@ -1,0 +1,98 @@
+.sideBarContainer {
+  width: 250px;
+  height: 100vh;
+
+  background-image: url('../../../../assets/images/nav_nachos2.png');
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-position: bottom;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  .imageContainer  {
+    width: 100%;
+    padding: 20px 40px;
+
+    img {
+      width: 100%;
+      outline: none;
+    }
+  }
+
+  .navElementsContainer {
+    width: 100%;
+
+    .navElementContainer {
+      padding: 0px 10px;
+      outline: none;
+
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+
+      i {
+        margin-right: 10px;
+      }
+
+      p {
+        font-weight: bold;
+      }
+    }
+
+    .navElementContainer:hover {
+      cursor: pointer;
+    }
+
+    .subNavElementContainer {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      outline: none;
+
+      i {
+        margin-right: 10px;
+      }
+    }
+
+    .subNavElementContainer:hover {
+      cursor: pointer;
+    }
+
+    .navElementContainer_1 {
+      width: 100%;
+      padding: 4px 25px;
+      font-weight: bold;
+      outline: none;
+
+      p {
+        margin: 8px 0px;
+      }
+    }
+
+    .navElementContainer_1:hover {
+      background-color: rgba(0, 0, 0, 0.04);
+    }
+  }
+
+  .signOutContainer {
+    width: 100%;
+    padding: 10px 20px;
+    transition: 0.5s;
+    color: rgb(41, 41, 41);
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    border-top: 1px solid rgba(199, 199, 199, 0.596);
+  }
+
+  .signOutContainer:hover {
+    cursor: pointer;
+    transition: 0.5s;
+    color: white;
+    background-color: #e43f5a;
+  }
+}

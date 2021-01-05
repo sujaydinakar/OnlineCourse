@@ -1,25 +1,31 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { InstructorCreatingCourseComponent } from './layout/backend/instructor-creating-course/instructor-creating-course.component';
-import { InstructorDashboardComponent } from './layout/backend/instructor-dashboard/instructor-dashboard.component';
+import { AdminMainComponent } from './layout/admin/admin-main/admin-main.component';
+import { InstructorCreatingCourseComponent } from './layout/instructor/instructor-creating-course/instructor-creating-course.component';
+import { InstructorDashboardComponent } from './layout/instructor/instructor-dashboard/instructor-dashboard.component';
 
-import { MainComponent } from './layout/frontend/main/main.component';
-import { Main2Component } from './layout/frontend/main2/main2.component';
-import { CaptionsComponent } from './pages/backend/creating-course/captions/captions.component';
-import { CourseLandingPagesComponent } from './pages/backend/creating-course/course-landing-pages/course-landing-pages.component';
-import { CourseMessagesComponent } from './pages/backend/creating-course/course-messages/course-messages.component';
-import { CourseStructureComponent } from './pages/backend/creating-course/course-structure/course-structure.component';
-import { CurriculumComponent } from './pages/backend/creating-course/curriculum/curriculum.component';
-import { FilmAndEditComponent } from './pages/backend/creating-course/film-and-edit/film-and-edit.component';
-import { PricingComponent } from './pages/backend/creating-course/pricing/pricing.component';
-import { PromotionsComponent } from './pages/backend/creating-course/promotions/promotions.component';
-import { SettingComponent } from './pages/backend/creating-course/setting/setting.component';
-import { SetupAndTestVideoComponent } from './pages/backend/creating-course/setup-and-test-video/setup-and-test-video.component';
-import { TargetYourStudentsComponent } from './pages/backend/creating-course/target-your-students/target-your-students.component';
-import { InstructorHomeComponent } from './pages/backend/instructor-home/instructor-home.component';
-import { HomeComponent } from './pages/frontend/home/home.component';
-import { ListTopicByCategoryComponent } from './pages/frontend/list-topic-by-category/list-topic-by-category.component';
-import { TopicDescriptionComponent } from './pages/frontend/topic-description/topic-description.component';
+import { MainComponent } from './layout/student/main/main.component';
+import { Main2Component } from './layout/student/main2/main2.component';
+import { AdminAddCategoryComponent } from './pages/admin/course-category/admin-add-category/admin-add-category.component';
+import { AdminCategoryComponent } from './pages/admin/course-category/admin-category/admin-category.component';
+import { AdminHomeComponent } from './pages/admin/admin-home/admin-home.component';
+import { AdminInstructorComponent } from './pages/admin/admin-instructor/admin-instructor.component';
+import { AdminSlideshowComponent } from './pages/admin/admin-slideshow/admin-slideshow.component';
+import { CaptionsComponent } from './pages/instructor/creating-course/captions/captions.component';
+import { CourseLandingPagesComponent } from './pages/instructor/creating-course/course-landing-pages/course-landing-pages.component';
+import { CourseMessagesComponent } from './pages/instructor/creating-course/course-messages/course-messages.component';
+import { CourseStructureComponent } from './pages/instructor/creating-course/course-structure/course-structure.component';
+import { CurriculumComponent } from './pages/instructor/creating-course/curriculum/curriculum.component';
+import { FilmAndEditComponent } from './pages/instructor/creating-course/film-and-edit/film-and-edit.component';
+import { PricingComponent } from './pages/instructor/creating-course/pricing/pricing.component';
+import { PromotionsComponent } from './pages/instructor/creating-course/promotions/promotions.component';
+import { SettingComponent } from './pages/instructor/creating-course/setting/setting.component';
+import { SetupAndTestVideoComponent } from './pages/instructor/creating-course/setup-and-test-video/setup-and-test-video.component';
+import { TargetYourStudentsComponent } from './pages/instructor/creating-course/target-your-students/target-your-students.component';
+import { InstructorHomeComponent } from './pages/instructor/instructor-home/instructor-home.component';
+import { HomeComponent } from './pages/student/home/home.component';
+import { ListTopicByCategoryComponent } from './pages/student/list-topic-by-category/list-topic-by-category.component';
+import { TopicDescriptionComponent } from './pages/student/topic-description/topic-description.component';
 import { PageNotFoundComponent } from './shared/page-not-found/page-not-found.component';
 
 const routes: Routes = [
@@ -50,6 +56,33 @@ const routes: Routes = [
         path: 'topic/:id',
         component: TopicDescriptionComponent
       }
+    ],
+  },
+  {
+    path: 'admin',
+    component: AdminMainComponent,
+    children: [
+      {
+        path: '',
+        redirectTo: 'home',
+        pathMatch: 'full'
+      },
+      {
+        path: 'home',
+        component: AdminHomeComponent,
+      },
+      {
+        path: 'course-category',
+        component: AdminCategoryComponent,
+      },
+      {
+        path: 'slideshow',
+        component: AdminSlideshowComponent,
+      },
+      {
+        path: 'instructor',
+        component: AdminInstructorComponent,
+      },
     ],
   },
   {

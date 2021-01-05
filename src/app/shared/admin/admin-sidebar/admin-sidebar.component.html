@@ -1,0 +1,44 @@
+<div class="sideBarContainer">
+  <div>
+    <div class="imageContainer">
+      <img src="./assets/logo/logo.png" [routerLink]="['/admin']">
+    </div>
+
+    <div class="navElementsContainer">
+      <mat-accordion>
+        <mat-expansion-panel opened>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <div class="navElementContainer">
+                <div>
+                  <p>Category</p>
+                </div>
+              </div>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div class="subNavElementContainer" [routerLink]="['/admin/course-category']" routerLinkActive="menuElement-active">
+            <i class="fas fa-archive"></i>
+            <p>Course Category</p>
+          </div>
+          <div class="subNavElementContainer">
+            <i class="fas fa-archive"></i>
+            <p>Instructor Category</p>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
+
+      <div class="navElementContainer_1" [routerLink]="['/admin/instructor']" routerLinkActive="menuElement-active">
+        <p>Instructor</p>
+      </div>
+
+      <div class="navElementContainer_1" [routerLink]="['/admin/slideshow']" routerLinkActive="menuElement-active">
+        <p>SlideShow</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="signOutContainer">
+    <p>Sign Out</p>
+    <i class="fas fa-sign-out-alt"></i>
+  </div>
+</div>

@@ -1,0 +1,25 @@
+<div class="adminMainComponent">
+  <mat-drawer-container class="drawerContainer">
+    <mat-drawer #drawer [mode]="sideNavOption" [opened]="true">
+      <app-admin-sidebar [ngStyle]="{'background-image': 'url(\'./assets/image/nav_nachos2.png\')'}"></app-admin-sidebar>
+    </mat-drawer>
+    <mat-drawer-content>
+
+      <div class="headerContainer">
+        <button mat-button (click)="drawer.toggle()" style="margin: 0; padding: 0;">
+          <i class="fas fa-bars"></i>
+        </button>
+
+        <button mat-button>
+          <i class="fas fa-user"></i>
+        </button>
+      </div>
+
+      <div class="routerOutletContainer">
+        <router-outlet></router-outlet>
+      </div>
+    </mat-drawer-content>
+  </mat-drawer-container>
+
+  <app-admin-footer></app-admin-footer>
+</div>

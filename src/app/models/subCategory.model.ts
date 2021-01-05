@@ -1,8 +1,9 @@
-export class ICategory {
+export class ISubCategory {
   key: string;
   name: string;
-  order: number;
+  category: any;
   kh_name: any;
+  order:number;
   keywords: any;
   description?: any;
   create_date?: Date;

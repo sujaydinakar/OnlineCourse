@@ -1,5 +1,14 @@
 {
   "projects": {
     "default": "onlinecourse-717bf"
+  },
+  "targets": {
+    "auxswot-courseonline": {
+      "hosting": {
+        "onlinecourse": [
+          "auxswot-courseonline"
+        ]
+      }
+    }
   }
 }

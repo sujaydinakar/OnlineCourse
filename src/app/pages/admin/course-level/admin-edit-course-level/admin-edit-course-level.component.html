@@ -1,0 +1,45 @@
+<div class="fullHeightDialogContainer">
+
+    <h2 mat-dialog-title>Course Level</h2>
+  
+    <mat-dialog-content class="mat-typography">
+  
+      <form [formGroup]="editCourseLevelForm" class="addCategoryContainer" (ngSubmit)="onSubmit(editCourseLevelForm.value)">
+        <mat-form-field appearance="outline" class="matInputForm">
+          <mat-label>Name</mat-label>
+          <input matInput placeholder="name" formControlName="name">
+        </mat-form-field>
+  
+        <mat-form-field appearance="outline" class="matInputForm">
+          <mat-label>Kh_Name</mat-label>
+          <input matInput placeholder="khmer name" formControlName="kh_name">
+        </mat-form-field>
+  
+        <mat-form-field appearance="outline" class="matInputForm">
+          <mat-label>Order</mat-label>
+          <input type="number" matInput placeholder="order" formControlName="order">
+        </mat-form-field>
+  
+        <label style="margin-bottom: 20px">Description</label><br/><br/>
+        <quill-editor [styles]="{height: '200px'}" formControlName="description">
+          {{ this.textDescription }}
+        </quill-editor><br>
+
+        <label style="margin-bottom: 20px">Kh_Description</label><br/><br/>
+        <quill-editor [styles]="{height: '200px'}" formControlName="kh_description">
+          {{ this.textKhDescription }}
+        </quill-editor><br>
+  
+        <label style="margin-bottom: 20px; margin-top: 40px">Status</label><br><br>
+        <mat-slide-toggle formControlName="status">Active</mat-slide-toggle>
+      </form>
+  
+    </mat-dialog-content>
+  
+    <mat-dialog-actions align="end">
+      <button mat-button mat-dialog-close>Cancel</button>
+      <button mat-button [mat-dialog-close]="true" cdkFocusInitial class="matSubmitForm" (click)="onSubmit(editCourseLevelForm.value)">Save</button>
+    </mat-dialog-actions>
+  
+  </div>
+  

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-admin-main',
@@ -6,11 +7,21 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./admin-main.component.scss']
 })
 export class AdminMainComponent implements OnInit {
+
   sideNavOption = 'side';
 
-  constructor() { }
+  constructor(
+    private location: Location,
+  ) { 
+
+  }
 
   ngOnInit(): void {
+
+  }
+
+  goBack() {
+    this.location.back();
   }
 
 }

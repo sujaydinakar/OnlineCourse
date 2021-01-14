@@ -9,23 +9,31 @@
         <mat-expansion-panel opened>
           <mat-expansion-panel-header>
             <mat-panel-title>
+
               <div class="navElementContainer">
-                <div>
-                  <p>Category</p>
-                </div>
+                <p>Category</p>
               </div>
+
             </mat-panel-title>
           </mat-expansion-panel-header>
           <div class="subNavElementContainer" [routerLink]="['/admin/course-category']" routerLinkActive="menuElement-active">
-            <i class="fas fa-archive"></i>
+            <span class="material-icons">
+              category
+            </span>
             <p>Course Category</p>
           </div>
           <div class="subNavElementContainer">
-            <i class="fas fa-archive"></i>
+            <span class="material-icons">
+              person
+            </span>
             <p>Instructor Category</p>
           </div>
         </mat-expansion-panel>
       </mat-accordion>
+
+      <div class="navElementContainer_1" [routerLink]="['/admin/level']" routerLinkActive="menuElement-active">
+        <p>Level</p>
+      </div>
 
       <div class="navElementContainer_1" [routerLink]="['/admin/instructor']" routerLinkActive="menuElement-active">
         <p>Instructor</p>
@@ -37,7 +45,7 @@
     </div>
   </div>
 
-  <div class="signOutContainer">
+  <div class="signOutContainer" (click)="btnSignOutClicked()">
     <p>Sign Out</p>
     <i class="fas fa-sign-out-alt"></i>
   </div>

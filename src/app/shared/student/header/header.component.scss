@@ -1,7 +1,7 @@
 .headerContainer__fixed {
   width: 100%;
   position: fixed;
-  z-index: 9999;
+  z-index: 999;
   background-color: white;
   top: 0;
   left: 0;
@@ -38,6 +38,7 @@
 
         .category_dialog {
           display: flex;
+          background-color: white;
 
           ul {
             width: 300px;
@@ -63,6 +64,7 @@
                 width: 300px;
                 height: auto;
                 position: absolute;
+                bottom: 0;
                 top: -1px;
                 margin-left: 250px;
                 display: none;
@@ -80,6 +82,7 @@
                       width: 300px;
                       height: auto;
                       position: absolute;
+                      bottom: 0;
                       top: 0px;
                       margin-top: -1px;
                       margin-left: 250px;
@@ -107,7 +110,8 @@
             li:hover {
 
               .itemContainer {
-                color: #941b0c;
+                color: #162447;
+                font-weight: bold;
               }
 
               .subcategory_dialog {
@@ -119,12 +123,14 @@
 
                     .itemContainer {
                       color: black;
+                      font-weight: normal;
                     }
                   }
 
                   li:hover {
                     .itemContainer {
-                      color: #941b0c;
+                      color: #162447;
+                      font-weight: bold;
                     }
 
                     .topic_dialog {
@@ -134,12 +140,14 @@
 
                         .itemContainer {
                           color: black;
+                          font-weight: normal;
                         }
                       }
 
                       li:hover {
                         .itemContainer {
-                          color: #941b0c;
+                          color: #162447;
+                          font-weight: bold;
                         }
                       }
                     }
@@ -161,7 +169,8 @@
       }
 
       .categoryContainer__title {
-        color: darken($color: #941b0c, $amount: 15);
+        font-weight: bold;
+        color: #162447;
       }
     }
 

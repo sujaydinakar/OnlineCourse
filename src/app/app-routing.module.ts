@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { AngularFireAuthGuard, redirectUnauthorizedTo } from '@angular/fire/auth-guard';
+
 import { AdminMainComponent } from './layout/admin/admin-main/admin-main.component';
 import { InstructorCreatingCourseComponent } from './layout/instructor/instructor-creating-course/instructor-creating-course.component';
 import { InstructorDashboardComponent } from './layout/instructor/instructor-dashboard/instructor-dashboard.component';
-
 import { MainComponent } from './layout/student/main/main.component';
 import { Main2Component } from './layout/student/main2/main2.component';
 import { AdminAddCategoryComponent } from './pages/admin/course-category/admin-add-category/admin-add-category.component';
@@ -27,6 +28,12 @@ import { HomeComponent } from './pages/student/home/home.component';
 import { ListTopicByCategoryComponent } from './pages/student/list-topic-by-category/list-topic-by-category.component';
 import { TopicDescriptionComponent } from './pages/student/topic-description/topic-description.component';
 import { PageNotFoundComponent } from './shared/page-not-found/page-not-found.component';
+import { AdminLoginComponent } from './pages/auth/admin-login/admin-login.component';
+import { AdminSubcategoryComponent } from './pages/admin/course-subcategory/admin-subcategory/admin-subcategory.component';
+import { AdminCourseTopicComponent } from './pages/admin/course-topic/admin-course-topic/admin-course-topic.component';
+import { AdminCourseLevelComponent } from './pages/admin/course-level/admin-course-level/admin-course-level.component';
+
+const redirectUnauthorizedAdminToLogin = () => redirectUnauthorizedTo(['/admin/login']);
 
 const routes: Routes = [
   {
@@ -59,8 +66,14 @@ const routes: Routes = [
     ],
   },
   {
+    path: 'admin/login',
+    component: AdminLoginComponent
+  },
+  {
     path: 'admin',
     component: AdminMainComponent,
+    canActivate: [AngularFireAuthGuard],
+    data: { authGuardPipe: redirectUnauthorizedAdminToLogin },
     children: [
       {
         path: '',
@@ -74,6 +87,18 @@ const routes: Routes = [
       {
         path: 'course-category',
         component: AdminCategoryComponent,
+      },
+      {
+        path: 'course-subcategory/:key',
+        component: AdminSubcategoryComponent,
+      },
+      {
+        path: 'course-topic/:key1/:key2',
+        component: AdminCourseTopicComponent,
+      },
+      {
+        path: 'level',
+        component: AdminCourseLevelComponent,
       },
       {
         path: 'slideshow',

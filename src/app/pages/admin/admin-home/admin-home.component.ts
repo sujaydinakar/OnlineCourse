@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { GetGreetingWordsService } from 'src/app/services/generator/get-greeting-words.service';
+import { UserStore } from 'src/app/stores/user.store';
 
 @Component({
   selector: 'app-admin-home',
@@ -7,9 +9,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminHomeComponent implements OnInit {
 
-  constructor() { }
+  dayTime = '';
 
-  ngOnInit(): void {
+  constructor(
+    public userStore: UserStore,
+    public greetingWordsService: GetGreetingWordsService
+  ) { }
+
+  async ngOnInit(): Promise<void> {
+    await this.userStore.getCurrentLoggedInUser();
   }
 
 }

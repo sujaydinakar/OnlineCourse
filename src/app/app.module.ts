@@ -7,7 +7,18 @@ import { SwiperConfigInterface } from 'ngx-swiper-wrapper';
 
 import { QuillModule } from 'ngx-quill';
 import { BarRatingModule } from "ngx-bar-rating";
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireAnalyticsModule } from '@angular/fire/analytics';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SkeletonModule } from 'primeng/skeleton';
+import { TableModule } from 'primeng/table';
+import { ScrollingModule } from '@angular/cdk/scrolling';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+
+import { environment } from 'src/environments/environment';
+import { ScrollableDirective } from './directives/scrollable.directive';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -63,11 +74,21 @@ import { AdminAddCategoryComponent } from './pages/admin/course-category/admin-a
 import { AdminSlideshowComponent } from './pages/admin/admin-slideshow/admin-slideshow.component';
 import { AdminInstructorComponent } from './pages/admin/admin-instructor/admin-instructor.component';
 import { AdminCategoryComponent } from './pages/admin/course-category/admin-category/admin-category.component'
-import { environment } from 'src/environments/environment';
 
-import { AngularFireModule } from '@angular/fire';
-import { AngularFireAnalyticsModule } from '@angular/fire/analytics';
-import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AdminLoginComponent } from './pages/auth/admin-login/admin-login.component';
+import { StudentLoginComponent } from './pages/auth/student-login/student-login.component';
+import { AdminEditCategoryComponent } from './pages/admin/course-category/admin-edit-category/admin-edit-category.component';
+import { AdminConfirmationDialogComponent } from './shared/admin/admin-confirmation-dialog/admin-confirmation-dialog.component';
+import { AdminAddSubcategoryComponent } from './pages/admin/course-subcategory/admin-add-subcategory/admin-add-subcategory.component';
+import { AdminSubcategoryComponent } from './pages/admin/course-subcategory/admin-subcategory/admin-subcategory.component';
+import { AdminEditSubcategoryComponent } from './pages/admin/course-subcategory/admin-edit-subcategory/admin-edit-subcategory.component';
+import { AdminEditCourseTopicComponent } from './pages/admin/course-topic/admin-edit-course-topic/admin-edit-course-topic.component';
+import { AdminAddCourseTopicComponent } from './pages/admin/course-topic/admin-add-course-topic/admin-add-course-topic.component';
+import { AdminCourseTopicComponent } from './pages/admin/course-topic/admin-course-topic/admin-course-topic.component';
+import { GetDocPipe } from './pipes/get-doc.pipe';
+import { AdminCourseLevelComponent } from './pages/admin/course-level/admin-course-level/admin-course-level.component';
+import { AdminAddCourseLevelComponent } from './pages/admin/course-level/admin-add-course-level/admin-add-course-level.component';
+import { AdminEditCourseLevelComponent } from './pages/admin/course-level/admin-edit-course-level/admin-edit-course-level.component';
 
 
 const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
@@ -77,6 +98,7 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
 
 @NgModule({
   declarations: [
+    ScrollableDirective,
     AppComponent,
     MainComponent,
     HeaderComponent,
@@ -124,22 +146,44 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     AdminAddCategoryComponent,
     AdminSlideshowComponent,
     AdminInstructorComponent,
-    AdminCategoryComponent
+    AdminCategoryComponent,
+    AdminLoginComponent,
+    StudentLoginComponent,
+    AdminEditCategoryComponent,
+    AdminConfirmationDialogComponent,
+    AdminAddSubcategoryComponent,
+    AdminSubcategoryComponent,
+    AdminEditSubcategoryComponent,
+    AdminEditCourseTopicComponent,
+    AdminAddCourseTopicComponent,
+    AdminCourseTopicComponent,
+    GetDocPipe,
+    AdminCourseLevelComponent,
+    AdminAddCourseLevelComponent,
+    AdminEditCourseLevelComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     MaterialModule,
-    MobxAngularModule,
-    SwiperModule,
-    BarRatingModule,
-    FontAwesomeModule,
-    QuillModule.forRoot(),
+    ScrollingModule,
 
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAnalyticsModule,
     AngularFirestoreModule,
+
+    MobxAngularModule,
+    SwiperModule,
+    BarRatingModule,
+    FontAwesomeModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MobxAngularModule,
+    QuillModule.forRoot(),
+    SkeletonModule,
+    TableModule,
+    NgxDatatableModule
   ],
   providers: [
     {

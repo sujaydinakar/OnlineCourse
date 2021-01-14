@@ -5,10 +5,14 @@ export class ICategory {
   kh_name: any;
   keywords: any;
   description?: any;
-  create_date?: Date;
-  create_by?: object;
-  update_date?: Date;
-  update_by?: object;
+
+  createdAt?: Date;
+  createdBy?:string;
+  createdRef?: any;
+  updatedAt?: Date;
+  updatedBy?:string;
+  updatedRef?: any;
+
   status?: any;
   isDelete?: boolean;
 }

@@ -1,0 +1,66 @@
+<div class="categoryContainer">
+    <div class="adminPagesHeader">
+      <h1>Course Level</h1>
+      <button mat-raised-button color="primary" (click)="openAddCourseCategoryDialog()">Add Course Category</button>
+    </div>
+  
+    <ng-container *ngIf="this.levelStore.loading">
+      <p-skeleton styleClass="p-mb-2"></p-skeleton> <br>
+      <p-skeleton width="10rem" styleClass="p-mb-2"></p-skeleton> <br>
+      <p-skeleton width="5rem" styleClass="p-mb-2"></p-skeleton> <br>
+      <p-skeleton height="2rem" styleClass="p-mb-2"></p-skeleton> <br>
+      <p-skeleton width="10rem" height="4rem"></p-skeleton>
+    </ng-container>
+  
+    <div scrollable (scrollPosition)="scrollHandler($event)" *ngIf="!this.levelStore.loading"
+      [ngStyle]="{'height': 'calc(100vh - 230px)', 'overflow-y': 'auto', 'padding': '20px'}">
+      <div class="tableContainer">
+        <table class="table-wrapper" #printtable id="printtable">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Kh_Name</th>
+              <th>Order</th>
+              <th>Status</th>
+              <th>Updated By</th>
+              <th>Updated At</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+              
+            <ng-container *ngIf="this.levelStore.data.length == 0">
+              <tr [ngStyle]="{'text-align': 'center'}">
+                <td colspan="8">No Rows.</td>
+              </tr>
+            </ng-container>
+  
+            <ng-container *ngIf="this.levelStore.data.length != 0">
+              <tr *ngFor="let item of this.levelStore.data; let i=index;">
+                <td [routerLink]="['/admin/course-subcategory/' + item.key]">{{ i + 1 }}</td>
+                <td style="text-align: left;" [routerLink]="['/admin/course-subcategory/' + item.key]">{{ item?.name }}</td>
+                <td style="text-align: left;" [routerLink]="['/admin/course-subcategory/' + item.key]">{{ item?.kh_name }}</td>
+                <td>{{ item?.order }}</td>
+                <td>{{ item?.status?.text }}</td>
+                <td>{{ item?.updatedRef | getDoc : 'full_name' | async }}</td>
+                <td>{{ item?.updatedAt?.toDate() | date : 'medium'}}</td>
+                <td>
+                  <i class="fas fa-pencil-alt" (click)="editCategory(item)" style="margin-right: 20px;"></i>
+                  <i class="fas fa-trash-alt" (click)="deleteCategory(item)"></i>
+                </td>
+              </tr>
+            </ng-container>
+  
+          </tbody>
+        </table>
+  
+        <ng-container *ngIf="this.levelStore.fetching">
+          <div class="spinnerContainer">
+            <mat-spinner></mat-spinner>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  
+</div>

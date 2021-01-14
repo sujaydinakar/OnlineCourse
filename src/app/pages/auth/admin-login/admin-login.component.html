@@ -1,0 +1,30 @@
+<div class="adminLoginContainer">
+  <div class="leftSide">
+    <div class="containerForMiddle">
+      <div class="imageContainer">
+        <img src="./assets/logo/logo.png">
+      </div>
+
+      <form [formGroup]="loginForm" class="loginForm" (ngSubmit)="onSubmit(loginForm.value)">
+        <mat-form-field appearance="outline" class="matInputForm">
+          <mat-label>Email</mat-label>
+          <input type="email" matInput placeholder="enter email" required formControlName="email">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="matInputForm">
+          <mat-label>Password</mat-label>
+          <input type="password" matInput placeholder="enter password" required formControlName="password">
+        </mat-form-field>
+
+        <button type="submit">Login</button>
+
+        <div class="moreOptionsContainer">
+          <mat-checkbox class="example-margin">Remember me!</mat-checkbox>
+          <a>Forget Password?</a>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="rightSide"></div>
+</div>

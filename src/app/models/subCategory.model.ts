@@ -1,15 +1,22 @@
+import { ICategory } from "./category.model";
+
 export class ISubCategory {
   key: string;
   name: string;
-  category: any;
+  order: number;
   kh_name: any;
-  order:number;
   keywords: any;
   description?: any;
-  create_date?: Date;
-  create_by?: object;
-  update_date?: Date;
-  update_by?: object;
+  categoryKey: string;
+  categoryRef: any;
+
+  createdAt?: Date;
+  createdBy?:string;
+  createdRef?: any;
+  updatedAt?: Date;
+  updatedBy?:string;
+  updatedRef?: any;
+
   status?: any;
   isDelete?: boolean;
 }

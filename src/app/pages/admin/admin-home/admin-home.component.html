@@ -1,3 +1,3 @@
 <div class="adminHomeContainer">
-  <h1>Good Evening! Admin.</h1>
+  <h1>{{ this.greetingWordsService.getGreetingTime() }}! {{ this.userStore.User?.displayName }}.</h1>
 </div>

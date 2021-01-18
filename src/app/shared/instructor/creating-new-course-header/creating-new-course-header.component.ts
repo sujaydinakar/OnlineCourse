@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { CourseStore } from 'src/app/stores/course.store';
 
 @Component({
   selector: 'app-creating-new-course-header',
@@ -8,12 +9,26 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class CreatingNewCourseHeaderComponent implements OnInit {
 
+  courseId;
+
   constructor(
-    private route: ActivatedRoute
-  ) { }
+    private courseStore: CourseStore,
+    private route: ActivatedRoute,
+
+    private router: Router,
+    private activatedRoute: ActivatedRoute
+  ) { 
+    this.activatedRoute.params.forEach(params => {
+      this.courseId = params['courseId'];
+    });
+  }
 
   ngOnInit(): void {
+    
+  }
 
+  btnSaveCourseClicked() {
+    this.courseStore.submitSaveCourse();
   }
 
 }

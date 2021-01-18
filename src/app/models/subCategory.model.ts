@@ -7,15 +7,12 @@ export class ISubCategory {
   kh_name: any;
   keywords: any;
   description?: any;
-  categoryKey: string;
-  categoryRef: any;
+  category: any;
 
   createdAt?: Date;
-  createdBy?:string;
-  createdRef?: any;
+  createdBy?: any;
   updatedAt?: Date;
-  updatedBy?:string;
-  updatedRef?: any;
+  updatedBy?: any;
 
   status?: any;
   isDelete?: boolean;

@@ -2,15 +2,15 @@
   <div class="groupNavElements">
     <h3>Plan your course</h3>
 
-    <div class="navElement" [routerLink]="['/create_course/target_your_student']" [routerLinkActive]="['active_creating_course']">
+    <div class="navElement" [routerLink]="['/create_course/' + this.courseId + '/target_your_student']" [routerLinkActive]="['active_creating_course']">
       <p>Target your student</p>
     </div>
 
-    <div class="navElement" [routerLink]="['/create_course/course_structure']" [routerLinkActive]="['active_creating_course']">
+    <div class="navElement" [routerLink]="['/create_course/' + this.courseId + '/course_structure']" [routerLinkActive]="['active_creating_course']">
       <p>Course structure</p>
     </div>
 
-    <div class="navElement" [routerLink]="['/create_course/setup_and_test_video']" [routerLinkActive]="['active_creating_course']">
+    <div class="navElement" [routerLink]="['/create_course/' + this.courseId + '/setup_and_test_video']" [routerLinkActive]="['active_creating_course']">
       <p>Setup & test video</p>
     </div>
   </div>
@@ -18,15 +18,15 @@
   <div class="groupNavElements">
     <h3>Create your content</h3>
 
-    <div class="navElement" [routerLink]="['/create_course/film_and_edit']" [routerLinkActive]="['active_creating_course']">
+    <div class="navElement" [routerLink]="['/create_course/' + this.courseId + '/film_and_edit']" [routerLinkActive]="['active_creating_course']">
       <p>Film & edit</p>
     </div>
 
-    <div class="navElement" [routerLink]="['/create_course/curriculum']" [routerLinkActive]="['active_creating_course']">
+    <div class="navElement" [routerLink]="['/create_course/' + this.courseId + '/curriculum']" [routerLinkActive]="['active_creating_course']">
       <p>Curriculum</p>
     </div>
 
-    <div class="navElement" [routerLink]="['/create_course/captions']" [routerLinkActive]="['active_creating_course']">
+    <div class="navElement" [routerLink]="['/create_course/' + this.courseId + '/captions']" [routerLinkActive]="['active_creating_course']">
       <p>Captions (optional)</p>
     </div>
   </div>
@@ -34,19 +34,19 @@
   <div class="groupNavElements">
     <h3>Publish your course</h3>
 
-    <div class="navElement" [routerLink]="['/create_course/course_landing_pages']" [routerLinkActive]="['active_creating_course']">
+    <div class="navElement" [routerLink]="['/create_course/' + this.courseId + '/course_landing_pages']" [routerLinkActive]="['active_creating_course']">
       <p>Course landing page</p>
     </div>
 
-    <div class="navElement" [routerLink]="['/create_course/pricing']" [routerLinkActive]="['active_creating_course']">
+    <div class="navElement" [routerLink]="['/create_course/' + this.courseId + '/pricing']" [routerLinkActive]="['active_creating_course']">
       <p>Pricing</p>
     </div>
 
-    <div class="navElement" [routerLink]="['/create_course/promotions']" [routerLinkActive]="['active_creating_course']">
+    <div class="navElement" [routerLink]="['/create_course/' + this.courseId + '/promotions']" [routerLinkActive]="['active_creating_course']">
       <p>Promotion</p>
     </div>
 
-    <div class="navElement" [routerLink]="['/create_course/course_messages']" [routerLinkActive]="['active_creating_course']">
+    <div class="navElement" [routerLink]="['/create_course/' + this.courseId + '/course_messages']" [routerLinkActive]="['active_creating_course']">
       <p>Course Messages</p>
     </div>
   </div>

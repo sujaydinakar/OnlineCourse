@@ -97,9 +97,10 @@
 
     .courseContainer {
       display: flex;
-      border: 1px solid rgb(175, 175, 175);
+      transition: 0.5s;
       margin-bottom: 20px;
-
+      border: 1px solid rgb(175, 175, 175);
+      
       .imageContainer {
         width: 250px;
         height: 150px;
@@ -139,6 +140,12 @@
           }
         }
       }
+    }
+
+    .courseContainer:hover {
+      cursor: pointer;
+      transition: 0.5s;
+      box-shadow: 0px 0px 10px rgb(175, 175, 175);
     }
   }
 

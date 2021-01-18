@@ -5,9 +5,17 @@
 
         <mat-form-field appearance="legacy">
           <mat-label>Subcategory</mat-label>
-          <mat-select [(value)]="this.parentSubCategoryKey">
-            <!-- <mat-option value="{{ this.topicStore.ParentSubCategory?.key }}" [routerLink]="['/admin/course-topic/' + this.parentCategoryKey + '/' + this.topicStore.ParentSubCategory?.key]">{{ this.topicStore.ParentSubCategory?.name }}</mat-option> -->
-            <mat-option *ngFor="let item of this.subCategoryStore.SubCategories" value="{{ item.key }}" [routerLink]="['/admin/course-topic/' + this.parentCategoryKey + '/' + item.key]">
+          <mat-select [(value)]="this.topicStore.ParentSubCategory" [compareWith]="compareFn">
+
+            <!-- <mat-option value="{{ this.topicStore.ParentSubCategory?.key }}" 
+              [routerLink]="['/admin/course-topic/' + this.parentCategoryKey + '/' + this.topicStore.ParentSubCategory?.key]"
+              >
+              {{ this.topicStore.ParentSubCategory?.name }}
+            </mat-option> -->
+
+            <mat-option *ngFor="let item of this.subCategoryStore.SubCategories" [value]="item" 
+              [routerLink]="['/admin/course-topic/' + this.parentCategoryKey + '/' + item.key]"
+            >
               {{ item.name }}
             </mat-option>
           </mat-select>
@@ -58,7 +66,8 @@
                 <td style="text-align: left;">{{ item?.kh_name }}</td>
                 <td>{{ item?.order }}</td>
                 <td>{{ item?.status?.text }}</td>
-                <td>{{ item?.updatedRef | getDoc : 'full_name' | async }}</td>
+                <!-- <td>{{ item?.updatedRef | getDoc : 'full_name' | async }}</td> -->
+                <td>{{ item?.updatedBy?.displayName }}</td>
                 <td>{{ item?.updatedAt?.toDate() | date : 'medium'}}</td>
                 <td>
                   <i class="fas fa-pencil-alt" (click)="editTopic(item)" style="margin-right: 20px;"></i>

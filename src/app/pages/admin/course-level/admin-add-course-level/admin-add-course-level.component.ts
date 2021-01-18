@@ -66,10 +66,11 @@ export class AdminAddCourseLevelComponent implements OnInit {
 
       createdAt: new Date(),
       createdBy: this.userStore.User,
-      createdRef: this.afs.collection('users').doc(this.userStore.User.key).ref,
       updatedAt: new Date(),
       updatedBy: this.userStore.User,
-      updatedRef: this.afs.collection('users').doc(this.userStore.User.key).ref,
+
+      // createdRef: this.afs.collection('users').doc(this.userStore.User.key).ref,
+      // updatedRef: this.afs.collection('users').doc(this.userStore.User.key).ref,
     };
 
     this.levelStore.addLevel(level);

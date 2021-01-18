@@ -22,19 +22,11 @@
       <div class="leftSideContainer">
         <select style="width: 80px;">
           <option>USD</option>
-          <option>GBP</option>
-          <option>AUD</option>
-          <option>EUR</option>
         </select>
 
-        <select style="width: 120px;">
-          <option>Select</option>
-          <option>Free</option>
-          <option>$19.99</option>
-          <option>$24.99</option>
-        </select>
+        <input type="number" style="width: 120px;" (change)="txtPriceChanged($event)" [value]="this.courseStore.TempCourse?.price?.amount">
 
-        <button>Save</button>
+        <button (click)="btnSaveClicked()">Save</button>
       </div>
 
       <div class="rightSideContainer">

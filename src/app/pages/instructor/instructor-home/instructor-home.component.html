@@ -26,20 +26,21 @@
       </select>
     </div>
 
-    <button [routerLink]="['/create_course']">New Courses</button>
+    <button [routerLink]="['/create_course/new']">New Courses</button>
   </div>
 
   <div class="coursesContainer">
-    <div class="courseContainer">
+
+    <div class="courseContainer" *ngFor="let item of this.courseStore.Courses" [routerLink]="['/create_course/' + item.key ]">
       <div class="imageContainer">
-        <img src="./assets/images/js.jpg">
+        <img src="{{ item?.courseImageUrl || './assets/images/placeholder.png' }}">
       </div>
 
       <div class="descriptionContainer">
         <div>
           <div class="first_row">
-            <p>2020 Complete Python Bootcamp From Zero to Hero in Python</p>
-            <p>Published</p>
+            <p>{{ item?.title || 'Untitled Course' }}</p>
+            <p>{{ item?.status?.text }}</p>
           </div>
           <div class="second_row">
             <h4>Finish your course</h4>
@@ -48,82 +49,7 @@
         </div>
       </div>
     </div>
-
-    <div class="courseContainer">
-      <div class="imageContainer">
-        <img src="./assets/images/js.jpg">
-      </div>
-
-      <div class="descriptionContainer">
-        <div>
-          <div class="first_row">
-            <p>2020 Complete Python Bootcamp From Zero to Hero in Python</p>
-            <p>Published</p>
-          </div>
-          <div class="second_row">
-            <h4>Finish your course</h4>
-            <mat-progress-bar mode="determinate" value="40"></mat-progress-bar>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="courseContainer">
-      <div class="imageContainer">
-        <img src="./assets/images/js.jpg">
-      </div>
-
-      <div class="descriptionContainer">
-        <div>
-          <div class="first_row">
-            <p>2020 Complete Python Bootcamp From Zero to Hero in Python</p>
-            <p>Published</p>
-          </div>
-          <div class="second_row">
-            <h4>Finish your course</h4>
-            <mat-progress-bar mode="determinate" value="40"></mat-progress-bar>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="courseContainer">
-      <div class="imageContainer">
-        <img src="./assets/images/js.jpg">
-      </div>
-
-      <div class="descriptionContainer">
-        <div>
-          <div class="first_row">
-            <p>2020 Complete Python Bootcamp From Zero to Hero in Python</p>
-            <p>Published</p>
-          </div>
-          <div class="second_row">
-            <h4>Finish your course</h4>
-            <mat-progress-bar mode="determinate" value="40"></mat-progress-bar>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="courseContainer">
-      <div class="imageContainer">
-        <img src="./assets/images/js.jpg">
-      </div>
-
-      <div class="descriptionContainer">
-        <div>
-          <div class="first_row">
-            <p>2020 Complete Python Bootcamp From Zero to Hero in Python</p>
-            <p>Published</p>
-          </div>
-          <div class="second_row">
-            <h4>Finish your course</h4>
-            <mat-progress-bar mode="determinate" value="40"></mat-progress-bar>
-          </div>
-        </div>
-      </div>
-    </div>
+    
   </div>
 
   <div class="resourceCardsContainer">

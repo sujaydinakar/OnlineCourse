@@ -32,6 +32,7 @@ import { AdminLoginComponent } from './pages/auth/admin-login/admin-login.compon
 import { AdminSubcategoryComponent } from './pages/admin/course-subcategory/admin-subcategory/admin-subcategory.component';
 import { AdminCourseTopicComponent } from './pages/admin/course-topic/admin-course-topic/admin-course-topic.component';
 import { AdminCourseLevelComponent } from './pages/admin/course-level/admin-course-level/admin-course-level.component';
+import { AdminCourseLanguageComponent } from './pages/admin/course-language/admin-course-language/admin-course-language.component';
 
 const redirectUnauthorizedAdminToLogin = () => redirectUnauthorizedTo(['/admin/login']);
 
@@ -101,6 +102,10 @@ const routes: Routes = [
         component: AdminCourseLevelComponent,
       },
       {
+        path: 'language',
+        component: AdminCourseLanguageComponent,
+      },
+      {
         path: 'slideshow',
         component: AdminSlideshowComponent,
       },
@@ -121,7 +126,7 @@ const routes: Routes = [
     ]
   },
   {
-    path: 'create_course',
+    path: 'create_course/:courseId',
     component: InstructorCreatingCourseComponent,
     children: [
       {

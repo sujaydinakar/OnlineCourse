@@ -14,6 +14,8 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SkeletonModule } from 'primeng/skeleton';
 import { TableModule } from 'primeng/table';
+import { FileUploadModule } from 'primeng/fileupload'; 
+import { HttpClientModule } from '@angular/common/http';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
@@ -89,6 +91,9 @@ import { GetDocPipe } from './pipes/get-doc.pipe';
 import { AdminCourseLevelComponent } from './pages/admin/course-level/admin-course-level/admin-course-level.component';
 import { AdminAddCourseLevelComponent } from './pages/admin/course-level/admin-add-course-level/admin-add-course-level.component';
 import { AdminEditCourseLevelComponent } from './pages/admin/course-level/admin-edit-course-level/admin-edit-course-level.component';
+import { AdminCourseLanguageComponent } from './pages/admin/course-language/admin-course-language/admin-course-language.component';
+import { AdminAddCourseLanguageComponent } from './pages/admin/course-language/admin-add-course-language/admin-add-course-language.component';
+import { AdminEditCourseLanguageComponent } from './pages/admin/course-language/admin-edit-course-language/admin-edit-course-language.component';
 
 
 const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
@@ -99,6 +104,8 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
 @NgModule({
   declarations: [
     ScrollableDirective,
+    GetDocPipe,
+
     AppComponent,
     MainComponent,
     HeaderComponent,
@@ -151,16 +158,22 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     StudentLoginComponent,
     AdminEditCategoryComponent,
     AdminConfirmationDialogComponent,
+    
     AdminAddSubcategoryComponent,
     AdminSubcategoryComponent,
     AdminEditSubcategoryComponent,
+
     AdminEditCourseTopicComponent,
     AdminAddCourseTopicComponent,
     AdminCourseTopicComponent,
-    GetDocPipe,
+
     AdminCourseLevelComponent,
     AdminAddCourseLevelComponent,
-    AdminEditCourseLevelComponent
+    AdminEditCourseLevelComponent,
+
+    AdminCourseLanguageComponent,
+    AdminAddCourseLanguageComponent,
+    AdminEditCourseLanguageComponent
   ],
   imports: [
     BrowserModule,
@@ -182,6 +195,8 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     MobxAngularModule,
     QuillModule.forRoot(),
     SkeletonModule,
+    FileUploadModule, 
+    HttpClientModule,
     TableModule,
     NgxDatatableModule
   ],

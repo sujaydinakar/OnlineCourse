@@ -23,7 +23,9 @@ export class CurriculumComponent implements OnInit {
   assignmentTitle: '';
   assignmentSection: '';
 
-  constructor() { }
+  constructor(
+    
+  ) { }
 
   ngOnInit(): void {
   }

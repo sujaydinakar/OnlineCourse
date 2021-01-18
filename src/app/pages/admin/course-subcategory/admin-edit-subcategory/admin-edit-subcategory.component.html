@@ -21,7 +21,7 @@
             <mat-option [value]="this.subCategoryStore.ParentCategory">
               {{this.subCategoryStore.ParentCategory?.name}}
             </mat-option>
-            <mat-option *ngFor="let item of this.categoryStore.Categories" [value]="item.key">
+            <mat-option *ngFor="let item of this.categoryStore.Categories" [value]="item">
               {{item.name}}
             </mat-option>
           </mat-select>

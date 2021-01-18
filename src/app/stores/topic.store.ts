@@ -51,14 +51,14 @@ export class CourseTopicStore {
 
   @action
   getParentSubCategoriesByParentCategoryKey(parentKey: string) {
-    this.afs.collection('subcategories', ref => ref.where('categoryKey', '==', parentKey)).valueChanges().subscribe((data: any) => {
+    this.afs.collection('subcategories', ref => ref.where('category.key', '==', parentKey)).valueChanges().subscribe((data: any) => {
       this.ParentSubCategories = data;
     })
   }
 
   @action
   getTopics(parentKey: string, parentKey1: string) {
-    this.afs.collection('topics', ref => ref.where('categoryKey', '==', parentKey).where('subCategoryKey', '==', parentKey1)).valueChanges().subscribe((data: any) => {
+    this.afs.collection('topics', ref => ref.where('category.key', '==', parentKey).where('subcategory.key', '==', parentKey1)).valueChanges().subscribe((data: any) => {
       this.Topics = data
     })
   }
@@ -79,10 +79,8 @@ export class CourseTopicStore {
     this.afs.collection('topics').doc(key).set({
       key,
       ...topicData,
-      categoryKey: category.key,
-      categoryRef: this.afs.collection('categories').doc(category.key).ref,
-      subcategoryKey: subcategory.key,
-      subcategoryRef: this.afs.collection('subcategories').doc(subcategory.key).ref,
+      category: category,
+      subcategory: subcategory,
     });
   }
 
@@ -162,7 +160,7 @@ export class CourseTopicStore {
 
   lazyTopicRef(lastVisible: any, search, filter, category_key, subcategory_key) {
     return this.afs.collection<any>("topics", ref => {
-      let condition = ref.where('isDelete', '==', false).where('categoryKey', '==', category_key).where('subcategoryKey', '==', subcategory_key).limit(20);
+      let condition = ref.where('isDelete', '==', false).where('category.key', '==', category_key).where('subcategory.key', '==', subcategory_key).limit(20);
 
       if (search) {
         const txt = GenerateKeywordsService.toCapitalize(search)

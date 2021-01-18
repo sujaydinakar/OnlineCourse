@@ -8,10 +8,8 @@ export class ICategory {
 
   createdAt?: Date;
   createdBy?:string;
-  createdRef?: any;
   updatedAt?: Date;
   updatedBy?:string;
-  updatedRef?: any;
 
   status?: any;
   isDelete?: boolean;

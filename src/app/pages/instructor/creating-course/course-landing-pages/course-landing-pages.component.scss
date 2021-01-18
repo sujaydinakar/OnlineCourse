@@ -31,6 +31,7 @@
   .basicInfoContainer {
     width: 100%;
     display: grid;
+    padding-top: 10px;
     grid-column-gap: 20px;
     grid-template-columns: repeat(3, 1fr);
     // grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
@@ -45,6 +46,10 @@
       width: 49%;
 
       img {
+        width: 100%;
+      }
+
+      video {
         width: 100%;
       }
     }

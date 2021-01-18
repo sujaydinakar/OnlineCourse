@@ -82,7 +82,8 @@ export class AdminEditCourseLevelComponent implements OnInit {
 
       updatedAt: new Date(),
       updatedBy: this.userStore.User,
-      updatedRef: this.afs.collection('users').doc(this.userStore.User.key).ref,
+      
+      // updatedRef: this.afs.collection('users').doc(this.userStore.User.key).ref,
     };
 
     this.levelStore.updateLevel(level);

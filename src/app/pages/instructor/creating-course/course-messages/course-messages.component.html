@@ -9,10 +9,12 @@
       course content. If you do not wish to send a welcome or congratulations message, leave the text box blank.
     </p>
 
-    <p>Welcome Message</p>
-    <quill-editor [styles]="{height: '200px'}"></quill-editor>
+    <form [formGroup]="messageForm" (ngSubmit)="onSubmit(messageForm.value)">
+      <p>Welcome Message</p>
+      <quill-editor [styles]="{height: '200px'}" formControlName="welcome_message"></quill-editor>
 
-    <p>Congratulations Message</p>
-    <quill-editor [styles]="{height: '200px'}"></quill-editor>
+      <p>Congratulations Message</p>
+      <quill-editor [styles]="{height: '200px'}" formControlName="congratulation_message"></quill-editor>
+    </form>
   </div>
 </div>

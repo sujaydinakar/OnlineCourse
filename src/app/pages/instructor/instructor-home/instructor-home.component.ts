@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CourseStore } from 'src/app/stores/course.store';
 
 @Component({
   selector: 'app-instructor-home',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class InstructorHomeComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    public courseStore: CourseStore,
+  ) { }
 
   ngOnInit(): void {
+    this.courseStore.getCourses();
   }
 
 }

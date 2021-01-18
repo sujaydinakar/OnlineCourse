@@ -71,8 +71,9 @@ export class AdminEditCategoryComponent implements OnInit {
       },
 
       updatedAt: new Date(),
-      updatedBy: this.userStore.User.key,
-      updatedRef: this.afs.collection('users').doc(this.userStore.User.key).ref,
+      updatedBy: this.userStore.User,
+      
+      // updatedRef: this.afs.collection('users').doc(this.userStore.User.key).ref,
     };
 
     this.categoryStore.updateCategory(category);

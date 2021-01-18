@@ -5,7 +5,7 @@
   </div>
 
   <div class="controllersContainer">
-    <button class="btnSave">Save</button>
-    <button class="btnSetting" [routerLink]="['/create_course/setting']"><i class="fas fa-cog"></i></button>
+    <button class="btnSave" (click)="btnSaveCourseClicked()">Save</button>
+    <button class="btnSetting" [routerLink]="['/create_course/' + this.courseId + '/setting']"><i class="fas fa-cog"></i></button>
   </div>
 </div>

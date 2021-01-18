@@ -25,7 +25,7 @@
                 <ul>
                   <li *ngFor="let jtem of subcategoryStore.SubCategories">
                     
-                    <ng-container *ngIf="jtem?.categoryKey === item?.key">
+                    <ng-container *ngIf="jtem?.category.key === item?.key">
                       <div class="itemContainer">
                         <p>{{ jtem.name }}</p>
                         <span class="material-icons">
@@ -35,8 +35,13 @@
   
                       <div class="topic_dialog">
                         <ul>
+                          <li>
+                            <div class="itemContainer">
+                              <p>All {{ jtem.name }} Topics</p>
+                            </div>
+                          </li>
                           <li *ngFor="let ktem of this.topicStore.Topics">
-                            <ng-container *ngIf="ktem?.subcategoryKey === jtem?.key">
+                            <ng-container *ngIf="ktem?.subcategory.key === jtem?.key">
                               <div class="itemContainer">
                                 <p>{{ ktem.name }}</p>
                               </div>

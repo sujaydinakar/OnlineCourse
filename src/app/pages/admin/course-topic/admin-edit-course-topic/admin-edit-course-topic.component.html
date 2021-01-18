@@ -17,11 +17,11 @@
 
         <mat-form-field appearance="outline" class="matInputForm">
           <mat-label></mat-label>
-          <mat-select formControlName="parent_category" (selectionChange)="this.selectParentCategoryChanged($event)">
-            <mat-option [value]="this.courseTopicStore.ParentCategory?.key">
+          <mat-select formControlName="parent_category" (selectionChange)="this.selectParentCategoryChanged($event)" [compareWith]="compareFn">
+            <!-- <mat-option [value]="this.courseTopicStore.ParentCategory">
               {{this.courseTopicStore.ParentCategory?.name}}
-            </mat-option>
-            <mat-option *ngFor="let item of this.courseTopicStore.ParentCategories" [value]="item.key">
+            </mat-option> -->
+            <mat-option *ngFor="let item of this.courseTopicStore.ParentCategories" [value]="item">
               {{item.name}}
             </mat-option>
           </mat-select>
@@ -29,11 +29,11 @@
 
         <mat-form-field appearance="outline" class="matInputForm">
           <mat-label></mat-label>
-          <mat-select formControlName="parent_subcategory">
+          <mat-select formControlName="parent_subcategory" [compareWith]="compareFn">
             <!-- <mat-option [value]="this.courseTopicStore.ParentSubCategories">
               {{this.courseTopicStore.ParentSubCategory?.name}}
             </mat-option> -->
-            <mat-option *ngFor="let item of this.courseTopicStore.ParentSubCategories" [value]="item.key">
+            <mat-option *ngFor="let item of this.courseTopicStore.ParentSubCategories" [value]="item">
               {{item.name}}
             </mat-option>
           </mat-select>

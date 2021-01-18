@@ -8,44 +8,72 @@
 
     <div class="questionAndAnswerBox">
       <p>What will students learn in your course?</p>
-
-      <div class="inputController">
-        <input type="text">
-        <button><i class="far fa-trash-alt"></i></button>
-        <button><i class="fas fa-list-ul"></i></button>
+      
+      <div *ngFor="let item of this.courseStore.TempCourse?.arrStudentObjective; let i=index;" class="inputController">
+        <input type="text" [value]="item" (change)="textExistedInArrObjective($event, i)">
+        <button (click)="deleteTextExistedInArrObjective(i)">
+          <i class="far fa-trash-alt"></i>
+        </button>
+        <!-- <button><i class="fas fa-list-ul"></i></button> -->
       </div>
 
-      <button>
+      <div class="inputController">
+        <input type="text" [(ngModel)]="answerOfObjective">
+        <!-- <button><i class="far fa-trash-alt"></i></button>
+        <button><i class="fas fa-list-ul"></i></button> -->
+      </div>
+
+      <button (click)="btnAddAnswerToArrObjectiveClicked()">
         <i class="fas fa-plus"></i>
         <p>Add an Answer</p>
       </button>
     </div>
+
+    <!-- ------------------------------------------------------------------------- -->
 
     <div class="questionAndAnswerBox">
       <p>Are there any course requirements or prerequisites?</p>
 
-      <div class="inputController">
-        <input type="text">
-        <button><i class="far fa-trash-alt"></i></button>
-        <button><i class="fas fa-list-ul"></i></button>
+      <div *ngFor="let item of this.courseStore.TempCourse?.arrStudentRequirement; let i=index;" class="inputController">
+        <input type="text" [value]="item" (change)="textExistedInArrCourseRequirements($event, i)">
+        <button (click)="deleteTextExistedInArrCourseRequirements(i)">
+          <i class="far fa-trash-alt"></i>
+        </button>
+        <!-- <button><i class="fas fa-list-ul"></i></button> -->
       </div>
 
-      <button>
+      <div class="inputController">
+        <input type="text" [(ngModel)]="answerOfCourseRequirements">
+        <!-- <button><i class="far fa-trash-alt"></i></button>
+        <button><i class="fas fa-list-ul"></i></button> -->
+      </div>
+
+      <button (click)="btnAddAnswerToArrCourseRequirementsClicked()">
         <i class="fas fa-plus"></i>
         <p>Add an Answer</p>
       </button>
     </div>
 
+    <!-- ------------------------------------------------------------------------- -->
+
     <div class="questionAndAnswerBox">
       <p>Who are your target students?</p>
 
-      <div class="inputController">
-        <input type="text">
-        <button><i class="far fa-trash-alt"></i></button>
-        <button><i class="fas fa-list-ul"></i></button>
+      <div *ngFor="let item of this.courseStore.TempCourse?.arrTargetStudent; let i=index;" class="inputController">
+        <input type="text" [value]="item" (change)="textExistedInArrTargetStudent($event, i)">
+        <button (click)="deleteTextExistedInArrTargetStudent(i)">
+          <i class="far fa-trash-alt"></i>
+        </button>
+        <!-- <button><i class="fas fa-list-ul"></i></button> -->
       </div>
 
-      <button>
+      <div class="inputController">
+        <input type="text" [(ngModel)]="answerOfTargetStudent">
+        <!-- <button><i class="far fa-trash-alt"></i></button>
+        <button><i class="fas fa-list-ul"></i></button> -->
+      </div>
+
+      <button (click)="btnAddAnswerToArrTargetStudentClicked()">
         <i class="fas fa-plus"></i>
         <p>Add an Answer</p>
       </button>

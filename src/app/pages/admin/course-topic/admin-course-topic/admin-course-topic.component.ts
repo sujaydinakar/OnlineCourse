@@ -1,15 +1,14 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ActivatedRoute } from '@angular/router';
 
+import { CourseTopicStore } from 'src/app/stores/topic.store';
 import { CategoryStore } from 'src/app/stores/category.store';
 import { SubCategoryStore } from 'src/app/stores/subcategory.store';
 
 import { AdminConfirmationDialogComponent } from 'src/app/shared/admin/admin-confirmation-dialog/admin-confirmation-dialog.component';
-import { ActivatedRoute } from '@angular/router';
 import { AdminAddCourseTopicComponent } from '../admin-add-course-topic/admin-add-course-topic.component';
-import { AdminEditCategoryComponent } from '../../course-category/admin-edit-category/admin-edit-category.component';
-import { CourseTopicStore } from 'src/app/stores/topic.store';
 import { AdminEditCourseTopicComponent } from '../admin-edit-course-topic/admin-edit-course-topic.component';
 
 @Component({
@@ -87,6 +86,10 @@ export class AdminCourseTopicComponent implements OnInit {
     if (e === 'bottom') {
       this.topicStore.fetchTopicDataMore(this.parentCategoryKey, this.parentSubCategoryKey)
     }
+  }
+
+  compareFn(object1: any, object2: any) {
+    return object1 && object2 ? object1.key === object2.key : object1 === object2;
   }
 
 }

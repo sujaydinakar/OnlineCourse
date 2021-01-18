@@ -9,17 +9,13 @@ export class ITopic {
   keywords: any;
   description?: any;
 
-  categoryKey: string;
-  categoryRef: any;
-  subcategoryKey: string;
-  subcategoryRef: any;
+  category: any;
+  subcategory: any;
 
   createdAt?: Date;
-  createdBy?:string;
-  createdRef?: any;
+  createdBy?: any;
   updatedAt?: Date;
-  updatedBy?:string;
-  updatedRef?: any;
+  updatedBy?: any;
 
   status?: any;
   isDelete?: boolean;

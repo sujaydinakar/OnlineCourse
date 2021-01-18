@@ -33,7 +33,7 @@ export class SubCategoryStore {
 
   @action
   getSubCategories(parentKey: string) {
-    this.afs.collection('subcategories', ref => ref.where('categoryKey', '==', parentKey)).valueChanges().subscribe((data: any) => {
+    this.afs.collection('subcategories', ref => ref.where('category.key', '==', parentKey)).valueChanges().subscribe((data: any) => {
       this.SubCategories = data
     })
   }
@@ -53,8 +53,7 @@ export class SubCategoryStore {
     this.afs.collection('subcategories').doc(key).set({
       key,
       ...categoryData,
-      categoryKey: category.key,
-      categoryRef: this.afs.collection('categories').doc(category.key).ref,
+      category: category,
     });
   }
 
@@ -131,7 +130,7 @@ export class SubCategoryStore {
 
   lazySubCategoryRef(lastVisible: any, search, filter, categoryKey) {
     return this.afs.collection<any>("subcategories", ref => {
-      let condition = ref.where('isDelete', '==', false).where('categoryKey', '==', categoryKey).limit(20);
+      let condition = ref.where('isDelete', '==', false).where('category.key', '==', categoryKey).limit(20);
 
       if (search) {
         const txt = GenerateKeywordsService.toCapitalize(search)

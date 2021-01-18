@@ -61,11 +61,12 @@ export class AdminAddCategoryComponent implements OnInit {
       isDelete: false,
 
       createdAt: new Date(),
-      createdBy: this.userStore.User.key,
-      createdRef: this.afs.collection('users').doc(this.userStore.User.key).ref,
+      createdBy: this.userStore.User,
       updatedAt: new Date(),
-      updatedBy: this.userStore.User.key,
-      updatedRef: this.afs.collection('users').doc(this.userStore.User.key).ref,
+      updatedBy: this.userStore.User,
+
+      // createdRef: this.afs.collection('users').doc(this.userStore.User.key).ref,
+      // updatedRef: this.afs.collection('users').doc(this.userStore.User.key).ref,
     };
 
     this.categoryStore.addCategory(category);

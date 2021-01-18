@@ -9,7 +9,7 @@
 
     <div class="courseControllerContainer">
       <div class="leftSide">
-        <button>Unpublish</button>
+        <button (click)="btnPublishClicked()">{{ this.courseStore.TempCourse?.status?.text == "Unpublish" ? 'Publish' : 'Unpublish' }}</button>
       </div>
       <div class="rightSide">
         <p>New students cannot find your course via search, but existing students can still access content.</p>
@@ -18,7 +18,7 @@
 
     <div class="courseControllerContainer">
       <div class="leftSide">
-        <button style="border: 1px solid #992337; color: #992337;">Delete</button>
+        <button style="border: 1px solid #992337; color: #992337;" (click)="btnDeleteCliced()">Delete</button>
       </div>
       <div class="rightSide">
         <p>We promise students lifetime access, so courses cannot be deleted after students have enrolled.</p>

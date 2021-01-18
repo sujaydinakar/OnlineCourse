@@ -58,7 +58,8 @@
                 <td style="text-align: left;" [routerLink]="['/admin/course-topic/' + this.subCategoryStore.ParentCategory?.key + '/' + item.key]">{{ item?.kh_name }}</td>
                 <td>{{ item?.order }}</td>
                 <td>{{ item?.status?.text }}</td>
-                <td>{{ item?.updatedRef | getDoc : 'full_name' | async }}</td>
+                <!-- <td>{{ item?.updatedRef | getDoc : 'full_name' | async }}</td> -->
+                <td>{{ item?.updatedBy?.displayName }}</td>
                 <td>{{ item?.updatedAt?.toDate() | date : 'medium'}}</td>
                 <td>
                   <i class="fas fa-pencil-alt" (click)="editCategory(item)" style="margin-right: 20px;"></i>

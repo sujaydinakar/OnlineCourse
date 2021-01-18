@@ -1,0 +1,40 @@
+<div class="fullHeightDialogContainer">
+
+    <h2 mat-dialog-title>Course Language</h2>
+  
+    <mat-dialog-content class="mat-typography">
+  
+      <form [formGroup]="editCourseLanguageForm" class="addCategoryContainer" (ngSubmit)="onSubmit(editCourseLanguageForm.value)">
+        <mat-form-field appearance="outline" class="matInputForm">
+          <mat-label>Name</mat-label>
+          <input matInput placeholder="name" formControlName="name">
+        </mat-form-field>
+  
+        <mat-form-field appearance="outline" class="matInputForm">
+          <mat-label>Kh_Name</mat-label>
+          <input matInput placeholder="khmer name" formControlName="kh_name">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="matInputForm">
+          <mat-label>Short_Name</mat-label>
+          <input matInput placeholder="short name" formControlName="short_name" required>
+        </mat-form-field>
+  
+        <mat-form-field appearance="outline" class="matInputForm">
+          <mat-label>Order</mat-label>
+          <input type="number" matInput placeholder="order" formControlName="order">
+        </mat-form-field>
+  
+        <label style="margin-bottom: 20px; margin-top: 40px">Status</label><br><br>
+        <mat-slide-toggle formControlName="status">Active</mat-slide-toggle>
+      </form>
+  
+    </mat-dialog-content>
+  
+    <mat-dialog-actions align="end">
+      <button mat-button mat-dialog-close>Cancel</button>
+      <button mat-button [mat-dialog-close]="true" cdkFocusInitial class="matSubmitForm" (click)="onSubmit(editCourseLanguageForm.value)">Save</button>
+    </mat-dialog-actions>
+  
+  </div>
+  

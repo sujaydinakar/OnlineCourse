@@ -9,10 +9,8 @@ export class ILevel {
 
   createdAt?: Date;
   createdBy?:string;
-  createdRef?: any;
   updatedAt?: Date;
   updatedBy?:string;
-  updatedRef?: any;
 
   status?: any;
   isDelete?: boolean;

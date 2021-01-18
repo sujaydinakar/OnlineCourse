@@ -6,6 +6,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ICategory } from 'src/app/models/category.model';
 import { ISubCategory } from 'src/app/models/subCategory.model';
 import { generateKeywords } from 'src/app/services/generator/generate-keywords.service';
+import { CategoryMappingService } from 'src/app/services/mapping/category-mapping.service';
 import { CategoryStore } from 'src/app/stores/category.store';
 import { SubCategoryStore } from 'src/app/stores/subcategory.store';
 import { UserStore } from 'src/app/stores/user.store';
@@ -29,6 +30,7 @@ export class AdminEditSubcategoryComponent implements OnInit {
     private userStore: UserStore,
     public categoryStore: CategoryStore,
     public subCategoryStore: SubCategoryStore,
+    public categoryMapping: CategoryMappingService,
 
     public dialogRef: MatDialogRef<AdminSubcategoryComponent>,
     @Inject(MAT_DIALOG_DATA) public data
@@ -74,12 +76,13 @@ export class AdminEditSubcategoryComponent implements OnInit {
         'text': 'Inactive'
       },
 
-      categoryKey: parent_category,
-      categoryRef: this.afs.collection('categories').doc(parent_category).ref,
+      category: this.categoryMapping.mapCategory(parent_category),
 
       updatedAt: new Date(),
-      updatedBy: this.userStore.User.key,
-      updatedRef: this.afs.collection('users').doc(this.userStore.User.key).ref,
+      updatedBy: this.userStore.User,
+
+      // categoryRef: this.afs.collection('categories').doc(parent_category).ref,
+      // updatedRef: this.afs.collection('users').doc(this.userStore.User.key).ref,
     };
 
     this.subCategoryStore.updateSubCategory(category);

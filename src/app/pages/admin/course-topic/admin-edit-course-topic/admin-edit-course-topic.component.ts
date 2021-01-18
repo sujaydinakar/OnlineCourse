@@ -5,8 +5,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ITopic } from 'src/app/models/topic.model';
 import { generateKeywords } from 'src/app/services/generator/generate-keywords.service';
-import { CategoryStore } from 'src/app/stores/category.store';
-import { SubCategoryStore } from 'src/app/stores/subcategory.store';
+import { CategoryMappingService } from 'src/app/services/mapping/category-mapping.service';
 import { CourseTopicStore } from 'src/app/stores/topic.store';
 import { UserStore } from 'src/app/stores/user.store';
 import { AdminCourseTopicComponent } from '../admin-course-topic/admin-course-topic.component';
@@ -28,9 +27,9 @@ export class AdminEditCourseTopicComponent implements OnInit {
     private _snackBar: MatSnackBar,
 
     private userStore: UserStore,
-    // public categoryStore: CategoryStore,
-    // public subCategoryStore: SubCategoryStore,
     public courseTopicStore: CourseTopicStore,
+    
+    public categoryMapping: CategoryMappingService,
 
     public dialogRef: MatDialogRef<AdminCourseTopicComponent>,
     @Inject(MAT_DIALOG_DATA) public data
@@ -44,15 +43,15 @@ export class AdminEditCourseTopicComponent implements OnInit {
       description: this.data.description,
       order: this.data.order,
       status: this.selectedSlideToggle,
-      parent_category: this.data.categoryKey,
-      parent_subcategory: this.data.subcategoryKey
+      parent_category: this.data.category,
+      parent_subcategory: this.data.subcategory
     });
   }
 
 
   async ngOnInit(): Promise<void> {
     this.courseTopicStore.getParentCategories();
-    this.courseTopicStore.getParentSubCategoriesByParentCategoryKey(this.data.categoryKey);
+    this.courseTopicStore.getParentSubCategoriesByParentCategoryKey(this.data.category.key);
     await this.userStore.getCurrentLoggedInUser();
   }
 
@@ -80,14 +79,15 @@ export class AdminEditCourseTopicComponent implements OnInit {
       },
       isDelete: false,
 
-      categoryKey: parent_category,
-      categoryRef: this.afs.collection('categories').doc(parent_category).ref,
-      subcategoryKey: parent_subcategory,
-      subcategoryRef: this.afs.collection('categories').doc(parent_subcategory).ref,
-
+      category: this.categoryMapping.mapCategory(parent_category),
+      subcategory: this.categoryMapping.mapCategory(parent_subcategory),
+      
       updatedAt: new Date(),
-      updatedBy: this.userStore.User.key,
-      updatedRef: this.afs.collection('users').doc(this.userStore.User.key).ref,
+      updatedBy: this.userStore.User,
+
+      // categoryRef: this.afs.collection('categories').doc(parent_category).ref,
+      // subcategoryRef: this.afs.collection('categories').doc(parent_subcategory).ref,
+      // updatedRef: this.afs.collection('users').doc(this.userStore.User.key).ref,
     };
 
     this.courseTopicStore.updateTopic(topic);
@@ -101,6 +101,11 @@ export class AdminEditCourseTopicComponent implements OnInit {
   }
 
   selectParentCategoryChanged(event: any) {
-    this.courseTopicStore.getParentSubCategoriesByParentCategoryKey(event.value)
+    this.courseTopicStore.getParentSubCategoriesByParentCategoryKey(event.value.key)
   }
+
+  compareFn(object1: any, object2: any) {
+    return object1 && object2 ? object1.key === object2.key : object1 === object2;
+  }
+  
 }

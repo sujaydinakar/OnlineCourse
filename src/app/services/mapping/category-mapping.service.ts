@@ -8,7 +8,7 @@ export class CategoryMappingService {
 
   constructor() { }
 
-  mapCategory(category: ICategory) {
+  mapCategory(category: any) {
     if(category == null) {
       return category;
     }

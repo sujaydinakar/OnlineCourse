@@ -44,6 +44,9 @@ $onlinecourse-theme: mat-light-theme((
 @import '~@swimlane/ngx-datatable/themes/bootstrap.scss';
 @import '~@swimlane/ngx-datatable/assets/icons.css';
 
+@import '~@vime/core/themes/default.css';
+@import '~@vime/core/themes/light.css';
+
 // html, body { height: 100%; }
 
 body {

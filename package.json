@@ -1,6 +1,15 @@
 {
   "name": "onlinecourse",
   "version": "0.0.0",
+  "browser": {
+    "http": false,
+    "https": false,
+    "net": false,
+    "path": false,
+    "stream": false,
+    "tls": false,
+    "fs": false
+  },
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -26,7 +35,10 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.32",
     "@swimlane/ngx-datatable": "^19.0.0",
     "@tinymce/tinymce-angular": "^4.2.0",
+    "@vime/angular": "^5.0.27",
+    "@vimeo/player": "^2.15.0",
     "angular-quill": "^0.3.0",
+    "angularx-social-login": "^3.5.4",
     "firebase": "^7.0 || ^8.0",
     "lodash": "^4.17.20",
     "mobx": "^6.0.4",
@@ -43,16 +55,23 @@
     "swiper": "^6.4.1",
     "tinymce": "^5.6.2",
     "tslib": "^2.0.0",
+    "vimeo": "^2.1.1",
     "zone.js": "~0.10.2"
   },
   "devDependencies": {
+    "@angular-devkit/architect": ">= 0.900 < 0.1200",
     "@angular-devkit/build-angular": "~0.1002.0",
     "@angular/cli": "~10.2.0",
     "@angular/compiler-cli": "~10.2.0",
-    "@types/node": "^12.11.1",
     "@types/jasmine": "~3.5.0",
     "@types/jasminewd2": "~2.0.3",
+    "@types/node": "^12.11.1",
+    "@types/vimeo": "^2.1.3",
     "codelyzer": "^6.0.0",
+    "firebase-tools": "^8.0.0",
+    "fuzzy": "^0.1.3",
+    "inquirer": "^6.2.2",
+    "inquirer-autocomplete-prompt": "^1.0.1",
     "jasmine-core": "~3.6.0",
     "jasmine-spec-reporter": "~5.0.0",
     "karma": "~5.0.0",
@@ -60,15 +79,10 @@
     "karma-coverage-istanbul-reporter": "~3.0.2",
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "^1.5.0",
+    "open": "^7.0.3",
     "protractor": "~7.0.0",
     "ts-node": "~8.3.0",
     "tslint": "~6.1.0",
-    "typescript": "~4.0.2",
-    "@angular-devkit/architect": ">= 0.900 < 0.1200",
-    "firebase-tools": "^8.0.0",
-    "fuzzy": "^0.1.3",
-    "inquirer": "^6.2.2",
-    "inquirer-autocomplete-prompt": "^1.0.1",
-    "open": "^7.0.3"
+    "typescript": "~4.0.2"
   }
 }

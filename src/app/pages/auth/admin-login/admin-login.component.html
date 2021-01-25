@@ -2,7 +2,7 @@
   <div class="leftSide">
     <div class="containerForMiddle">
       <div class="imageContainer">
-        <img src="./assets/logo/logo.png">
+        <img src="./assets/logo/logo.png" [routerLink]="['/home']">
       </div>
 
       <form [formGroup]="loginForm" class="loginForm" (ngSubmit)="onSubmit(loginForm.value)">

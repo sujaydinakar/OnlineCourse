@@ -2,7 +2,9 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { FormBuilder } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { AngularFireStorage, AngularFireUploadTask } from '@angular/fire/storage';
 import { MatSnackBar } from '@angular/material/snack-bar';
+
 import { ICategory } from 'src/app/models/category.model';
 import { generateKeywords } from 'src/app/services/generator/generate-keywords.service';
 import { CategoryStore } from 'src/app/stores/category.store';
@@ -19,8 +21,20 @@ export class AdminEditCategoryComponent implements OnInit {
   editCategoryForm;
   selectedSlideToggle;
 
+  selectedImage;
+  downloadURL: string;
+  imageFile: File;
+  task: AngularFireUploadTask;
+  percentage;
+
+  fileUploadedURL;
+  fileUploadedPath;
+
+  old_fileUploadedPath;
+
   constructor(
     private afs: AngularFirestore,
+    private storage: AngularFireStorage,
     private formBuilder: FormBuilder,
     private _snackBar: MatSnackBar,
 
@@ -32,6 +46,9 @@ export class AdminEditCategoryComponent implements OnInit {
   ) {
     this.textDescription = this.data.description;
     this.selectedSlideToggle = this.data.status.text == 'Active' ? true : false;
+    this.fileUploadedURL = this.data.categoryImageUrl;
+    this.fileUploadedPath = this.data.categoryImagePath;
+    this.old_fileUploadedPath = this.data.categoryImagePath;
 
     this.editCategoryForm = this.formBuilder.group({
       name: this.data.name,
@@ -50,7 +67,10 @@ export class AdminEditCategoryComponent implements OnInit {
   async onSubmit(formData) {
     let category = new ICategory;
     const { name, kh_name, order, description, status } = formData;
-    const keywords = generateKeywords([ name ])
+    const keywords = generateKeywords([ name ]);
+
+    if(this.fileUploadedPath !== this.old_fileUploadedPath && this.old_fileUploadedPath) 
+      this.categoryStore.deleteFileFromFirebase(this.old_fileUploadedPath);
 
     category = {
       ...this.data,
@@ -70,6 +90,9 @@ export class AdminEditCategoryComponent implements OnInit {
         'text': 'Inactive'
       },
 
+      categoryImageUrl: this.fileUploadedURL,
+      categoryImagePath: this.fileUploadedPath,
+
       updatedAt: new Date(),
       updatedBy: this.userStore.User,
       
@@ -84,5 +107,33 @@ export class AdminEditCategoryComponent implements OnInit {
     this._snackBar.open(message, action, {
       duration: 2000,
     });
+  }
+
+  inputImageChanged(event) {
+    this.selectedImage = event.currentFiles[0];
+    this.uploadFilesToFirebase(event.currentFiles[0], 'category_thumbnail');
+  }
+
+  uploadFilesToFirebase(item: File, basePath: string) {
+    const filePath = `${basePath}/${Date.now()}_${item.name}`;
+    const storageRef = this.storage.ref(filePath);
+
+    this.task = this.storage.upload(filePath, item);
+    this.task.percentageChanges().subscribe((data) => {
+      this.percentage = data;
+    });
+
+    this.task.then((f) => {
+      f.ref.getDownloadURL().then((downloadURL) => {
+        this.fileUploadedURL = downloadURL;
+        this.fileUploadedPath = filePath;
+
+        console.log('Upload Image Successfully!');
+      });
+    });
+  }
+
+  formatPercentage(number) {
+    return parseFloat(number).toFixed(2);
   }
 }

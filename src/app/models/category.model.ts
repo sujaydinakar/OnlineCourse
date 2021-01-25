@@ -6,6 +6,9 @@ export class ICategory {
   keywords: any;
   description?: any;
 
+  categoryImagePath: any;
+  categoryImageUrl: any;
+
   createdAt?: Date;
   createdBy?:string;
   updatedAt?: Date;

@@ -33,6 +33,7 @@ import { AdminSubcategoryComponent } from './pages/admin/course-subcategory/admi
 import { AdminCourseTopicComponent } from './pages/admin/course-topic/admin-course-topic/admin-course-topic.component';
 import { AdminCourseLevelComponent } from './pages/admin/course-level/admin-course-level/admin-course-level.component';
 import { AdminCourseLanguageComponent } from './pages/admin/course-language/admin-course-language/admin-course-language.component';
+import { StudentLoginComponent } from './pages/auth/student-login/student-login.component';
 
 const redirectUnauthorizedAdminToLogin = () => redirectUnauthorizedTo(['/admin/login']);
 
@@ -69,6 +70,10 @@ const routes: Routes = [
   {
     path: 'admin/login',
     component: AdminLoginComponent
+  },
+  {
+    path: 'student/login',
+    component: StudentLoginComponent
   },
   {
     path: 'admin',
@@ -128,6 +133,8 @@ const routes: Routes = [
   {
     path: 'create_course/:courseId',
     component: InstructorCreatingCourseComponent,
+    canActivate: [AngularFireAuthGuard],
+    data: { authGuardPipe: redirectUnauthorizedAdminToLogin },
     children: [
       {
         path: '',

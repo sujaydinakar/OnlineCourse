@@ -4,46 +4,11 @@
   <div class="swiperContainer">
     <swiper [config]="config">
 
-      <div class="swiperContainer_block" [routerLink]="['/category/1']">
+      <div class="swiperContainer_block" *ngFor="let item of this.categoryStore.Categories" [routerLink]="['/category/' + item.key]">
         <div class="imageContainer">
-          <img src="./assets/images/biology.jpg">
+          <img src="{{ item.categoryImageUrl }}">
         </div>
-        <p>Biology</p>
-      </div>
-
-      <div class="swiperContainer_block" [routerLink]="['/category/1']">
-        <div class="imageContainer">
-          <img src="./assets/images/chemistry.jpg">
-        </div>
-        <p>Chemistry</p>
-      </div>
-
-      <div class="swiperContainer_block" [routerLink]="['/category/1']">
-        <div class="imageContainer">
-          <img src="./assets/images/khmer.jpg">
-        </div>
-        <p>Khmer Literature</p>
-      </div>
-
-      <div class="swiperContainer_block" [routerLink]="['/category/1']">
-        <div class="imageContainer">
-          <img src="./assets/images/math.jpg">
-        </div>
-        <p>Math</p>
-      </div>
-
-      <div class="swiperContainer_block" [routerLink]="['/category/1']">
-        <div class="imageContainer">
-          <img src="./assets/images/physic.jpg">
-        </div>
-        <p>Physic</p>
-      </div>
-
-      <div class="swiperContainer_block" [routerLink]="['/category/1']">
-        <div class="imageContainer">
-          <img src="./assets/images/history2.png">
-        </div>
-        <p>History</p>
+        <p>{{ item.name }}</p>
       </div>
 
     </swiper>

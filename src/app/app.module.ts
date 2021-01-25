@@ -5,6 +5,9 @@ import { SwiperModule } from 'ngx-swiper-wrapper';
 import { SWIPER_CONFIG } from 'ngx-swiper-wrapper';
 import { SwiperConfigInterface } from 'ngx-swiper-wrapper';
 
+import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
+import { GoogleLoginProvider, FacebookLoginProvider } from 'angularx-social-login';
+
 import { QuillModule } from 'ngx-quill';
 import { BarRatingModule } from "ngx-bar-rating";
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -18,6 +21,7 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { HttpClientModule } from '@angular/common/http';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { VimeModule } from '@vime/angular';
 
 import { environment } from 'src/environments/environment';
 import { ScrollableDirective } from './directives/scrollable.directive';
@@ -94,6 +98,8 @@ import { AdminEditCourseLevelComponent } from './pages/admin/course-level/admin-
 import { AdminCourseLanguageComponent } from './pages/admin/course-language/admin-course-language/admin-course-language.component';
 import { AdminAddCourseLanguageComponent } from './pages/admin/course-language/admin-add-course-language/admin-add-course-language.component';
 import { AdminEditCourseLanguageComponent } from './pages/admin/course-language/admin-edit-course-language/admin-edit-course-language.component';
+import { TrustedURLServicePipe } from './pipes/trusted-urlservice.pipe';
+import { CourseSectionBlockComponent } from './pages/instructor/creating-course/components/course-section-block/course-section-block.component';
 
 
 const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
@@ -104,7 +110,9 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
 @NgModule({
   declarations: [
     ScrollableDirective,
+    
     GetDocPipe,
+    TrustedURLServicePipe,
 
     AppComponent,
     MainComponent,
@@ -173,7 +181,9 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
 
     AdminCourseLanguageComponent,
     AdminAddCourseLanguageComponent,
-    AdminEditCourseLanguageComponent
+    AdminEditCourseLanguageComponent,
+
+    CourseSectionBlockComponent,
   ],
   imports: [
     BrowserModule,
@@ -198,12 +208,32 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     FileUploadModule, 
     HttpClientModule,
     TableModule,
-    NgxDatatableModule
+    NgxDatatableModule,
+    SocialLoginModule,
+    VimeModule
   ],
   providers: [
     {
       provide: SWIPER_CONFIG,
       useValue: DEFAULT_SWIPER_CONFIG
+    },
+    {
+      provide: 'SocialAuthServiceConfig',
+      useValue: {
+        autoLogin: false,
+        providers: [
+          {
+            id: GoogleLoginProvider.PROVIDER_ID,
+            provider: new GoogleLoginProvider(
+              'clientId'
+            )
+          },
+          {
+            id: FacebookLoginProvider.PROVIDER_ID,
+            provider: new FacebookLoginProvider('clientId')
+          }
+        ]
+      } as SocialAuthServiceConfig,
     }
   ],
   bootstrap: [AppComponent],

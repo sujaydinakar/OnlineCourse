@@ -20,6 +20,25 @@
         <input type="number" matInput placeholder="order" formControlName="order">
       </mat-form-field>
 
+      <ng-container>
+        <label style="margin-bottom: 20px; margin-top: 40px">Upload Image</label><br><br>
+
+        <img src="{{ this.data.categoryImageUrl }}" style="margin-bottom: 20px; width: 100%;">
+
+        <ng-container *ngIf="this.selectedImage">
+          <p>Filename: {{ this.selectedImage.name }}</p>
+        </ng-container>
+
+        <ng-container *ngIf="this.percentage">
+          <mat-progress-bar mode="determinate" [value]="this.percentage"></mat-progress-bar> 
+          <p [ngStyle]="{'margin-top': '10px', 'text-align': 'right'}">{{ this.formatPercentage(this.percentage) }}% Complete</p>
+        </ng-container>
+
+        <p-fileUpload #fubauto mode="basic" accept="image/*" maxFileSize="1000000000" 
+          (onSelect)="inputImageChanged($event)" [auto]="true" chooseLabel="Browse">
+        </p-fileUpload>
+      </ng-container><br>
+
       <label style="margin-bottom: 20px">Description</label><br/><br/>
       <quill-editor [styles]="{height: '200px'}" formControlName="description">
         {{ this.textDescription }}

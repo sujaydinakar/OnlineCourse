@@ -22,7 +22,19 @@ export class UserStore {
 
       this.afs.collection('users').doc(uid).valueChanges().subscribe((data: any) => {
         this.User = this.userMapping.mapUser(data);
-      })
+      });
+    })
+  }
+
+  @action
+  async getCurrentLoggedInUser_2(callback) {
+    this.auth.authState.subscribe((data) => {
+      const { email, uid } = data;
+
+      this.afs.collection('users').doc(uid).valueChanges().subscribe((data: any) => {
+        this.User = this.userMapping.mapUser(data);
+        callback(this.User)
+      });
     })
   }
 }

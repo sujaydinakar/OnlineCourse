@@ -16,250 +16,40 @@
 
     <button class="btnAddSection" (click)="this.set_isShowAddSectionDialog()">
       <i class="fas fa-plus"></i>
-      <p>Add New (Section, Lecture, Quiz, Exercise, Assignment)</p>
+      <p>Add New Section</p>
     </button>
 
-    <mat-tab-group [ngStyle]="{'display': !!this.isShowAddSectionDialog ? 'block' : 'none'}">
-      <mat-tab label="Section">
-        <div class="addSectionContainer">
-          <div class="inputsContainer">
-            <div class="leftSideContainer">
-              <p>New Section:</p>
-            </div>
-
-            <div class="rightSideContainer">
-              <input type="text" placeholder="Enter a Title" [(ngModel)]="sectionTitle">
-
-              <p>What will students be able to do at the end of this section?</p>
-              <input type="text" placeholder="Enter a learning objective" [(ngModel)]="sectionObjective">
-            </div>
-          </div>
-
-          <div class="groupActionButtons">
-            <button class="btnCancel" (click)="this.set_isShowAddSectionDialog()">Cancel</button>
-            <button class="btnAddSection2" (click)="btnAddSectionClicked()">Add Section</button>
-          </div>
-        </div>
-      </mat-tab>
-      <mat-tab label="Lecture">
-        <div class="addSectionContainer">
-          <div class="inputsContainer">
-            <div class="leftSideContainer">
-              <p>New Lecture:</p>
-            </div>
-
-            <div class="rightSideContainer">
-              <input type="text" placeholder="Enter a Lecture" [(ngModel)]="lectureTitle">
-
-              <p>Which section will contain this lecture?</p>
-              <select [(ngModel)]="lectureSection">
-                <option *ngFor="let item of this.arrSection; let i=index;" [value]="item.sectionTitle">
-                  Section {{ i + 1 }}: {{ item.sectionTitle }}
-                </option>
-              </select>
-            </div>
-          </div>
-
-          <div class="groupActionButtons">
-            <button class="btnCancel" (click)="this.set_isShowAddSectionDialog()">Cancel</button>
-            <button class="btnAddSection2" (click)="btnAddLectureClicked()">Add Lecture</button>
-          </div>
-        </div>
-      </mat-tab>
-      <mat-tab label="Quiz">
-        <div class="addSectionContainer">
-          <div class="inputsContainer">
-            <div class="leftSideContainer">
-              <p>New Quiz:</p>
-            </div>
-
-            <div class="rightSideContainer">
-              <input type="text" placeholder="Enter a Quiz Title" [(ngModel)]="quizTitle">
-
-              <p>Description</p>
-              <quill-editor [styles]="{height: '200px'}"></quill-editor>
-
-              <p>Which section will contain this quiz?</p>
-              <select [(ngModel)]="quizSection">
-                <option *ngFor="let item of this.arrSection; let i=index;" [value]="item.sectionTitle">
-                  Section {{ i + 1 }}: {{ item.sectionTitle }}
-                </option>
-              </select>
-            </div>
-          </div>
-
-          <div class="groupActionButtons">
-            <button class="btnCancel" (click)="this.set_isShowAddSectionDialog()">Cancel</button>
-            <button class="btnAddSection2" (click)="btnAddQuizClicked()">Add Quiz</button>
-          </div>
-        </div>
-      </mat-tab>
-      <mat-tab label="Exercise">
-        <div class="addSectionContainer">
-          <div class="inputsContainer">
-            <div class="leftSideContainer">
-              <p>New Exercise:</p>
-            </div>
-
-            <div class="rightSideContainer">
-              <input type="text" placeholder="Enter a Excise Title" [(ngModel)]="exerciseTitle">
-
-              <p>Which section will contain this exercise?</p>
-              <select [(ngModel)]="exerciseSection">
-                <option *ngFor="let item of this.arrSection; let i=index;" [value]="item.sectionTitle">
-                  Section {{ i + 1 }}: {{ item.sectionTitle }}
-                </option>
-              </select>
-            </div>
-          </div>
-
-          <div class="groupActionButtons">
-            <button class="btnCancel" (click)="this.set_isShowAddSectionDialog()">Cancel</button>
-            <button class="btnAddSection2" (click)="btnAddExerciseClicked()">Add Exercise</button>
-          </div>
-        </div>
-      </mat-tab>
-      <mat-tab label="Assignment">
-        <div class="addSectionContainer">
-          <div class="inputsContainer">
-            <div class="leftSideContainer">
-              <p>New Assignment:</p>
-            </div>
-
-            <div class="rightSideContainer">
-              <input type="text" placeholder="Enter a Assignment Title" [(ngModel)]="assignmentTitle">
-
-              <p>Which section will contain this assignment?</p>
-              <select [(ngModel)]="assignmentSection">
-                <option *ngFor="let item of this.arrSection; let i=index;" [value]="item.sectionTitle">
-                  Section {{ i + 1 }}: {{ item.sectionTitle }}
-                </option>
-              </select>
-            </div>
-          </div>
-
-          <div class="groupActionButtons">
-            <button class="btnCancel" (click)="this.set_isShowAddSectionDialog()">Cancel</button>
-            <button class="btnAddSection2" (click)="btnAddAssignmentClicked()">Add Assignment</button>
-          </div>
-        </div>
-      </mat-tab>
-    </mat-tab-group>
-
-    <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
-
-      <div class="sectionContainer" *ngFor="let item of this.arrSection; let i=index">
-        <div class="sectionHeader">
-          <div class="sectionHeader__leftSide">
-            <p><span style="font-weight: bold;">Section {{ i + 1 }}: </span>{{ item.sectionTitle }}</p>
-            <button class="btnOrderList"><i class="far fa-edit"></i></button>
-            <button class="btnOrderList" (click)="btnDeleteSectionClicked(i)"><i class="far fa-trash-alt"></i></button>
-          </div>
-          <div class="sectionHeader__rightSide">
-            <button class="btnOrderList"><i class="fas fa-bars"></i></button>
-          </div>
+    <div class="addSectionContainer" [ngStyle]="{'display': !!this.isShowAddSectionDialog ? 'block' : 'none'}">
+      <div class="inputsContainer">
+        <div class="leftSideContainer">
+          <p>New Section:</p>
         </div>
 
-        <div class="section_elementContainer" *ngFor="let jtem of this.arrSection[i].elements; let j=index;">
-          <div class="section_elementContainer__leftSide">
-            <p><span style="font-weight: bold;">{{ jtem.type }} {{ jtem.order }}: </span>{{ jtem.elementTitle }}</p>
-            <button class="btnOrderList"><i class="far fa-edit"></i></button>
-            <button class="btnOrderList"><i class="far fa-trash-alt" (click)="btnDeleteElementClicked(i, j)"></i></button>
-          </div>
-          <div class="section_elementContainer__rightSide">
-            <button class="btnOrderList"><i class="fas fa-bars"></i></button>
-          </div>
+        <div class="rightSideContainer">
+          <input type="text" placeholder="Enter a Title" [(ngModel)]="sectionTitle">
+
+          <p>What will students be able to do at the end of this section?</p>
+          <input type="text" placeholder="Enter a learning objective" [(ngModel)]="sectionObjective">
         </div>
-        
       </div>
 
-      <!-- <div class="sectionContainer">
-        <div class="sectionHeader">
-          <div class="sectionHeader__leftSide">
-            <p><span style="font-weight: bold;">Section 1: </span>Introduction</p>
-            <button class="btnOrderList"><i class="far fa-edit"></i></button>
-            <button class="btnOrderList"><i class="far fa-trash-alt"></i></button>
-          </div>
-          <div class="sectionHeader__rightSide">
-            <button class="btnOrderList"><i class="fas fa-bars"></i></button>
-          </div>
-        </div>
+      <div class="groupActionButtons">
+        <button class="btnCancel" (click)="this.set_isShowAddSectionDialog()">Cancel</button>
+        <button class="btnAddSection2" (click)="btnAddSectionClicked()">Add Section</button>
+      </div>
+    </div>
 
-        <div class="section_elementContainer">
-          <div class="section_elementContainer__leftSide">
-            <p><span style="font-weight: bold;">Lecture 1: </span>Introduction</p>
-            <button class="btnOrderList"><i class="far fa-edit"></i></button>
-            <button class="btnOrderList"><i class="far fa-trash-alt"></i></button>
-          </div>
-          <div class="section_elementContainer__rightSide">
-            <button class="btnOrderList"><i class="fas fa-bars"></i></button>
-          </div>
-        </div>
-        <div class="section_elementContainer">
-          <div class="section_elementContainer__leftSide">
-            <p><span style="font-weight: bold;">Quiz 1: </span>Introduction</p>
-            <button class="btnOrderList"><i class="far fa-edit"></i></button>
-            <button class="btnOrderList"><i class="far fa-trash-alt"></i></button>
-          </div>
-          <div class="section_elementContainer__rightSide">
-            <button class="btnOrderList"><i class="fas fa-bars"></i></button>
-          </div>
-        </div>
-        <div class="section_elementContainer">
-          <div class="section_elementContainer__leftSide">
-            <p><span style="font-weight: bold;">Lecture 2: </span>Introduction</p>
-            <button class="btnOrderList"><i class="far fa-edit"></i></button>
-            <button class="btnOrderList"><i class="far fa-trash-alt"></i></button>
-          </div>
-          <div class="section_elementContainer__rightSide">
-            <button class="btnOrderList"><i class="fas fa-bars"></i></button>
-          </div>
-        </div>
-      </div> -->
-
-      <!-- <div class="sectionContainer">
-        <div class="sectionHeader">
-          <div class="sectionHeader__leftSide">
-            <p><span style="font-weight: bold;">Section 2: </span>Introduction</p>
-            <button class="btnOrderList"><i class="far fa-edit"></i></button>
-            <button class="btnOrderList"><i class="far fa-trash-alt"></i></button>
-          </div>
-          <div class="sectionHeader__rightSide">
-            <button class="btnOrderList"><i class="fas fa-bars"></i></button>
-          </div>
-        </div>
-        <div class="section_elementContainer">
-          <div class="section_elementContainer__leftSide">
-            <p><span style="font-weight: bold;">Lecture 1: </span>Introduction</p>
-            <button class="btnOrderList"><i class="far fa-edit"></i></button>
-            <button class="btnOrderList"><i class="far fa-trash-alt"></i></button>
-          </div>
-          <div class="section_elementContainer__rightSide">
-            <button class="btnOrderList"><i class="fas fa-bars"></i></button>
-          </div>
-        </div>
-        <div class="section_elementContainer">
-          <div class="section_elementContainer__leftSide">
-            <p><span style="font-weight: bold;">Quiz 1: </span>Introduction</p>
-            <button class="btnOrderList"><i class="far fa-edit"></i></button>
-            <button class="btnOrderList"><i class="far fa-trash-alt"></i></button>
-          </div>
-          <div class="section_elementContainer__rightSide">
-            <button class="btnOrderList"><i class="fas fa-bars"></i></button>
-          </div>
-        </div>
-        <div class="section_elementContainer">
-          <div class="section_elementContainer__leftSide">
-            <p><span style="font-weight: bold;">Lecture 2: </span>Introduction</p>
-            <button class="btnOrderList"><i class="far fa-edit"></i></button>
-            <button class="btnOrderList"><i class="far fa-trash-alt"></i></button>
-          </div>
-          <div class="section_elementContainer__rightSide">
-            <button class="btnOrderList"><i class="fas fa-bars"></i></button>
-          </div>
-        </div>
-      </div> -->
-
+    <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
+      <div *ngFor="let item of this.arrSection; let i=index" cdkDrag>
+        <app-course-section-block 
+          [section_index]="i + 1" 
+          [section_title]="item.sectionTitle"  
+          [section_elements]="arrSection[i].elements"
+          (deleleSectionEvent)="this.btnDeleteSectionClicked($event)"
+          (deleteElementEvent)="this.btnDeleteElementClicked($event)"
+          (addElementEvent)="this.btnAddElementClicked($event)"
+        ></app-course-section-block>
+      </div>
     </div>
   </div>
 </div>

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CourseStore } from 'src/app/stores/course.store';
+import { UserStore } from 'src/app/stores/user.store';
 
 @Component({
   selector: 'app-instructor-home',
@@ -9,11 +10,13 @@ import { CourseStore } from 'src/app/stores/course.store';
 export class InstructorHomeComponent implements OnInit {
 
   constructor(
+    public userStore: UserStore,
     public courseStore: CourseStore,
   ) { }
 
-  ngOnInit(): void {
-    this.courseStore.getCourses();
+  async ngOnInit(): Promise<void> {
+    await this.userStore.getCurrentLoggedInUser_2((data) => {
+      this.courseStore.getCourses();
+    });
   }
-
 }

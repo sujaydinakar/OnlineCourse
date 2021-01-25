@@ -1,7 +1,12 @@
-import { ChangeDetectionStrategy, Component, OnInit, SimpleChanges } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, SimpleChanges, ViewChildren } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { AngularFireStorage, AngularFireUploadTask } from '@angular/fire/storage';
+import { Observable } from 'rxjs';
+import { map,switchMap } from 'rxjs/operators';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { HttpEventType, HttpResponse } from '@angular/common/http';
+import * as Player from "@vimeo/player/dist/player.js";
 
 import { generateKeywords } from 'src/app/services/generator/generate-keywords.service';
 
@@ -11,8 +16,7 @@ import { CourseLanguageStore } from 'src/app/stores/language.store';
 import { CourseLevelStore } from 'src/app/stores/level.store';
 import { SubCategoryStore } from 'src/app/stores/subcategory.store';
 import { UserStore } from 'src/app/stores/user.store';
-import { Observable } from 'rxjs';
-import { AngularFirestore } from '@angular/fire/firestore';
+import { UploadingVideoService } from 'src/app/services/uploading_video/uploading-video.service';
 
 @Component({
   selector: 'app-course-landing-pages',
@@ -20,6 +24,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
   styleUrls: ['./course-landing-pages.component.scss'],
 })
 export class CourseLandingPagesComponent implements OnInit {
+
   selectedImage: File;
   selectedVideo: File;
 
@@ -48,6 +53,8 @@ export class CourseLandingPagesComponent implements OnInit {
     public categoryStore: CategoryStore,
     public languageStore: CourseLanguageStore,
     public subcategoryStore: SubCategoryStore,
+
+    public uploadingVideoService: UploadingVideoService
   ) { 
     this.courseLandingPageForm = this.formBuilder.group({
       title: '',
@@ -83,6 +90,8 @@ export class CourseLandingPagesComponent implements OnInit {
               subcategory: data.subcategory || '-- Select Subcategory --',
               primaryTaught: data.primaryTaught
             });
+
+            this.vimeo_uploadedVideoUrl = data.promotionVideoUrl;
           });
         } else {
           this.courseLandingPageForm.patchValue({
@@ -95,6 +104,8 @@ export class CourseLandingPagesComponent implements OnInit {
             subcategory: this.courseStore.TempCourse.subcategory || '-- Select Subcategory --',
             primaryTaught: this.courseStore.TempCourse.primaryTaught
           });
+
+          this.vimeo_uploadedVideoUrl = this.courseStore.TempCourse.promotionVideoUrl;
         }
       }
     });
@@ -114,10 +125,22 @@ export class CourseLandingPagesComponent implements OnInit {
         updatedBy: this.userStore.User,
       }
     });
+
+    this.uploadingVideoService.vimeoLinkObs.subscribe(
+      data => {
+        this.vimeo_uploadedVideoUrl = data;
+      }, error => {
+        throw new Error(error);
+      }
+    );
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     console.log('changes',this.courseStore.TempCourse);
+  }
+
+  ngAfterViewInit() {
+
   }
 
   selectParentCategoryChanged(event) {
@@ -154,7 +177,11 @@ export class CourseLandingPagesComponent implements OnInit {
 
   courseVideoChanged(event) {
     this.selectedVideo = event.currentFiles[0];
-    this.uploadVideosToFirebase(event.currentFiles[0], 'course_promotion_video');
+
+    // this.uploadVideosToFirebase(event.currentFiles[0], 'course_promotion_video');
+
+    this.vimeo_uploadedVideoName = this.selectedVideo.name;
+    this.uploadVimeoVideo(this.selectedVideo);
   }
 
   uploadFilesToFirebase(item: File, basePath: string) {
@@ -207,20 +234,95 @@ export class CourseLandingPagesComponent implements OnInit {
     return parseFloat(number).toFixed(2);
   }
 
-  // deleteFile(fileUpload: File): void {
-  //   this.deleteFileDatabase(fileUpload.key)
-  //     .then(() => {
-  //       this.deleteFileStorage(fileUpload.name);
-  //     })
-  //     .catch(error => console.log(error));
-  // }
+  // ------------------------------------------------------------------------------------------------------------
+
+  private data: any;
+
+  vimeo_uploadedVideoUrl;
+  vimeo_uploadedVideoPct;
+  vimeo_uploadedVideoName;
+  vimeo_uploadedVideoStatus = "Loading...";
+
+  // Track upload status by tracking code
+  // 0 - Not started
+  // 1 - File chosen
+  // 2 - Wrong file type
+  // 3 - Uploading
+  // 4 - Upload error
+  // 5 - Upload complete
   
-  // private deleteFileDatabase(key: string): void {
-  //   return this.db.list(this.basePath).remove(key);
-  // }
-  
-  // private deleteFileStorage(name: string): void {
-  //   const storageRef = this.storage.ref(this.basePath);
-  //   storageRef.child(name).delete();
-  // }
+  public uploadStatus: Number = 0;
+
+  uploadVimeoVideo(fileForUpload: File): void {
+    this.uploadStatus = 1;
+
+    if (fileForUpload === undefined) {
+      console.log('No file selected!');
+      return;
+    }
+
+    const isAccepted = this.checkAllowedType(fileForUpload.type);
+
+    if (isAccepted) {
+      this.uploadStatus = 1;
+
+      const options = {
+        token: '2f72e3f8d1269d8f11c1387e272ef3d5',
+        url: 'https://api.vimeo.com/me/videos',
+        videoName: this.vimeo_uploadedVideoName,
+        videoDescription: this.vimeo_uploadedVideoName + '\'s description'
+      };
+
+      this.uploadingVideoService.createVimeo(options, fileForUpload.size)
+        .pipe(
+          map(data => this.data = data),
+          switchMap(
+            () => {
+              this.uploadingVideoService.updateVimeoLink(this.data.link);
+              if (this.data.upload.size === fileForUpload.size) {
+                return this.uploadingVideoService.vimeoUpload(this.data.upload.upload_link, fileForUpload);
+              } else {
+                this.uploadStatus = 4;
+              }
+            }
+          )
+        ).subscribe(
+          event => {
+            if (event.type === HttpEventType.UploadProgress) {
+              this.vimeo_uploadedVideoPct = Math.round(100 * event.loaded / event.total);
+              this.uploadStatus = 3;
+            } else if (event instanceof HttpResponse) {
+              this.uploadStatus = 5;
+              setTimeout(() => {
+                this.uploadStatus = 0;
+              }, 5000);
+            }
+          },
+          (error) => {
+            console.log('Upload Error:', error);
+            this.uploadStatus = 4;
+          }, () => {
+            this.courseStore.TempCourse.promotionVideoUrl = this.vimeo_uploadedVideoUrl;
+            this.vimeo_uploadedVideoStatus = 'Uploaded sucessfully!';
+          }
+        );
+    } else {
+      this.uploadStatus = 2;
+    }
+  }
+
+  allowUpload(): void {
+    this.uploadStatus = 0;
+  }
+
+  checkAllowedType(filetype: string): boolean {
+    const allowed = ['mov', 'wmv', 'avi', 'flv', 'mp4'];
+    const videoType = filetype.split('/').pop();
+    return allowed.includes(videoType);
+  }
+
+  replaceVimeoURL(oldURL: string) {
+    const result = oldURL.replace('https://vimeo.com/', 'https://player.vimeo.com/video/');
+    return result;
+  }
 }

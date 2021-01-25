@@ -112,10 +112,13 @@
     <div class="courseImageContiner">
       <div class="leftSideContainer">
         <ng-container *ngIf="this.courseStore.TempCourse.promotionVideoUrl">
-          <video width="320" height="240" controls>
-            <source src="{{ this.courseStore.TempCourse.promotionVideoUrl }}" type="video/mp4">
-          Your browser does not support the video tag.
-          </video>
+          <!-- <vm-player theme="light" style="--vm-player-theme: #227ed5;">
+            <vm-vimeo video-id="503346622" ></vm-vimeo>
+            <vm-default-ui></vm-default-ui>
+          </vm-player> -->
+
+          <iframe [src]="this.replaceVimeoURL(this.courseStore.TempCourse.promotionVideoUrl) | safe:'resourceUrl'" width="100%" height="300px" frameborder="0" 
+          title="hello world" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
         </ng-container>
         
         <ng-container *ngIf="!this.courseStore.TempCourse.promotionVideoUrl">
@@ -132,9 +135,12 @@
           <p>Filename: {{ this.selectedVideo.name }}</p>
         </ng-container>
 
-        <ng-container *ngIf="this.percentage_ForVideo">
-          <mat-progress-bar mode="determinate" [value]="this.percentage_ForVideo"></mat-progress-bar> 
-          <p [ngStyle]="{'margin-top': '10px', 'text-align': 'right'}">{{ this.formatPercentage(this.percentage_ForVideo) }}% Complete</p>
+        <ng-container *ngIf="this.vimeo_uploadedVideoPct">
+          <mat-progress-bar mode="determinate" [value]="this.vimeo_uploadedVideoPct"></mat-progress-bar> 
+          <div [ngStyle]="{'display': 'flex', 'justify-content': 'space-between', 'margin-top': '10px'}">
+            <p>{{ vimeo_uploadedVideoStatus }}</p>
+            <p>{{ this.formatPercentage(this.vimeo_uploadedVideoPct) }}% Complete</p>
+          </div>
           <br/>
         </ng-container>
 

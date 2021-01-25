@@ -6,11 +6,14 @@ import { CategoryMappingService } from "../services/mapping/category-mapping.ser
 import { LevelMappingService } from "../services/mapping/level-mapping.service";
 import { LanguageMappingService } from "../services/mapping/language-mapping.service";
 import { UserStore } from "./user.store";
+import { AngularFireStorage } from "@angular/fire/storage";
+import { pushToArray } from "../services/mapping/user-mapping.service";
 
 @Injectable({providedIn:'root'})
 export class CourseStore {
   @observable public Courses: Array<ICourse>;
   @observable public Course: ICourse;
+  @observable public CourseSections: any;
 
   @observable public TempCourse: ICourse;
 
@@ -18,6 +21,7 @@ export class CourseStore {
 
   constructor(
     private afs: AngularFirestore,
+    private storage: AngularFireStorage,
 
     private userStore: UserStore, 
 
@@ -121,5 +125,45 @@ export class CourseStore {
       this.addCourse(this.TempCourse);
     else 
       this.updatedCourse(this.TempCourse);
+  }
+
+  @action
+  deleteFileFromFirebase(imagePath) {
+    this.storage.ref(imagePath).delete();
+  }
+
+  @action 
+  getCourseSections(courseKey: string) {
+    this.afs.collection('courses').doc(courseKey).collection('sections').valueChanges().subscribe((data: any) => {
+      this.CourseSections = data;
+    });
+  }
+
+  @action 
+  async getCourseSections_2(courseKey: string) {
+    const data = pushToArray(await this.afs.collection('courses').doc(courseKey).collection('sections').get().toPromise())
+    return data;
+  }
+
+  @action 
+  addCourseSection(sectionData: any, courseKey: string) {
+    const key = this.afs.createId();
+
+    this.afs.collection('courses').doc(courseKey).collection('sections').doc(key).set({
+      ...sectionData,
+
+      key,
+
+      status: {
+        key: '1',
+        text: 'Published'
+      },
+      isDelete: false,
+
+      createdAt: new Date(),
+      createdBy: this.userStore.User,
+      updatedAt: new Date(),
+      updatedBy: this.userStore.User,
+    });
   }
 }

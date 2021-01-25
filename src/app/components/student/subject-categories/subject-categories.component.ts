@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CategoryStore } from 'src/app/stores/category.store';
 import { SwiperOptions } from 'swiper';
 
 @Component({
@@ -8,9 +9,12 @@ import { SwiperOptions } from 'swiper';
 })
 export class SubjectCategoriesComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    public categoryStore: CategoryStore,
+  ) { }
 
   ngOnInit(): void {
+    this.categoryStore.getCategories();
   }
 
   public config: SwiperOptions = {
@@ -24,4 +28,6 @@ export class SubjectCategoriesComponent implements OnInit {
     pagination: false,
     spaceBetween: 20
   };
+
+  
 }

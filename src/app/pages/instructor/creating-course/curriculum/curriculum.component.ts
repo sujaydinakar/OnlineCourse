@@ -1,5 +1,7 @@
-import { CdkDragDrop } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Params } from '@angular/router';
+import { CourseStore } from 'src/app/stores/course.store';
 
 @Component({
   selector: 'app-curriculum',
@@ -8,34 +10,33 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CurriculumComponent implements OnInit {
 
+  courseKey;
   arrSection: Array<any> = [];
   isShowAddSectionDialog = false;
 
-  sectionTitle: '';
-  sectionObjective: '';
-
-  lectureTitle: '';
-  lectureSection: '';
-  quizTitle: '';
-  quizSection: '';
-  exerciseTitle: '';
-  exerciseSection: '';
-  assignmentTitle: '';
-  assignmentSection: '';
+  sectionTitle = '';
+  sectionObjective = '';
 
   constructor(
-    
+    private courseStore: CourseStore,
+    private activatedRoute: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
+    this.activatedRoute.parent.params.subscribe((params: Params) => {
+      this.courseKey = params.courseId;
+
+      this.courseStore.getCourseSections_2(this.courseKey).then((data) => {
+        this.arrSection = data;
+      });
+    });
   }
 
   set_isShowAddSectionDialog() {
-    this.isShowAddSectionDialog = !this.isShowAddSectionDialog;
-  }
+    this.sectionTitle = '';
+    this.sectionObjective = '';
 
-  drop(event: CdkDragDrop<string[]>) {
-    // moveItemInArray(this.movies, event.previousIndex, event.currentIndex);
+    this.isShowAddSectionDialog = !this.isShowAddSectionDialog;
   }
 
   btnAddSectionClicked() {
@@ -46,134 +47,38 @@ export class CurriculumComponent implements OnInit {
       sectionTitle,
       sectionObjective,
       elements: []
-    })
-  }
-
-  btnAddLectureClicked() {
-    let sectionIndex;
-    let section;
-
-    let elementTitle = this.lectureTitle;
-    let elementSection = this.lectureSection;
-
-    this.arrSection.forEach((item, index) => {
-      if(item.sectionTitle === elementSection) {
-        sectionIndex = index;
-        section = item;
-      }
     });
 
-    if(sectionIndex !== undefined) {
-      let count = 1;
+    this.sectionTitle = '';
+    this.sectionObjective = '';
 
-      this.arrSection[sectionIndex].elements.forEach((item) => {
-        if(item.type === 'Lecture')
-          count++;
-      });
-
-      this.arrSection[sectionIndex].elements.push({
-        type: 'Lecture',
-        order: count,
-        elementTitle
-      });
-    }
-  }
-
-  btnAddQuizClicked() {
-    let sectionIndex;
-    let section;
-
-    let elementTitle = this.quizTitle;
-    let elementSection = this.quizSection;
-
-    this.arrSection.forEach((item, index) => {
-      if(item.sectionTitle === elementSection) {
-        sectionIndex = index;
-        section = item;
-      }
-    });
-
-    if(sectionIndex !== undefined) {
-      let count = 1;
-
-      this.arrSection[sectionIndex].elements.forEach((item) => {
-        if(item.type === 'Quiz')
-          count++;
-      });
-
-      this.arrSection[sectionIndex].elements.push({
-        type: 'Quiz',
-        order: count,
-        elementTitle
-      });
-    }
-  }
-
-  btnAddExerciseClicked() {
-    let sectionIndex;
-    let section;
-
-    let elementTitle = this.exerciseTitle;
-    let elementSection = this.exerciseSection;
-
-    this.arrSection.forEach((item, index) => {
-      if(item.sectionTitle === elementSection) {
-        sectionIndex = index;
-        section = item;
-      }
-    });
-
-    if(sectionIndex !== undefined) {
-      let count = 1;
-
-      this.arrSection[sectionIndex].elements.forEach((item) => {
-        if(item.type === 'Exercise')
-          count++;
-      });
-
-      this.arrSection[sectionIndex].elements.push({
-        type: 'Exercise',
-        order: count,
-        elementTitle
-      });
-    }
-  }
-
-  btnAddAssignmentClicked() {
-    let sectionIndex;
-    let section;
-
-    let elementTitle = this.assignmentTitle;
-    let elementSection = this.assignmentSection;
-
-    this.arrSection.forEach((item, index) => {
-      if(item.sectionTitle === elementSection) {
-        sectionIndex = index;
-        section = item;
-      }
-    });
-
-    if(sectionIndex !== undefined) {
-      let count = 1;
-
-      this.arrSection[sectionIndex].elements.forEach((item) => {
-        if(item.type === 'Assignment')
-          count++;
-      });
-
-      this.arrSection[sectionIndex].elements.push({
-        type: 'Assignment',
-        order: count,
-        elementTitle
-      });
-    }
+    this.courseStore.addCourseSection({
+      sectionTitle,
+      sectionObjective,
+    }, this.courseKey);
   }
 
   btnDeleteSectionClicked(index) {
-    this.arrSection.splice(index, 1);
+    this.arrSection.splice(index - 1, 1);
   }
 
-  btnDeleteElementClicked(index, jndex) {
-    this.arrSection[index].elements.splice(jndex, 1);
+  btnAddElementClicked(data) {
+    let { section_index, type, order, elementTitle } = data;
+
+    this.arrSection[section_index - 1].elements.push({
+      type, 
+      order, 
+      elementTitle
+    });
   }
+
+  btnDeleteElementClicked(data) {
+    let { section_index, element_index } = data;
+    this.arrSection[section_index - 1].elements.splice(element_index, 1);
+  }
+
+  drop(event: CdkDragDrop<string[]>) {
+    moveItemInArray(this.arrSection, event.previousIndex, event.currentIndex);
+  }
+
 }

@@ -26,3 +26,8 @@ export function pushToObject(doc: firebase.firestore.DocumentSnapshot) {
   if (!doc.exists) return null;
   return { ...doc.data(), key: doc.id }
 }
+
+export function pushToArray(snapshot: firebase.firestore.QuerySnapshot): any {
+  if (snapshot.empty) return [];
+  return snapshot.docs.map(m => ({ ...m.data() }));
+}

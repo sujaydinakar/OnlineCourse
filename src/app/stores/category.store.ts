@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import { AngularFirestore } from '@angular/fire/firestore';
 import { ICategory } from "../models/category.model";
 import { GenerateKeywordsService } from "../services/generator/generate-keywords.service";
+import { AngularFireStorage } from "@angular/fire/storage";
 
 @Injectable({providedIn:'root'})
 export class CategoryStore {
@@ -18,6 +19,7 @@ export class CategoryStore {
 
   constructor(
     private afs: AngularFirestore,
+    private storage: AngularFireStorage
   ) {}
 
   @action
@@ -50,6 +52,11 @@ export class CategoryStore {
       ...category,
       isDelete: true
     });
+  }
+
+  @action
+  deleteFileFromFirebase(imagePath) {
+    this.storage.ref(imagePath).delete();
   }
 
   @action

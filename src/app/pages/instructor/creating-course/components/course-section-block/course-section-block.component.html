@@ -1,0 +1,108 @@
+<div class="sectionContainer" >
+    <div class="sectionHeader">
+      <div class="sectionHeader__leftSide">
+        <p><span style="font-weight: bold;">Section {{ section_index }}: </span>{{ section_title }}</p>
+        <button class="btnOrderList"><i class="far fa-edit"></i></button>
+        <button class="btnOrderList" (click)="btnDeleteSectionClicked(section_index)"><i class="far fa-trash-alt"></i></button>
+      </div>
+      <div class="sectionHeader__rightSide">
+        <button class="btnOrderList"><i class="fas fa-bars"></i></button>
+      </div>
+    </div>
+
+    <div class="section_elementContainer" *ngFor="let jtem of this.section_elements; let j=index;">
+      <div class="section_elementContainer__leftSide">
+        <p><span style="font-weight: bold;">{{ jtem.type }} {{ jtem.order }}: </span>{{ jtem.elementTitle }}</p>
+        <button class="btnOrderList"><i class="far fa-edit"></i></button>
+        <button class="btnOrderList"><i class="far fa-trash-alt" (click)="btnDeleteElementClicked(section_index, j)"></i></button>
+      </div>
+      <div class="section_elementContainer__rightSide">
+        <button class="btnOrderList"><i class="fas fa-bars"></i></button>
+      </div>
+    </div>
+
+    <div>
+      <mat-tab-group>
+
+        <mat-tab label="Lecture">
+          <div class="addSectionContainer">
+            <div class="inputsContainer">
+              <div class="leftSideContainer">
+                <p>New Lecture:</p>
+              </div>
+  
+              <div class="rightSideContainer">
+                <input type="text" placeholder="Enter a Lecture" [(ngModel)]="lectureTitle">
+              </div>
+            </div>
+  
+            <div class="groupActionButtons">
+              <button class="btnCancel" (click)="this.btnCancelLectureClicked()">Cancel</button>
+              <button class="btnAddSection2" (click)="btnAddLectureClicked()">Add Lecture</button>
+            </div>
+          </div>
+        </mat-tab>
+
+        <mat-tab label="Quiz">
+          <div class="addSectionContainer">
+            <div class="inputsContainer">
+              <div class="leftSideContainer">
+                <p>New Quiz:</p>
+              </div>
+  
+              <div class="rightSideContainer">
+                <input type="text" placeholder="Enter a Quiz Title" [(ngModel)]="quizTitle">
+  
+                <p>Description</p>
+                <quill-editor [styles]="{height: '200px'}" [(ngModel)]="quizDescription"></quill-editor>
+              </div>
+            </div>
+  
+            <div class="groupActionButtons">
+              <button class="btnCancel" (click)="this.btnCancelQuizClicked()">Cancel</button>
+              <button class="btnAddSection2" (click)="btnAddQuizClicked()">Add Quiz</button>
+            </div>
+          </div>
+        </mat-tab>
+
+        <mat-tab label="Exercise">
+          <div class="addSectionContainer">
+            <div class="inputsContainer">
+              <div class="leftSideContainer">
+                <p>New Exercise:</p>
+              </div>
+  
+              <div class="rightSideContainer">
+                <input type="text" placeholder="Enter a Excise Title" [(ngModel)]="exerciseTitle">
+              </div>
+            </div>
+  
+            <div class="groupActionButtons">
+              <button class="btnCancel" (click)="this.btnCancelExerciseClicked()">Cancel</button>
+              <button class="btnAddSection2" (click)="btnAddExerciseClicked()">Add Exercise</button>
+            </div>
+          </div>
+        </mat-tab>
+
+        <mat-tab label="Assignment">
+          <div class="addSectionContainer">
+            <div class="inputsContainer">
+              <div class="leftSideContainer">
+                <p>New Assignment:</p>
+              </div>
+  
+              <div class="rightSideContainer">
+                <input type="text" placeholder="Enter a Assignment Title" [(ngModel)]="assignmentTitle">
+              </div>
+            </div>
+  
+            <div class="groupActionButtons">
+              <button class="btnCancel" (click)="this.btnCancelAssignmentClicked()">Cancel</button>
+              <button class="btnAddSection2" (click)="btnAddAssignmentClicked()">Add Assignment</button>
+            </div>
+          </div>
+        </mat-tab>
+
+      </mat-tab-group>
+    </div>
+</div>

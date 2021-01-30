@@ -1,27 +1,26 @@
-<div class="sectionContainer" >
+<div class="sectionContainer">
     <div class="sectionHeader">
       <div class="sectionHeader__leftSide">
         <p><span style="font-weight: bold;">Section {{ section_index }}: </span>{{ section_title }}</p>
         <button class="btnOrderList"><i class="far fa-edit"></i></button>
         <button class="btnOrderList" (click)="btnDeleteSectionClicked(section_index)"><i class="far fa-trash-alt"></i></button>
       </div>
-      <div class="sectionHeader__rightSide">
-        <button class="btnOrderList"><i class="fas fa-bars"></i></button>
+    </div>
+
+    <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
+      <div *ngFor="let jtem of this.section_elements; let j=index;" class="elementBlockContainer" cdkDrag>
+        
+        <button class="btnOrderList" cdkDragHandle><i class="fas fa-bars"></i></button>
+
+        <app-course-element-block [elementData]="jtem" 
+          [section_index]="section_index" 
+          [element_index]="j" 
+          (deleleElementEvent)="this.btnDeleteElementClicked($event)">
+        </app-course-element-block>
       </div>
     </div>
 
-    <div class="section_elementContainer" *ngFor="let jtem of this.section_elements; let j=index;">
-      <div class="section_elementContainer__leftSide">
-        <p><span style="font-weight: bold;">{{ jtem.type }} {{ jtem.order }}: </span>{{ jtem.elementTitle }}</p>
-        <button class="btnOrderList"><i class="far fa-edit"></i></button>
-        <button class="btnOrderList"><i class="far fa-trash-alt" (click)="btnDeleteElementClicked(section_index, j)"></i></button>
-      </div>
-      <div class="section_elementContainer__rightSide">
-        <button class="btnOrderList"><i class="fas fa-bars"></i></button>
-      </div>
-    </div>
-
-    <div>
+    <div [ngStyle]="{'margin-top': '20px'}">
       <mat-tab-group>
 
         <mat-tab label="Lecture">
@@ -33,6 +32,9 @@
   
               <div class="rightSideContainer">
                 <input type="text" placeholder="Enter a Lecture" [(ngModel)]="lectureTitle">
+
+                <p>Description</p>
+                <quill-editor [styles]="{height: '200px'}" [(ngModel)]="lectureDescription"></quill-editor>
               </div>
             </div>
   
@@ -74,6 +76,9 @@
   
               <div class="rightSideContainer">
                 <input type="text" placeholder="Enter a Excise Title" [(ngModel)]="exerciseTitle">
+
+                <p>Description</p>
+                <quill-editor [styles]="{height: '200px'}" [(ngModel)]="exerciseDescription"></quill-editor>
               </div>
             </div>
   
@@ -93,6 +98,9 @@
   
               <div class="rightSideContainer">
                 <input type="text" placeholder="Enter a Assignment Title" [(ngModel)]="assignmentTitle">
+
+                <p>Description</p>
+                <quill-editor [styles]="{height: '200px'}" [(ngModel)]="assignmentDescription"></quill-editor>
               </div>
             </div>
   

@@ -40,7 +40,10 @@
     </div>
 
     <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
-      <div *ngFor="let item of this.arrSection; let i=index" cdkDrag>
+      <div *ngFor="let item of this.arrSection; let i=index" class="sectionBlockContainer" cdkDrag>
+
+        <button class="btnOrderList" cdkDragHandle><i class="fas fa-bars"></i></button>
+        
         <app-course-section-block 
           [section_index]="i + 1" 
           [section_title]="item.sectionTitle"  

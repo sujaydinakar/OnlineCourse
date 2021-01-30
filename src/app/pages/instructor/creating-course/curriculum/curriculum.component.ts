@@ -28,6 +28,9 @@ export class CurriculumComponent implements OnInit {
 
       this.courseStore.getCourseSections_2(this.courseKey).then((data) => {
         this.arrSection = data;
+        this.courseStore.TempCourseSections = this.arrSection;
+
+        this.courseStore.getCourseElementsAndAddToEachSection(this.courseKey);
       });
     });
   }
@@ -46,39 +49,51 @@ export class CurriculumComponent implements OnInit {
     this.arrSection.push({
       sectionTitle,
       sectionObjective,
+      order: this.arrSection.length + 1,
       elements: []
     });
 
+    this.courseStore.TempCourseSections = this.arrSection;
+
     this.sectionTitle = '';
     this.sectionObjective = '';
-
-    this.courseStore.addCourseSection({
-      sectionTitle,
-      sectionObjective,
-    }, this.courseKey);
   }
 
   btnDeleteSectionClicked(index) {
     this.arrSection.splice(index - 1, 1);
+    this.courseStore.TempCourseSections = this.arrSection;
   }
 
   btnAddElementClicked(data) {
-    let { section_index, type, order, elementTitle } = data;
+    let { section_index, type, no, order, elementTitle, elementDescription } = data;
 
     this.arrSection[section_index - 1].elements.push({
       type, 
-      order, 
-      elementTitle
+      no, 
+      order,
+      elementTitle,
+      elementDescription,
     });
+
+    this.courseStore.TempCourseSections = this.arrSection;
   }
 
   btnDeleteElementClicked(data) {
     let { section_index, element_index } = data;
     this.arrSection[section_index - 1].elements.splice(element_index, 1);
+
+    this.courseStore.TempCourseSections = this.arrSection;
   }
 
   drop(event: CdkDragDrop<string[]>) {
-    moveItemInArray(this.arrSection, event.previousIndex, event.currentIndex);
-  }
+    if(event.previousIndex !== event.currentIndex) {
+      moveItemInArray(this.arrSection, event.previousIndex, event.currentIndex);
+    
+      this.arrSection.map((item, index) => {
+        item.order = index + 1
+      });
 
+      this.courseStore.TempCourseSections = this.arrSection;
+    }
+  }
 }

@@ -1,4 +1,9 @@
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { isNgTemplate } from '@angular/compiler';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { UUID } from 'angular2-uuid';
+import { CourseStore } from 'src/app/stores/course.store';
 
 @Component({
   selector: 'app-course-section-block',
@@ -27,14 +32,25 @@ export class CourseSectionBlockComponent implements OnInit {
   }
 
   lectureTitle = '';
+  lectureDescription = '';
+
   quizTitle = '';
   quizDescription = '';
+
   exerciseTitle = '';
+  exerciseDescription = '';
+
   assignmentTitle = '';
+  assignmentDescription = '';
 
-  constructor() { }
+  constructor(
+    private afs: AngularFirestore,
+    private courseStore: CourseStore,
+  ) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void { 
+
+  }
 
   btnAddLectureClicked() {
     if(this.section_index !== undefined) {
@@ -49,9 +65,11 @@ export class CourseSectionBlockComponent implements OnInit {
 
       this.addElementEvent.emit({
         type: 'Lecture',
-        order: count,
+        no: count,
+        order: this.section_elements.length + 1,
         elementTitle: this.lectureTitle,
-        section_index: this.section_index
+        elementDescription: this.lectureDescription,
+        section_index: this.section_index,
       });
 
       this.btnCancelLectureClicked();
@@ -71,9 +89,11 @@ export class CourseSectionBlockComponent implements OnInit {
 
       this.addElementEvent.emit({
         type: 'Quiz',
-        order: count,
+        no: count,
+        order: this.section_elements.length + 1,
         elementTitle: this.quizTitle,
-        section_index: this.section_index
+        elementDescription: this.quizDescription,
+        section_index: this.section_index,
       });
 
       this.btnCancelQuizClicked();
@@ -93,9 +113,11 @@ export class CourseSectionBlockComponent implements OnInit {
 
       this.addElementEvent.emit({
         type: 'Exercise',
-        order: count,
+        no: count,
+        order: this.section_elements.length + 1,
         elementTitle: this.exerciseTitle,
-        section_index: this.section_index
+        elementDescription: this.exerciseDescription,
+        section_index: this.section_index,
       });
 
       this.btnCancelExerciseClicked();
@@ -115,9 +137,11 @@ export class CourseSectionBlockComponent implements OnInit {
 
       this.addElementEvent.emit({
         type: 'Assignment',
-        order: count,
+        no: count,
+        order: this.section_elements.length + 1,
         elementTitle: this.assignmentTitle,
-        section_index: this.section_index
+        elementDescription: this.assignmentDescription,
+        section_index: this.section_index,
       });
 
       this.btnCancelAssignmentClicked();
@@ -139,5 +163,21 @@ export class CourseSectionBlockComponent implements OnInit {
 
   btnCancelAssignmentClicked() {
     this.assignmentTitle = '';
+  }
+
+  drop(event: CdkDragDrop<string[]>) {
+    if(event.previousIndex !== event.currentIndex) {
+      moveItemInArray(this.section_elements, event.previousIndex, event.currentIndex);
+    
+      this.section_elements.map((item, index) => {
+        item.order = index + 1
+      });
+
+      this.courseStore.TempCourseSections[this.section_index].elements = this.section_elements;
+    };
+  }
+
+  generateUUID(){
+    return UUID.UUID();
   }
 }

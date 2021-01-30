@@ -38,6 +38,7 @@
     "@vime/angular": "^5.0.27",
     "@vimeo/player": "^2.15.0",
     "angular-quill": "^0.3.0",
+    "angular2-uuid": "^1.1.1",
     "angularx-social-login": "^3.5.4",
     "firebase": "^7.0 || ^8.0",
     "lodash": "^4.17.20",

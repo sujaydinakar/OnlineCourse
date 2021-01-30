@@ -100,6 +100,7 @@ import { AdminAddCourseLanguageComponent } from './pages/admin/course-language/a
 import { AdminEditCourseLanguageComponent } from './pages/admin/course-language/admin-edit-course-language/admin-edit-course-language.component';
 import { TrustedURLServicePipe } from './pipes/trusted-urlservice.pipe';
 import { CourseSectionBlockComponent } from './pages/instructor/creating-course/components/course-section-block/course-section-block.component';
+import { CourseElementBlockComponent } from './pages/instructor/creating-course/components/course-element-block/course-element-block.component';
 
 
 const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
@@ -184,6 +185,7 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     AdminEditCourseLanguageComponent,
 
     CourseSectionBlockComponent,
+    CourseElementBlockComponent,
   ],
   imports: [
     BrowserModule,

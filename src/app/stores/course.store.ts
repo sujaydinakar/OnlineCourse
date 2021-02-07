@@ -7,7 +7,7 @@ import { LevelMappingService } from "../services/mapping/level-mapping.service";
 import { LanguageMappingService } from "../services/mapping/language-mapping.service";
 import { UserStore } from "./user.store";
 import { AngularFireStorage } from "@angular/fire/storage";
-import { pushToArray } from "../services/mapping/user-mapping.service";
+import { pushToArray, pushToObject } from "../services/mapping/user-mapping.service";
 import { errorMonitor } from "events";
 import { CourseMappingService } from "../services/mapping/course-mapping.service";
 
@@ -17,9 +17,11 @@ export class CourseStore {
   @observable public Course: ICourse;
   @observable public CourseSections: Array<any>;
   @observable public CourseSection: any;
+  @observable public CourseElements: Array<any>;
+  @observable public CourseElement: any;
 
   @observable public TempCourseSections: Array<any>;
-  @observable public TempCourse: ICourse;
+  @observable public TempCourse: any;
 
   @observable public tempAddSectionNumber = 0;
   @observable public tempAddElementNumber = 0;
@@ -51,11 +53,19 @@ export class CourseStore {
   }
 
   @action
-  getCourseByKey(courseKey: string) {
+  async getCourseByKey(courseKey: string) {
+    // try {
+    //   this.afs.collection('courses').doc(courseKey).valueChanges().subscribe((data: any) => {
+    //     this.TempCourse = data;
+    //     this.getCourseSections(data.key)
+    //   });
+    // } catch(error) {
+    //   console.log(error)
+    // }
+
     try {
-      this.afs.collection('courses').doc(courseKey).valueChanges().subscribe((data: any) => {
-        this.TempCourse = data;
-      });
+      const data = pushToObject(await this.afs.collection('courses').doc(courseKey).get().toPromise());
+      this.TempCourse = data;
     } catch(error) {
       console.log(error)
     }
@@ -133,7 +143,7 @@ export class CourseStore {
         updatedAt: new Date(),
         updatedBy: this.userStore.User,
       }).then(() => {
-        this.TempCourseSections.map((item, index) => {
+        this.TempCourseSections?.map((item, index) => {
           if(!item.key) {
             const key = this.afs.createId();
             this.addCourseSection(courseData.key, { ...item, key }, index);
@@ -167,10 +177,13 @@ export class CourseStore {
   }
 
   @action 
-  async getSections(courseKey: string) {
+  async getCourseSections(courseKey: string) {
     try {
-      const data = pushToArray(await this.afs.firestore.collection('sections').where('courseKey', '==', courseKey).orderBy('order', 'asc').get());
-      this.CourseSections = data;
+      // const data = pushToArray(await this.afs.firestore.collection('sections').where('courseKey', '==', courseKey).orderBy('order', 'asc').get());
+      const data = pushToArray(await this.afs.collection('sections', ref => ref.where('courseKey', '==', courseKey).orderBy('order', 'asc')).get().toPromise());
+      console.log(data)
+      this.TempCourseSections = data;
+      this.getCourseElementsAndAddToEachSection(courseKey);
     } catch(error) {
       console.log(error)
     }
@@ -233,7 +246,7 @@ export class CourseStore {
         updatedAt: new Date(),
         updatedBy: this.userStore.User,
       }).then(() => {
-        this.TempCourseSections[courseIndex].elements.map((item, index) => {
+        this.TempCourseSections[courseIndex]?.elements?.map((item, index) => {
           if(item.key === undefined) {
             const key = this.afs.createId();
             const data = { ...item, key };
@@ -309,8 +322,28 @@ export class CourseStore {
   getCourseElements(courseKey: string, sectionKey: string) {
     try {
       this.afs.collection('elements', ref => ref.where('courseKey', '==', courseKey).where('sectionKey', '==', sectionKey).orderBy('order', 'asc')).valueChanges().subscribe((data: any) => {
-        this.CourseSections = data;
+        this.CourseElements = data;
       });
+    } catch(error) {
+      console.log(error)
+    }
+  }
+
+  @action 
+  async getCourseElements_2(courseKey: string, sectionKey: string) {
+    try {
+      const data = pushToArray(await this.afs.collection('elements', ref => ref.where('courseKey', '==', courseKey).where('sectionKey', '==', sectionKey).orderBy('order', 'asc')).get().toPromise())
+      return data;
+    } catch(error) {
+      console.log(error)
+    }
+  }
+
+  @action 
+  async getCourseElements_3(courseKey: string) {
+    try {
+      const data = pushToArray(await this.afs.collection('elements', ref => ref.where('courseKey', '==', courseKey).orderBy('order', 'asc')).get().toPromise())
+      return data;
     } catch(error) {
       console.log(error)
     }
@@ -333,18 +366,8 @@ export class CourseStore {
           }
         });
 
-        item.elements.push();
+        return item;
       });
-    } catch(error) {
-      console.log(error)
-    }
-  }
-
-  @action 
-  async getCourseElements_2(courseKey: string, sectionKey: string) {
-    try {
-      const data = pushToArray(await this.afs.collection('elements', ref => ref.where('courseKey', '==', courseKey).where('sectionKey', '==', sectionKey).orderBy('order', 'asc')).get().toPromise())
-      return data;
     } catch(error) {
       console.log(error)
     }

@@ -11,9 +11,11 @@ export class CourseElementBlockComponent implements OnInit {
   @Input() element_index: string;
   @Input() elementData: any;
 
-  @Output() deleteElementEvent = new EventEmitter<any>();
+  @Output() deleteElementEvent:EventEmitter<any> = new EventEmitter<any>();
 
-  constructor() { }
+  constructor(
+
+  ) { }
 
   ngOnInit(): void {
   }

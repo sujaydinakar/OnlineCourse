@@ -1,6 +1,7 @@
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
+import { CourseMappingService } from 'src/app/services/mapping/course-mapping.service';
 import { CourseStore } from 'src/app/stores/course.store';
 
 @Component({
@@ -19,18 +20,33 @@ export class CurriculumComponent implements OnInit {
 
   constructor(
     private courseStore: CourseStore,
+    private courseMapping: CourseMappingService,
     private activatedRoute: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
     this.activatedRoute.parent.params.subscribe((params: Params) => {
       this.courseKey = params.courseId;
-
+      
       this.courseStore.getCourseSections_2(this.courseKey).then((data) => {
         this.arrSection = data;
-        this.courseStore.TempCourseSections = this.arrSection;
-
-        this.courseStore.getCourseElementsAndAddToEachSection(this.courseKey);
+        
+        this.courseStore.getCourseElements_3(this.courseKey).then((data2) => {
+          this.arrSection.map((item) => {
+            let temp_elements = [];
+            let temp_element;
+            item.elements = temp_elements;
+            
+            data2.forEach((jtem) => {
+              if(item.key === jtem.sectionKey) {
+                temp_element = this.courseMapping.mapElement(jtem);
+                temp_elements.push(temp_element);
+              }
+            });
+    
+            return item;
+          });
+        });
       });
     });
   }
@@ -65,7 +81,7 @@ export class CurriculumComponent implements OnInit {
   }
 
   btnAddElementClicked(data) {
-    let { section_index, type, no, order, elementTitle, elementDescription } = data;
+    let { section_index, type, no, order, elementTitle, elementDescription, files } = data;
 
     this.arrSection[section_index - 1].elements.push({
       type, 
@@ -73,9 +89,10 @@ export class CurriculumComponent implements OnInit {
       order,
       elementTitle,
       elementDescription,
+      files
     });
-
-    this.courseStore.TempCourseSections = this.arrSection;
+    
+    this.courseStore.TempCourseSections = this.arrSection;  
   }
 
   btnDeleteElementClicked(data) {
@@ -95,5 +112,13 @@ export class CurriculumComponent implements OnInit {
 
       this.courseStore.TempCourseSections = this.arrSection;
     }
+  }
+
+  dragDropElementOrder(data) {
+    const { arrElement, section_index } = data;
+    this.arrSection[section_index].elements = arrElement;
+    this.courseStore.TempCourseSections = this.arrSection;
+
+    console.log(this.courseStore.TempCourseSections)
   }
 }

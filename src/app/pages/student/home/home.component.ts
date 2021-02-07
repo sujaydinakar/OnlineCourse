@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { CourseStore } from 'src/app/stores/course.store';
+import { UserStore } from 'src/app/stores/user.store';
 
 @Component({
   selector: 'app-home',
@@ -12,9 +14,15 @@ export class HomeComponent implements OnInit {
     './assets/images/banner 3.jpg'
   ]
 
-  constructor() { }
+  constructor(
+    public userStore: UserStore,
+    public courseStore: CourseStore,
+  ) { }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
+    await this.userStore.getCurrentLoggedInUser_2((data) => {
+  
+    });
   }
 
 }

@@ -170,6 +170,8 @@ export class CourseLandingPagesComponent implements OnInit {
     console.log(formData)
   }
 
+  // ------------------------------------------------------------------------------------------------------------
+
   courseImageChanged(event) {
     this.selectedImage = event.currentFiles[0];
     this.uploadFilesToFirebase(event.currentFiles[0], 'course_image_thumbnail');
@@ -183,6 +185,8 @@ export class CourseLandingPagesComponent implements OnInit {
     this.vimeo_uploadedVideoName = this.selectedVideo.name;
     this.uploadVimeoVideo(this.selectedVideo);
   }
+
+  // ------------------------------------------------------------------------------------------------------------
 
   uploadFilesToFirebase(item: File, basePath: string) {
     const filePath = `${basePath}/${Date.now()}_${item.name}`;

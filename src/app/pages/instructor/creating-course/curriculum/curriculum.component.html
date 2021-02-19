@@ -47,7 +47,8 @@
         <app-course-section-block 
           [section_index]="i + 1" 
           [section_title]="item.sectionTitle"  
-          [section_elements]="arrSection[i].elements"
+          [section_data]="item"
+          [section_elements]="item.elements"
           (deleleSectionEvent)="this.btnDeleteSectionClicked($event)"
           (deleteElementEvent)="this.btnDeleteElementClicked($event)"
           (addElementEvent)="this.btnAddElementClicked($event)"

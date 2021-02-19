@@ -1,0 +1,30 @@
+<h2 mat-dialog-title>
+    Section {{ this.data?.index }}: {{ this.data?.sectionTitle }}
+</h2>
+<mat-dialog-content class="mat-typography">
+    <div class="dateContainer">
+        <p>Created Date: {{ this.data?.createdAt?.toDate() | date : 'medium' }}</p>
+        <p>Updated Date: {{ this.data?.updatedAt?.toDate() | date : 'medium' }}</p>
+    </div>
+
+    <div style="margin-top: 20px;">
+        <p>Description:</p>
+        <div [innerHTML]="this.data?.sectionObjective"></div>
+    </div>
+
+    <div style="margin-top: 20px;">
+        <p>Content:</p>
+        <ol>
+            <li *ngFor="let item of this.data.elements">
+                <a>{{ item.elementTitle }}</a>
+            </li>
+            <li *ngIf="this.data.elements.length === 0">
+                No Content.
+            </li>
+        </ol>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <!-- <button mat-button mat-dialog-close>Close</button> -->
+  <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Close</button>
+</mat-dialog-actions>

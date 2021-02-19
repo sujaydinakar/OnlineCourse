@@ -23,9 +23,8 @@ export class CourseStore {
   @observable public TempCourseSections: Array<any>;
   @observable public TempCourse: any;
 
-  @observable public tempAddSectionNumber = 0;
-  @observable public tempAddElementNumber = 0;
-  @observable public latestCheckpoint: '';
+  @observable public tempDeletedSections: Array<any> = [];
+  @observable public tempDeletedElements: Array<any> = [];
 
   constructor(
     private afs: AngularFirestore,
@@ -160,17 +159,31 @@ export class CourseStore {
   }
 
   @action
-  submitSaveCourse() {
-    if(this.TempCourse.key === null)
-      this.addCourse(this.TempCourse);
-    else 
-      this.updatedCourse(this.TempCourse);
+  deleteCourse(courseData: any) {
+    try {
+      this.afs.collection(`courses`).doc(courseData.key).delete();
+      this.deleteCourseSectionByCourseKey(courseData);
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   @action
-  deleteFileFromFirebase(imagePath) {
+  submitSaveCourse() {
+    if (this.TempCourse.key === null) {
+      this.addCourse(this.TempCourse);
+    } else {
+      this.updatedCourse(this.TempCourse);
+      
+      this.tempDeletedSections.forEach((item) => this.deleteCourseSectionBySectionKey(item));
+      this.tempDeletedElements.forEach((item) => this.deleteCourseElementByElementKey(item));
+    }
+  }
+
+  @action
+  deleteFileFromFirebase(filePath) {
     try {
-      this.storage.ref(imagePath).delete();
+      this.storage.ref(filePath).delete();
     } catch(error) {
       console.log(error)
     }
@@ -239,25 +252,29 @@ export class CourseStore {
     // const clone =  Object.create(courseSectionData);
 
     try {
-      courseSectionData = this.courseMapping.mapSection(courseSectionData);
-      this.afs.collection('sections').doc(courseSectionData.key).update({
-        ...courseSectionData,
+      let isSectionDeleted = this.tempDeletedSections.some((item) => courseSectionData.key === item.key);
 
-        updatedAt: new Date(),
-        updatedBy: this.userStore.User,
-      }).then(() => {
-        this.TempCourseSections[courseIndex]?.elements?.map((item, index) => {
-          if(item.key === undefined) {
-            const key = this.afs.createId();
-            const data = { ...item, key };
-            this.addCourseElement(courseKey, courseSectionData.key, data);
-            return data;
-          } else {
-            this.editCourseElement(item);
-            return item;
-          }
+      if(!isSectionDeleted) {
+        courseSectionData = this.courseMapping.mapSection(courseSectionData);
+        this.afs.collection('sections').doc(courseSectionData.key).update({
+          ...courseSectionData,
+
+          updatedAt: new Date(),
+          updatedBy: this.userStore.User,
+        }).then(() => {
+          this.TempCourseSections[courseIndex]?.elements?.map((item, index) => {
+            if(item.key === undefined) {
+              const key = this.afs.createId();
+              const data = { ...item, key };
+              this.addCourseElement(courseKey, courseSectionData.key, data);
+              return data;
+            } else {
+              this.editCourseElement(item);
+              return item;
+            }
+          });
         });
-      });
+      }
     } catch(error) {
       console.log(error)
     }
@@ -275,6 +292,32 @@ export class CourseStore {
         });
       })
     } catch(error) {
+      console.log(error)
+    }
+  }
+  
+  @action
+  async deleteCourseSectionByCourseKey(courseData: any) {
+    try {
+      const data = pushToArray(await this.afs.collection('sections', ref => ref.where('courseKey', '==', courseData.key)).get().toPromise());
+
+      data.forEach((sectionData) => {
+        this.afs.collection(`sections`).doc(sectionData.key).delete();
+      });
+
+      this.deleteCourseElementByCourseKey(courseData);
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  @action
+  deleteCourseSectionBySectionKey(sectionData: any) {
+    try {
+      this.afs.collection(`sections`).doc(sectionData.key).delete();
+      this.deleteCourseElementBySectionKey(sectionData);
+    } catch (error) {
       console.log(error)
     }
   }
@@ -307,12 +350,16 @@ export class CourseStore {
   @action
   editCourseElement(elementData: ICourse) {
     try {
-      this.afs.collection('elements').doc(elementData.key).update({
-        ...elementData,
-        
-        updatedAt: new Date(),
-        updatedBy: this.userStore.User,
-      });
+       let isElementDeleted = this.tempDeletedElements.some((item) => elementData.key === item.key);
+
+      if(!isElementDeleted) {
+        this.afs.collection('elements').doc(elementData.key).update({
+          ...elementData,
+          
+          updatedAt: new Date(),
+          updatedBy: this.userStore.User,
+        });
+      }
     } catch(error) {
       console.log(error)
     }
@@ -369,6 +416,47 @@ export class CourseStore {
         return item;
       });
     } catch(error) {
+      console.log(error)
+    }
+  }
+
+  @action
+  async deleteCourseElementByCourseKey(course: any) {
+    try {
+      const data = pushToArray(await this.afs.collection('elements', ref => ref.where('courseKey', '==', course.key)).get().toPromise());
+
+      data.forEach((elementData) => {
+        this.deleteCourseElementByElementKey(elementData);
+      });
+      
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  @action
+  async deleteCourseElementBySectionKey(section: any) {
+    try {
+      const data = pushToArray(await this.afs.collection('elements', ref => ref.where('sectionKey', '==', section.key)).get().toPromise());
+
+      data.forEach((elementData) => {
+        this.deleteCourseElementByElementKey(elementData);
+      });
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  @action
+  deleteCourseElementByElementKey(elementData: any) {
+    try {
+      this.afs.collection(`elements`).doc(elementData.key).delete();
+      elementData.files?.forEach((item) => {
+        if (item.fileUploadedURL.includes('firebasestorage'))
+          this.deleteFileFromFirebase(item.fileUploadedPath);
+      });
+    } catch (error) {
       console.log(error)
     }
   }

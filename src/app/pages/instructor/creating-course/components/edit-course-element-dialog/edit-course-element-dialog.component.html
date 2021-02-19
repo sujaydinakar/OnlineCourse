@@ -1,0 +1,99 @@
+<h2 mat-dialog-title>
+    {{ this.data?.type }}: {{ this.data?.elementTitle }}
+</h2>
+<mat-dialog-content class="mat-typography">
+    <div class="dateContainer">
+        <p>Created Date: {{ this.data?.createdAt?.toDate() | date : 'medium' }}</p>
+        <p>Updated Date: {{ this.data?.updatedAt?.toDate() | date : 'medium' }}</p>
+    </div>
+
+    <div class="blocksContainer">
+        <div class="leftSideContainer">
+            <div style="margin-top: 20px;">
+                <p>Attachment Video:</p>
+        
+                <ng-container *ngFor="let item of this.data?.files">
+                    <iframe *ngIf="checkIfItIsVimeoLink(item.fileUploadedURL)" [src]="this.replaceVimeoURL(item.fileUploadedURL) | safe:'resourceUrl'" 
+                    frameborder="0" title="hello world" webkitallowfullscreen mozallowfullscreen allowfullscreen 
+                    style="width: 95% !important; min-height: 400px;"></iframe>
+                </ng-container>
+        
+                <ul *ngIf="!checkIfAllFilesHasOneVimeoVideo(this.data?.files)">
+                    <li>No Attachment Video.</li>
+                </ul>
+            </div>
+        
+            <div style="margin-top: 20px;">
+                <p>Attachment Files:</p>
+                <ul>
+                    <ng-container *ngFor="let item of this.data?.files">
+                        <li *ngIf="!checkIfItIsVimeoLink(item.fileUploadedURL)">
+                            <a href="{{ item.fileUploadedURL }}" target="_blank">
+                                {{ item.fileName || 'Untitled File' }}
+                            </a>
+                        </li>
+                    </ng-container>
+                    
+                    <li *ngIf="this.data?.files?.length === 0 || this.data?.files === undefined || !checkIfThereAttachmentFile(this.data?.files)">
+                        No Attachment Files.
+                    </li>
+                </ul>
+            </div>
+        </div>
+    
+        <div class="rightSideContainer">
+            <form [formGroup]="editElementForm" class="addCategoryContainer" (ngSubmit)="onSubmit(editElementForm.value)">
+                <p style="margin-top: 20px;">Element Title</p>
+                <input type="text" placeholder="section title" formControlName="elementTitle"/>
+        
+                <p style="margin-top: 20px;">Element Description</p>
+                <quill-editor [styles]="{height: '200px'}" formControlName="elementDescription"></quill-editor>
+
+                <div class="uploadingFilesContainer" style="margin-top: 20px;">
+                    <p class="label">Upload Video (Only 1 video can be attached.)</p>
+                    <div class="uploadingVideoBlockContainer" [ngStyle]="{ 'padding': '20px 0px 10px 0px;'}">
+                    <ng-container *ngIf="this.selectedVideo">
+                        <p [ngStyle]="{'margin-bottom': '10px'}">Attachment Video: {{ this.selectedVideo.name }}</p>                    
+                    </ng-container>
+
+                    <ng-container *ngIf="this.vimeo_uploadedVideoPct">
+                        <mat-progress-bar mode="determinate" [value]="this.vimeo_uploadedVideoPct"></mat-progress-bar> 
+                        <div [ngStyle]="{'display': 'flex', 'justify-content': 'space-between', 'margin-top': '10px'}">
+                        <p>{{ this.vimeo_uploadedVideoStatus }}</p>
+                        <p>{{ this.formatPercentage(this.vimeo_uploadedVideoPct) }}% Complete</p>
+                        </div>
+                        <br/>
+                    </ng-container>
+                    </div>
+
+                    <input type="file" (change)="courseVideoChanged($event)" accept="video/*"> 
+
+                    <p class="label" style="margin-top: 20px;">Upload File (Only 1 file can be attached.)</p>
+                    <div class="uploadingVideoBlockContainer" [ngStyle]="{ 'padding': '20px 0px 10px 0px;'}">
+                    <ng-container *ngIf="this.selectedFile">
+                        <p [ngStyle]="{'margin-bottom': '10px'}">Attachment Files: {{ this.selectedFile?.name }}</p>                
+                    </ng-container>
+                    
+                    <ng-container *ngIf="this.firebase_UploadingPercentage">
+                        <mat-progress-bar mode="determinate" [value]="this.firebase_UploadingPercentage"></mat-progress-bar> 
+                        <div [ngStyle]="{'display': 'flex', 'justify-content': 'space-between', 'margin-top': '10px'}">
+                        <p>{{ this.firebase_UploadedStatus}}</p>
+                        <p>{{ this.formatPercentage(this.firebase_UploadingPercentage) }}% Complete</p>
+                        </div>
+                        <br/>
+                    </ng-container>
+                    </div>
+
+                    <input type="file" (change)="courseFileChanged($event)">
+                </div>
+
+                <button type="reset" class="btnCancel">Cancel</button>
+                <button type="submit" class="btnSave">Save</button>
+            </form>
+        </div>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <!-- <button mat-button mat-dialog-close>Close</button> -->
+  <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Close</button>
+</mat-dialog-actions>

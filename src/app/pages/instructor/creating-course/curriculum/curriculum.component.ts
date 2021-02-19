@@ -20,7 +20,7 @@ export class CurriculumComponent implements OnInit {
 
   constructor(
     private courseStore: CourseStore,
-    private courseMapping: CourseMappingService,
+    public courseMapping: CourseMappingService,
     private activatedRoute: ActivatedRoute
   ) { }
 
@@ -39,8 +39,10 @@ export class CurriculumComponent implements OnInit {
             
             data2.forEach((jtem) => {
               if(item.key === jtem.sectionKey) {
-                temp_element = this.courseMapping.mapElement(jtem);
-                temp_elements.push(temp_element);
+                // temp_element = this.courseMapping.mapElement(jtem);
+                // temp_elements.push(temp_element);
+
+                temp_elements.push(jtem);
               }
             });
     
@@ -76,6 +78,10 @@ export class CurriculumComponent implements OnInit {
   }
 
   btnDeleteSectionClicked(index) {
+    if(this.arrSection[index - 1].key !== undefined) {
+      this.courseStore.tempDeletedSections.push(this.arrSection[index - 1]);
+    }
+
     this.arrSection.splice(index - 1, 1);
     this.courseStore.TempCourseSections = this.arrSection;
   }
@@ -97,6 +103,11 @@ export class CurriculumComponent implements OnInit {
 
   btnDeleteElementClicked(data) {
     let { section_index, element_index } = data;
+
+    if(this.arrSection[section_index - 1].elements[element_index].key !== undefined) {
+      this.courseStore.tempDeletedElements.push(this.arrSection[section_index - 1].elements[element_index]);
+    }
+
     this.arrSection[section_index - 1].elements.splice(element_index, 1);
 
     this.courseStore.TempCourseSections = this.arrSection;
@@ -118,7 +129,5 @@ export class CurriculumComponent implements OnInit {
     const { arrElement, section_index } = data;
     this.arrSection[section_index].elements = arrElement;
     this.courseStore.TempCourseSections = this.arrSection;
-
-    console.log(this.courseStore.TempCourseSections)
   }
 }

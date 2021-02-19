@@ -1,7 +1,8 @@
 <div class="section_elementContainer">
     <div class="section_elementContainer__leftSide">
       <p><span style="font-weight: bold;">{{ elementData.type }} {{ elementData.no }}: </span>{{ elementData.elementTitle }}</p>
-      <button class="btnOrderList"><i class="far fa-edit"></i></button>
-      <button class="btnOrderList"><i class="far fa-trash-alt" (click)="btnDeleteElementClicked(section_index, element_index)"></i></button>
+      <button class="btnOrderList" (click)="btnViewElementClicked(elementData)"><i class="far fa-eye"></i></button>
+      <button class="btnOrderList" (click)="btnEditElementClicked(elementData)"><i class="far fa-edit"></i></button>
+      <button class="btnOrderList" (click)="btnDeleteElementClicked(section_index, element_index)"><i class="far fa-trash-alt"></i></button>
     </div>
 </div>

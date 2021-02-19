@@ -1,0 +1,51 @@
+.dateContainer {
+    width: 100%;
+    padding: 20px;
+    background-color: #E6F2F5;
+    border-radius: 10px;
+    
+    p:last-child {
+        margin: 0px;
+        padding: 0px;
+    }
+}
+
+.blocksContainer {
+    width: 100%;
+    display: flex;
+
+    .leftSideContainer {
+        width: 50%;
+    }
+
+    .rightSideContainer {
+        width: 50%;
+
+        input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid rgb(179, 179, 179);
+            outline: none;
+        }
+
+        button {
+            padding: 10px 15px;
+            border: none;
+            outline: none;
+            font-weight: bold;
+            color: white;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+        .btnCancel {
+            background-color: #E43F5A;
+            margin-right: 20px;
+        }
+
+        .btnSave {
+            background-color: #1F4068;
+        }
+    }
+}

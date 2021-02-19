@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { elementsFromPoint } from '@swimlane/ngx-datatable';
 
 @Injectable({
   providedIn: 'root'
@@ -41,4 +42,5 @@ export class CourseMappingService {
       }
     }
   }
+
 }

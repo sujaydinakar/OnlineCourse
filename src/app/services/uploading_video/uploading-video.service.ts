@@ -71,4 +71,14 @@ export class UploadingVideoService {
     return this.http.request(req);
   }
 
+  vimeoDelete(url): Observable<HttpEvent<any>> {
+    const token = '2f72e3f8d1269d8f11c1387e272ef3d5';
+    const headers = new HttpHeaders({ 'Authorization': 'Bearer ' + token });
+    const options = { headers: headers };
+
+    // https://api.vimeo.com/videos/{video_id}
+
+    const req = new HttpRequest('DELETE', url, undefined, options);
+    return this.http.request(req);
+  }
 }

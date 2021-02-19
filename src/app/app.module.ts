@@ -19,7 +19,6 @@ import { SkeletonModule } from 'primeng/skeleton';
 import { TableModule } from 'primeng/table';
 import { FileUploadModule } from 'primeng/fileupload'; 
 import { HttpClientModule } from '@angular/common/http';
-import { ScrollingModule } from '@angular/cdk/scrolling';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { VimeModule } from '@vime/angular';
 
@@ -101,6 +100,10 @@ import { AdminEditCourseLanguageComponent } from './pages/admin/course-language/
 import { TrustedURLServicePipe } from './pipes/trusted-urlservice.pipe';
 import { CourseSectionBlockComponent } from './pages/instructor/creating-course/components/course-section-block/course-section-block.component';
 import { CourseElementBlockComponent } from './pages/instructor/creating-course/components/course-element-block/course-element-block.component';
+import { ViewCourseElementDialogComponent } from './pages/instructor/creating-course/components/view-course-element-dialog/view-course-element-dialog.component';
+import { EditCourseSectionDialogComponent } from './pages/instructor/creating-course/components/edit-course-section-dialog/edit-course-section-dialog.component';
+import { ViewCourseSectionDialogComponent } from './pages/instructor/creating-course/components/view-course-section-dialog/view-course-section-dialog.component';
+import { EditCourseElementDialogComponent } from './pages/instructor/creating-course/components/edit-course-element-dialog/edit-course-element-dialog.component';
 
 
 const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
@@ -167,7 +170,7 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     StudentLoginComponent,
     AdminEditCategoryComponent,
     AdminConfirmationDialogComponent,
-    
+
     AdminAddSubcategoryComponent,
     AdminSubcategoryComponent,
     AdminEditSubcategoryComponent,
@@ -186,14 +189,16 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
 
     CourseSectionBlockComponent,
     CourseElementBlockComponent,
+    ViewCourseElementDialogComponent,
+    EditCourseElementDialogComponent,
+    ViewCourseSectionDialogComponent,
+    EditCourseSectionDialogComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     MaterialModule,
-    ScrollingModule,
-
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAnalyticsModule,
     AngularFirestoreModule,

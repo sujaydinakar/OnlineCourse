@@ -226,3 +226,12 @@ border: none;
 .example-list.cdk-drop-list-dragging .sectionContainer:not(.cdk-drag-placeholder) {
 transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
+
+.custom-file-upload {
+    border: none;
+    display: inline-block;
+    padding: 10px 20px;
+    cursor: pointer;
+    background-color: #007791;
+    color: white;
+}

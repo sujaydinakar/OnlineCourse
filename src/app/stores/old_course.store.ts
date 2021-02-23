@@ -60,6 +60,15 @@ export class CourseStore {
 
   @action
   async getCourseByKey(courseKey: string) {
+    // try {
+    //   this.afs.collection('courses').doc(courseKey).valueChanges().subscribe((data: any) => {
+    //     this.TempCourse = data;
+    //     this.getCourseSections(data.key)
+    //   });
+    // } catch(error) {
+    //   console.log(error)
+    // }
+
     try {
       const data = pushToObject(await this.afs.collection('courses').doc(courseKey).get().toPromise());
       this.TempCourse = data;
@@ -111,10 +120,9 @@ export class CourseStore {
       this.afs.collection('courses').doc(_key).set({
         ...finalData
       }).then(() => {
-        if(this.tempInsertedSections !== undefined) {
-          this.tempInsertedSections.map((item, index) => {
+        if(this.TempCourseSections !== undefined) {
+          this.TempCourseSections.map((item, index) => {
             const key = this.afs.createId();
-            delete item.temp_sectionKey;
             this.addCourseSection(_key, { ...item, key }, index);
             return { ...item, key };
           });
@@ -141,36 +149,14 @@ export class CourseStore {
         updatedAt: new Date(),
         updatedBy: this.userStore.User,
       }).then(() => {
-        this.tempInsertedSections.map((item, index) => {
+        this.TempCourseSections?.map((item, index) => {
           if(!item.key) {
             const key = this.afs.createId();
             this.addCourseSection(courseData.key, { ...item, key }, index);
             return { ...item, key };
-          }
-        });
-
-        this.tempUpdatedSections.map((item, index) => {
-          if(item.key) {
+          } else {
             this.updatedCourseSection(courseData.key, item, index);
             return { ...item };
-          }
-        });
-
-        this.tempInsertedElements.map((item, index) => {
-          if (item.key === undefined && item.sectionKey !== undefined) {
-            delete item.temp_sectionKey;
-            const key = this.afs.createId();
-            const data = { ...item, key };
-            this.addCourseElement(courseData.key, item.sectionKey, data);
-            return data;
-          }
-        });
-  
-        this.tempUpdatedElements.map((item, index) => {
-          if (item.key !== undefined && item.sectionKey !== undefined) {
-            delete item.temp_sectionKey;
-            this.editCourseElement(item);
-            return item;
           }
         });
       });
@@ -194,20 +180,10 @@ export class CourseStore {
     if (this.TempCourse.key === null) {
       this.addCourse(this.TempCourse);
     } else {
-
-      // console.log("---------------- Elements ----------------")
-      // console.log(this.tempInsertedElements)
-      // console.log(this.tempUpdatedElements)
-      // console.log(this.tempDeletedElements)
-      // console.log("---------------- Sections ----------------")
-      // console.log(this.tempInsertedSections)
-      // console.log(this.tempUpdatedSections)
-      // console.log(this.tempDeletedSections)
-
+      this.updatedCourse(this.TempCourse);
+      
       this.tempDeletedSections.forEach((item) => this.deleteCourseSectionBySectionKey(item));
       this.tempDeletedElements.forEach((item) => this.deleteCourseElementByElementKey(item));
-
-      this.updatedCourse(this.TempCourse);
     }
   }
 
@@ -246,9 +222,6 @@ export class CourseStore {
   @action 
   addCourseSection(courseKey: string, sectionData: any, courseIndex: any) {
     try {
-      const temp_sectionKey = sectionData.temp_sectionKey;
-      delete sectionData.temp_sectionKey;
-
       sectionData = this.courseMapping.mapSection(sectionData);
       this.afs.collection('sections').doc(sectionData.key).set({
         ...sectionData,
@@ -266,9 +239,8 @@ export class CourseStore {
         updatedAt: new Date(),
         updatedBy: this.userStore.User,
       }).then(() => {
-        this.tempInsertedElements.map((item, index) => {
-          if (item.key === undefined && item.temp_sectionKey === temp_sectionKey) {
-            delete item.temp_sectionKey;
+        this.TempCourseSections[courseIndex].elements = this.TempCourseSections[courseIndex].elements.map((item, index) => {
+          if(item.key === undefined) {
             const key = this.afs.createId();
             const data = { ...item, key };
             this.addCourseElement(courseKey, sectionData.key, data);
@@ -283,25 +255,29 @@ export class CourseStore {
 
   @action
   updatedCourseSection(courseKey: string, courseSectionData: any, courseIndex: any) {
+    // const newData = Object.assign(courseSectionData, { updatedAt: new Date(), updatedBy: this.userStore.User});
+    // const clone =  Object.create(courseSectionData);
+
     try {
       let isSectionDeleted = this.tempDeletedSections.some((item) => courseSectionData.key === item.key);
 
       if(!isSectionDeleted) {
         courseSectionData = this.courseMapping.mapSection(courseSectionData);
-
         this.afs.collection('sections').doc(courseSectionData.key).update({
           ...courseSectionData,
 
           updatedAt: new Date(),
           updatedBy: this.userStore.User,
         }).then(() => {
-          this.tempInsertedElements.map((item, index) => {
-            if (item.key === undefined && item.sectionKey === undefined) {
-              delete item.temp_sectionKey;
+          this.TempCourseSections[courseIndex]?.elements?.map((item, index) => {
+            if(item.key === undefined) {
               const key = this.afs.createId();
               const data = { ...item, key };
               this.addCourseElement(courseKey, courseSectionData.key, data);
               return data;
+            } else {
+              this.editCourseElement(item);
+              return item;
             }
           });
         });
@@ -354,13 +330,10 @@ export class CourseStore {
   }
 
   @action 
-  addCourseElement(courseKey: string, sectionKey: string, elementData: any) {    
+  addCourseElement(courseKey: string, sectionKey: string, sectionData: any) {    
     try {
-      delete elementData.temp_sectionKey;
-      delete elementData.temp_elementKey;
-
-      this.afs.collection('elements').doc(elementData.key).set({
-        ...elementData,
+      this.afs.collection('elements').doc(sectionData.key).set({
+        ...sectionData,
 
         courseKey: courseKey,
         sectionKey: sectionKey,
@@ -474,8 +447,7 @@ export class CourseStore {
       const data = pushToArray(await this.afs.collection('elements', ref => ref.where('sectionKey', '==', section.key)).get().toPromise());
 
       data.forEach((elementData) => {
-        let isInDeletedList = this.tempDeletedElements.some((item) => item.key === elementData.key)
-        !isInDeletedList ? this.deleteCourseElementByElementKey(elementData) : '';
+        this.deleteCourseElementByElementKey(elementData);
       });
 
     } catch (error) {

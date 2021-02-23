@@ -46,6 +46,7 @@
     "mobx-angular": "^4.1.0",
     "ngx-bar-rating": "^2.0.0",
     "ngx-datatable": "^1.0.3",
+    "ngx-embed-video": "^1.0.4",
     "ngx-quill": "^13.0.1",
     "ngx-swiper-wrapper": "^10.0.0",
     "primeicons": "^4.1.0",

@@ -16,8 +16,10 @@
         <p>Attachment Video:</p>
 
         <ng-container *ngFor="let item of this.data?.files" style="width: 100% !important;">
-            <iframe *ngIf="checkIfItIsVimeoLink(item.fileUploadedURL)" [src]="this.replaceVimeoURL(item.fileUploadedURL) | safe:'resourceUrl'" 
-            width="100%" height="500px" frameborder="0" title="hello world" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+            <!-- <iframe *ngIf="checkIfItIsVimeoLink(item.fileUploadedURL)" [src]="this.replaceVimeoURL(item.fileUploadedURL) | safe:'resourceUrl'" 
+            width="100%" height="500px" frameborder="0" title="hello world" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe> -->
+
+            <div [innerHtml]="this.replaceVimeoURL(item.fileUploadedURL)" style="width: 100%; height: auto;"></div>
         </ng-container>
 
         <ul *ngIf="!checkIfAllFilesHasOneVimeoVideo(this.data?.files)">

@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ViewCourseSectionDialogComponent } from '../view-course-section-dialog/view-course-section-dialog.component';
@@ -11,7 +11,7 @@ import { ViewCourseSectionDialogComponent } from '../view-course-section-dialog/
 export class EditCourseSectionDialogComponent implements OnInit {
 
   sectionTitle;
-  sectionDescription;
+  sectionObjective;
 
   editSectionForm;
 
@@ -23,16 +23,27 @@ export class EditCourseSectionDialogComponent implements OnInit {
   ) {
     this.editSectionForm = this.formBuilder.group({
       sectionTitle: this.data.sectionTitle,
-      sectionDescription: this.data.sectionObjective
+      sectionObjective: this.data.sectionObjective
     });
   }
   
   ngOnInit(): void {
 
   }
+  
+  btnCloseClicked() {
+    this.dialogRef.close(undefined);
+  }
+
+  btnCancelClicked() {
+    this.editSectionForm = this.formBuilder.group({
+      sectionTitle: this.data.sectionTitle,
+      sectionObjective: this.data.sectionObjective
+    });
+  }
 
   onSubmit(sectionData) {
-    const { sectionTitle, sectionDescription } = sectionData;
+    this.dialogRef.close({ ...this.data, ...sectionData });
   }
 
 }

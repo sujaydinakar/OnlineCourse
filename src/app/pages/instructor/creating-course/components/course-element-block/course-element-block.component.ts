@@ -14,7 +14,8 @@ export class CourseElementBlockComponent implements OnInit {
   @Input() element_index: string;
   @Input() elementData: any;
 
-  @Output() deleteElementEvent:EventEmitter<any> = new EventEmitter<any>();
+  @Output() deleteElementEvent: EventEmitter<any> = new EventEmitter<any>();
+  @Output() updateElementEvent:EventEmitter<any> = new EventEmitter<any>();
 
   constructor(public dialog: MatDialog) {}
 
@@ -22,14 +23,9 @@ export class CourseElementBlockComponent implements OnInit {
   }
 
   btnViewElementClicked(elementData) {
-    const dialogRef = this.dialog.open(ViewCourseElementDialogComponent, {
+    this.dialog.open(ViewCourseElementDialogComponent, {
       width: '90%',
       data: { ...elementData }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      console.log(result)
     });
   }
 
@@ -47,8 +43,9 @@ export class CourseElementBlockComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      console.log(result)
+      this.updateElementEvent.emit({
+        ...result
+      });
     });
   }
 

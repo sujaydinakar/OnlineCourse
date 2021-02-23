@@ -17,6 +17,7 @@ import { CourseLevelStore } from 'src/app/stores/level.store';
 import { SubCategoryStore } from 'src/app/stores/subcategory.store';
 import { UserStore } from 'src/app/stores/user.store';
 import { UploadingVideoService } from 'src/app/services/uploading_video/uploading-video.service';
+import { EmbedVideoService } from 'ngx-embed-video';
 
 @Component({
   selector: 'app-course-landing-pages',
@@ -42,6 +43,7 @@ export class CourseLandingPagesComponent implements OnInit {
   percentage_ForVideo;
 
   constructor(
+    private embedService: EmbedVideoService,
     private formBuilder: FormBuilder,
     private activatedRoute: ActivatedRoute,
     private afs: AngularFirestore,
@@ -271,7 +273,8 @@ export class CourseLandingPagesComponent implements OnInit {
       this.uploadStatus = 1;
 
       const options = {
-        token: '2f72e3f8d1269d8f11c1387e272ef3d5',
+        // token: '2f72e3f8d1269d8f11c1387e272ef3d5',
+        token: 'f94e5f0392297d6bb9ffcb297874583f',
         url: 'https://api.vimeo.com/me/videos',
         videoName: this.vimeo_uploadedVideoName,
         videoDescription: this.vimeo_uploadedVideoName + '\'s description'
@@ -326,7 +329,9 @@ export class CourseLandingPagesComponent implements OnInit {
   }
 
   replaceVimeoURL(oldURL: string) {
-    const result = oldURL.replace('https://vimeo.com/', 'https://player.vimeo.com/video/');
+    const result = this.embedService.embed(oldURL, {
+      attr: { width: "100%", height: "260px" }
+    });
     return result;
   }
 }

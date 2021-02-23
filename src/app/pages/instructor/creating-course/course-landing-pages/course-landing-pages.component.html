@@ -111,17 +111,19 @@
     <p style="margin-top: 20px;">Promotional video</p>
     <div class="courseImageContiner">
       <div class="leftSideContainer">
-        <ng-container *ngIf="this.courseStore.TempCourse.promotionVideoUrl">
+        <ng-container *ngIf="this.courseStore.TempCourse?.promotionVideoUrl">
           <!-- <vm-player theme="light" style="--vm-player-theme: #227ed5;">
             <vm-vimeo video-id="503346622" ></vm-vimeo>
             <vm-default-ui></vm-default-ui>
           </vm-player> -->
 
-          <iframe [src]="this.replaceVimeoURL(this.courseStore.TempCourse.promotionVideoUrl) | safe:'resourceUrl'" width="100%" height="300px" frameborder="0" 
-          title="hello world" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+          <!-- <iframe [src]="this.replaceVimeoURL(this.courseStore.TempCourse?.promotionVideoUrl) | safe:'resourceUrl'" width="100%" height="300px" frameborder="0" 
+          title="hello world" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe> -->
+
+          <div [innerHtml]="this.replaceVimeoURL(this.courseStore.TempCourse?.promotionVideoUrl)" style="width: 100%; height: auto;"></div>
         </ng-container>
         
-        <ng-container *ngIf="!this.courseStore.TempCourse.promotionVideoUrl">
+        <ng-container *ngIf="!this.courseStore.TempCourse?.promotionVideoUrl">
           <img src="./assets/images/placeholder.png">
         </ng-container>
       </div>

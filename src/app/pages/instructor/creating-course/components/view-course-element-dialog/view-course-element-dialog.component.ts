@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { EmbedVideoService } from 'ngx-embed-video';
 
 @Component({
   selector: 'app-view-course-element-dialog',
@@ -9,6 +10,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 export class ViewCourseElementDialogComponent implements OnInit {
 
   constructor(
+    private embedService: EmbedVideoService,
     public dialogRef: MatDialogRef<ViewCourseElementDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data) { }
   
@@ -47,8 +49,10 @@ export class ViewCourseElementDialogComponent implements OnInit {
   }
 
   replaceVimeoURL(oldURL: string) {
-    const result = oldURL.replace('https://vimeo.com/', 'https://player.vimeo.com/video/');
+    const result = this.embedService.embed(oldURL, {
+      attr: { width: "100%", height: "400px" }
+    });
+    console.log(result)
     return result;
   }
-
 }

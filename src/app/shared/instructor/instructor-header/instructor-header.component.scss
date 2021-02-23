@@ -33,4 +33,15 @@
     cursor: pointer;
     color: darken(grey, 10);
   }
+
+  .btnLogOut {
+    background-color: #EC5252; 
+    border: none; 
+    font-weight: bold; 
+    color: white;
+
+    &:hover {
+      border: none;
+    }
+  }
 }

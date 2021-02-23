@@ -9,6 +9,7 @@ import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-logi
 import { GoogleLoginProvider, FacebookLoginProvider } from 'angularx-social-login';
 
 import { QuillModule } from 'ngx-quill';
+import { EmbedVideo } from 'ngx-embed-video';
 import { BarRatingModule } from "ngx-bar-rating";
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AngularFireModule } from '@angular/fire';
@@ -104,6 +105,8 @@ import { ViewCourseElementDialogComponent } from './pages/instructor/creating-co
 import { EditCourseSectionDialogComponent } from './pages/instructor/creating-course/components/edit-course-section-dialog/edit-course-section-dialog.component';
 import { ViewCourseSectionDialogComponent } from './pages/instructor/creating-course/components/view-course-section-dialog/view-course-section-dialog.component';
 import { EditCourseElementDialogComponent } from './pages/instructor/creating-course/components/edit-course-element-dialog/edit-course-element-dialog.component';
+import { AlertMessageDialogComponent } from './shared/dialog/alert-message-dialog/alert-message-dialog.component';
+import { ConfirmMessageDialogComponent } from './shared/dialog/confirm-message-dialog/confirm-message-dialog.component';
 
 
 const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
@@ -193,6 +196,8 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     EditCourseElementDialogComponent,
     ViewCourseSectionDialogComponent,
     EditCourseSectionDialogComponent,
+    AlertMessageDialogComponent,
+    ConfirmMessageDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -211,6 +216,7 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     ReactiveFormsModule,
     MobxAngularModule,
     QuillModule.forRoot(),
+    EmbedVideo.forRoot(),
     SkeletonModule,
     FileUploadModule, 
     HttpClientModule,

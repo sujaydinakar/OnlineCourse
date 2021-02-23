@@ -4,6 +4,7 @@ import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IUser } from 'src/app/models/user.model';
 import { UserStore } from 'src/app/stores/user.store';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-admin-login',
@@ -16,6 +17,7 @@ export class AdminLoginComponent implements OnInit {
   constructor(
     public userStore: UserStore,
 
+    private location: Location,
     public formBuilder: FormBuilder,
     private auth: AngularFireAuth,
     private router: Router
@@ -34,9 +36,11 @@ export class AdminLoginComponent implements OnInit {
     const { email, password } = formData;
 
     this.auth.signInWithEmailAndPassword(email, password).then((user: any) => {
-      this.router.navigate(['/admin']);
+      // this.router.navigate(['/admin']);
+      this.location.back();
     }).catch((error) => {
       console.log(error)
     });
   }
+
 }

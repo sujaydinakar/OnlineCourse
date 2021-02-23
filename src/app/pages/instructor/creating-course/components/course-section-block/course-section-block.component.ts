@@ -1,6 +1,6 @@
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { AngularFireStorage, AngularFireUploadTask } from '@angular/fire/storage';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -17,6 +17,8 @@ import { SubCategoryStore } from 'src/app/stores/subcategory.store';
 
 import { ViewCourseSectionDialogComponent } from '../view-course-section-dialog/view-course-section-dialog.component';
 import { EditCourseSectionDialogComponent } from '../edit-course-section-dialog/edit-course-section-dialog.component';
+import { AlertMessageDialogComponent } from 'src/app/shared/dialog/alert-message-dialog/alert-message-dialog.component';
+import { EmbedVideoService } from 'ngx-embed-video';
 
 @Component({
   selector: 'app-course-section-block',
@@ -33,10 +35,15 @@ export class CourseSectionBlockComponent implements OnInit {
   @Input() section_data: any;
   @Input() section_elements: Array<any> = [];
 
-  @Output() deleleSectionEvent:EventEmitter<any> = new EventEmitter<any>();
-  @Output() deleteElementEvent:EventEmitter<any> = new EventEmitter<any>();
+  @Output() deleleSectionEvent: EventEmitter<any> = new EventEmitter<any>();
+  @Output() updateSectionEvent:EventEmitter<any> = new EventEmitter<any>();
+  @Output() deleteElementEvent: EventEmitter<any> = new EventEmitter<any>();
+  @Output() updateElementEvent:EventEmitter<any> = new EventEmitter<any>();
   @Output() addElementEvent:EventEmitter<any> = new EventEmitter<any>();
-  @Output() dragDropElementOrderElement:EventEmitter<any> = new EventEmitter<any>();
+  @Output() dragDropElementOrderElement: EventEmitter<any> = new EventEmitter<any>();
+  
+  @ViewChild("inputLectureVideoElementRef") inputLectureVideoElementRef: ElementRef;
+  @ViewChild("inputLectureFileElementRef") inputLectureFileElementRef: ElementRef;
 
   btnDeleteSectionClicked(value: string) {
     this.deleleSectionEvent.emit(value);
@@ -44,6 +51,7 @@ export class CourseSectionBlockComponent implements OnInit {
 
   btnDeleteElementClicked(data) {
     this.deleteElementEvent.emit(data);
+    this.recalculateElementOrder();
   }
 
   lectureTitle = '';
@@ -70,6 +78,7 @@ export class CourseSectionBlockComponent implements OnInit {
     public languageStore: CourseLanguageStore,
     public subcategoryStore: SubCategoryStore,
 
+    private embedService: EmbedVideoService,
     public uploadingVideoService: UploadingVideoService,
   ) { }
 
@@ -129,16 +138,27 @@ export class CourseSectionBlockComponent implements OnInit {
         });
       }
 
-      this.addElementEvent.emit({
+      const data = {
         type: 'Quiz',
         no: count,
         order: this.section_elements.length + 1,
         elementTitle: this.quizTitle,
         elementDescription: this.quizDescription,
         section_index: this.section_index,
-      });
+      };
 
-      this.btnCancelQuizClicked();
+      if(this.selectedVideo) {
+        this.uploadVimeoVideo(this.selectedVideo, data);
+      }
+
+      if(this.selectedFile) {
+        this.uploadFilesToFirebase(this.selectedFile, 'quiz_attachment_files', data);
+      }
+
+      if(!this.selectedVideo && !this.selectedFile) {
+        this.finalDataForEmit = { ...data, files: [] };
+        this.addElementEvent.emit(this.finalDataForEmit);
+      }
     }
   }
 
@@ -153,16 +173,27 @@ export class CourseSectionBlockComponent implements OnInit {
         });
       }
 
-      this.addElementEvent.emit({
+      const data = {
         type: 'Exercise',
         no: count,
         order: this.section_elements.length + 1,
         elementTitle: this.exerciseTitle,
         elementDescription: this.exerciseDescription,
         section_index: this.section_index,
-      });
+      };
 
-      this.btnCancelExerciseClicked();
+      if(this.selectedVideo) {
+        this.uploadVimeoVideo(this.selectedVideo, data);
+      }
+
+      if(this.selectedFile) {
+        this.uploadFilesToFirebase(this.selectedFile, 'exercise_attachment_files', data);
+      }
+
+      if(!this.selectedVideo && !this.selectedFile) {
+        this.finalDataForEmit = { ...data, files: [] };
+        this.addElementEvent.emit(this.finalDataForEmit);
+      }
     }
   }
 
@@ -177,16 +208,27 @@ export class CourseSectionBlockComponent implements OnInit {
         });
       }
 
-      this.addElementEvent.emit({
+      const data = {
         type: 'Assignment',
         no: count,
         order: this.section_elements.length + 1,
         elementTitle: this.assignmentTitle,
         elementDescription: this.assignmentDescription,
         section_index: this.section_index,
-      });
+      };
 
-      this.btnCancelAssignmentClicked();
+      if(this.selectedVideo) {
+        this.uploadVimeoVideo(this.selectedVideo, data);
+      }
+
+      if(this.selectedFile) {
+        this.uploadFilesToFirebase(this.selectedFile, 'assignment_attachment_files', data);
+      }
+
+      if(!this.selectedVideo && !this.selectedFile) {
+        this.finalDataForEmit = { ...data, files: [] };
+        this.addElementEvent.emit(this.finalDataForEmit);
+      }
     }
   }
 
@@ -234,24 +276,27 @@ export class CourseSectionBlockComponent implements OnInit {
   drop(event: CdkDragDrop<string[]>) {
     if(event.previousIndex !== event.currentIndex) {
       moveItemInArray(this.section_elements, event.previousIndex, event.currentIndex);
-    
-      this.section_elements.map((item, index) => { 
-        let count = 0;
-
-        for(let jndex = 0; jndex <= index; jndex++) {
-          if(item.type === this.section_elements[jndex].type)
-            count++;
-        }
-
-        item.order = index + 1
-        item.no = count;
-      });
-
-      this.dragDropElementOrderElement.emit({
-        arrElement: this.section_elements,
-        section_index: parseInt(this.section_index) - 1
-      })
+      this.recalculateElementOrder();
     };
+  }
+
+  recalculateElementOrder() {
+    this.section_elements.map((item, index) => { 
+      let count = 0;
+
+      for(let jndex = 0; jndex <= index; jndex++) {
+        if(item.type === this.section_elements[jndex].type)
+          count++;
+      }
+
+      item.order = index + 1
+      item.no = count;
+    });
+
+    this.dragDropElementOrderElement.emit({
+      arrElement: this.section_elements,
+      section_index: parseInt(this.section_index) - 1
+    });
   }
 
   generateUUID(){
@@ -259,7 +304,9 @@ export class CourseSectionBlockComponent implements OnInit {
   }
 
   replaceVimeoURL(oldURL: string) {
-    const result = oldURL.replace('https://vimeo.com/', 'https://player.vimeo.com/video/');
+    const result = this.embedService.embed(oldURL, {
+      attr: { width: "95%", height: "400px" }
+    });
     return result;
   }
 
@@ -270,20 +317,22 @@ export class CourseSectionBlockComponent implements OnInit {
   // -------------------------------------------------------------------------
 
   courseVideoChanged(event) {
-    if(event.target.files[0]?.type.includes('video')) {
+    if(event.target.files.length !== 0 && event.target.files[0]?.type.includes('video')) {
       this.selectedVideo = event.target.files[0];
       this.vimeo_uploadedVideoName = this.selectedVideo.name;
-    } else {
-      this.selectedVideo = undefined;
+    } else if (event.target.files.length !== 0) {
+      this.inputLectureVideoElementRef.nativeElement.value = null;
+      this.openAlertMessageDialog("Error: Uploading Attachment Video", "<p>The attached file must be video.</p>");
     }
   }
 
   courseFileChanged(event) {
-    if(!event.target.files[0].type.includes('video')) {
+    if(event.target.files.length !== 0 && !event.target.files[0]?.type.includes('video')) {
       this.selectedFile = event.target.files[0];
-    } else {
-
-    }
+    } else if (event.target.files.length !== 0) {
+      this.inputLectureFileElementRef.nativeElement.value = null;
+      this.openAlertMessageDialog("Error: Uploading Attachment File", "<p>The attached file must not be video.</p>");
+    } 
   }
 
   // -------------------------------------------------------------------------
@@ -438,10 +487,10 @@ export class CourseSectionBlockComponent implements OnInit {
             console.log('Upload Error:', error);
             this.uploadStatus = 4;
           }, () => {
-            this.courseStore.TempCourse.promotionVideoUrl = this.vimeo_uploadedVideoUrl;
-
             this.isVideoUploaded = true;
             this.vimeo_uploadedVideoStatus = 'Uploaded';
+
+            console.log(this.vimeo_uploadedVideoUrl)
 
             if(this.isFileUploaded) {
               this.finalDataForEmit.files.push({
@@ -505,11 +554,6 @@ export class CourseSectionBlockComponent implements OnInit {
       width: '90%',
       data: { ...sectionData, index: section_index }
     });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      console.log(result)
-    });
   }
 
   btnEditSectionClicked(sectionData, section_index) {
@@ -519,9 +563,20 @@ export class CourseSectionBlockComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      console.log(result)
+      if (result) {
+        this.updateSectionEvent.emit({ ...result });
+      }
     });
   }
 
+  btnUpdateElementClicked(elementData) {
+    this.updateElementEvent.emit({ ...elementData });
+  }
+
+  openAlertMessageDialog(dialogTitle: String, dialogContent: String): void {
+    this.dialog.open(AlertMessageDialogComponent, {
+      width: '500px',
+      data: { dialogTitle, dialogContent }
+    });
+  }
 }

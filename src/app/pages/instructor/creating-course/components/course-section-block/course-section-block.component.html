@@ -16,7 +16,8 @@
         <app-course-element-block [elementData]="jtem" 
           [section_index]="section_index" 
           [element_index]="j" 
-          (deleteElementEvent)="this.btnDeleteElementClicked($event)">
+          (deleteElementEvent)="this.btnDeleteElementClicked($event)"
+          (updateElementEvent)="this.btnUpdateElementClicked($event)">
         </app-course-element-block>
       </div>
     </div>
@@ -38,16 +39,9 @@
                 <quill-editor [styles]="{height: '200px'}" [(ngModel)]="lectureDescription"></quill-editor>
 
                 <div class="uploadFilesContainer">
+
                   <p class="label">Upload Video (Only 1 video can be attached.)</p>
                   <div class="uploadingVideoBlockContainer" [ngStyle]="{ 'padding': '20px 0px 10px 0px;'}">
-                    <ng-container *ngIf="this.selectedVideo">
-                      <p [ngStyle]="{'margin-bottom': '10px'}">Attachment Video: {{ this.selectedVideo.name }}</p>                    
-                    </ng-container>
-
-                    <ng-container *ngIf="!this.selectedVideo">
-                      <p [ngStyle]="{'margin-bottom': '10px'}">No Attachment Video.</p>                    
-                    </ng-container>
-
                     <ng-container *ngIf="this.vimeo_uploadedVideoPct">
                       <mat-progress-bar mode="determinate" [value]="this.vimeo_uploadedVideoPct"></mat-progress-bar> 
                       <div [ngStyle]="{'display': 'flex', 'justify-content': 'space-between', 'margin-top': '10px'}">
@@ -56,20 +50,23 @@
                       </div>
                       <br/>
                     </ng-container>
-                  </div>
 
-                  <input type="file" (change)="courseVideoChanged($event)" accept="video/*"> 
+                    <div style="display: flex; align-items: center;">
+                      <label for="lecture-video-upload" class="custom-file-upload" style="margin-right: 10px;">Upload</label>
+                      <input id="lecture-video-upload" type="file" style="display: none;" #inputLectureVideoElementRef (change)="courseVideoChanged($event)" accept="video/*"/>
+
+                      <ng-container *ngIf="this.selectedVideo">
+                        <p>Attachment Video: {{ this.selectedVideo.name }}</p>                    
+                      </ng-container>
+  
+                      <ng-container *ngIf="!this.selectedVideo">
+                        <p>No Attachment Video.</p>                    
+                      </ng-container>
+                    </div>
+                  </div>
 
                   <p class="label">Upload File (Only 1 file can be attached.)</p>
                   <div class="uploadingVideoBlockContainer" [ngStyle]="{ 'padding': '20px 0px 10px 0px;'}">
-                    <ng-container *ngIf="this.selectedFile">
-                      <p [ngStyle]="{'margin-bottom': '10px'}">Attachment Files: {{ this.selectedFile?.name }}</p>                
-                    </ng-container>
-
-                    <ng-container *ngIf="!this.selectedFile">
-                      <p [ngStyle]="{'margin-bottom': '10px'}">No Attachment File.</p>                
-                    </ng-container>
-                    
                     <ng-container *ngIf="this.firebase_UploadingPercentage">
                       <mat-progress-bar mode="determinate" [value]="this.firebase_UploadingPercentage"></mat-progress-bar> 
                       <div [ngStyle]="{'display': 'flex', 'justify-content': 'space-between', 'margin-top': '10px'}">
@@ -78,9 +75,20 @@
                       </div>
                       <br/>
                     </ng-container>
-                  </div>
 
-                  <input type="file" (change)="courseFileChanged($event)">
+                    <div style="display: flex; align-items: center;">
+                      <label for="lecture-file-upload" class="custom-file-upload" style="margin-right: 10px;">Upload</label>
+                      <input id="lecture-file-upload" type="file" style="display: none;" #inputLectureFileElementRef (change)="courseFileChanged($event)"/>
+
+                      <ng-container *ngIf="this.selectedFile">
+                        <p>Attachment Files: {{ this.selectedFile?.name }}</p>                
+                      </ng-container>
+  
+                      <ng-container *ngIf="!this.selectedFile">
+                        <p>No Attachment File.</p>                
+                      </ng-container>
+                    </div>
+                  </div>
             
                   <!-- <p-fileUpload #fubauto mode="basic" accept="video/*" maxFileSize="1000000000" 
                     (onSelect)="courseVideoChanged($event)" [auto]="true" chooseLabel="Browse" multiple>
@@ -109,49 +117,59 @@
                 <p class="label">Description</p>
                 <quill-editor [styles]="{height: '200px'}" [(ngModel)]="quizDescription"></quill-editor>
 
-                <p class="label">Upload Video (Only 1 video can be attached.)</p>
-                <div class="uploadingVideoBlockContainer" [ngStyle]="{ 'padding': '20px 0px 10px 0px;'}">
-                  <ng-container *ngIf="this.selectedVideo">
-                    <p [ngStyle]="{'margin-bottom': '10px'}">Attachment Video: {{ this.selectedVideo.name }}</p>                    
-                  </ng-container>
+                <div class="uploadFilesContainer">
 
-                  <ng-container *ngIf="this.vimeo_uploadedVideoPct">
-                    <mat-progress-bar mode="determinate" [value]="this.vimeo_uploadedVideoPct"></mat-progress-bar> 
-                    <div [ngStyle]="{'display': 'flex', 'justify-content': 'space-between', 'margin-top': '10px'}">
-                      <p>{{ this.vimeo_uploadedVideoStatus }}</p>
-                      <p>{{ this.formatPercentage(this.vimeo_uploadedVideoPct) }}% Complete</p>
+                  <p class="label">Upload Video (Only 1 video can be attached.)</p>
+                  <div class="uploadingVideoBlockContainer" [ngStyle]="{ 'padding': '20px 0px 10px 0px;'}">
+                    <ng-container *ngIf="this.vimeo_uploadedVideoPct">
+                      <mat-progress-bar mode="determinate" [value]="this.vimeo_uploadedVideoPct"></mat-progress-bar> 
+                      <div [ngStyle]="{'display': 'flex', 'justify-content': 'space-between', 'margin-top': '10px'}">
+                        <p>{{ this.vimeo_uploadedVideoStatus }}</p>
+                        <p>{{ this.formatPercentage(this.vimeo_uploadedVideoPct) }}% Complete</p>
+                      </div>
+                      <br/>
+                    </ng-container>
+  
+                    <div style="display: flex; align-items: center;">
+                      <label for="quiz-video-upload" class="custom-file-upload" style="margin-right: 10px;">Upload</label>
+                      <input id="quiz-video-upload" type="file" style="display: none;" #inputLectureVideoElementRef (change)="courseVideoChanged($event)" accept="video/*"/>
+  
+                      <ng-container *ngIf="this.selectedVideo">
+                        <p>Attachment Video: {{ this.selectedVideo.name }}</p>                    
+                      </ng-container>
+  
+                      <ng-container *ngIf="!this.selectedVideo">
+                        <p>No Attachment Video.</p>                    
+                      </ng-container>
                     </div>
-                    <br/>
-                  </ng-container>
-                </div>
-
-                <input type="file" (change)="courseVideoChanged($event)" accept="video/*"> 
-
-                <p class="label">Upload File (Only 1 file can be attached.)</p>
-                <div class="uploadingVideoBlockContainer" [ngStyle]="{ 'padding': '20px 0px 10px 0px;'}">
-                  <!-- <ng-container *ngFor="let item of this.selectedFiles; let i=index;">
-                    <p [ngStyle]="{'margin-bottom': '10px'}">Attachment Files: {{ this.item.name }}</p>
-                  </ng-container> -->
-
-                  <ng-container *ngIf="this.selectedFile">
-                    <p [ngStyle]="{'margin-bottom': '10px'}">Attachment Files: {{ this.selectedFile?.name }}</p>                
-                  </ng-container>
-
-                  <ng-container *ngIf="this.firebase_UploadingPercentage">
-                    <mat-progress-bar mode="determinate" [value]="this.firebase_UploadingPercentage"></mat-progress-bar> 
-                    <div [ngStyle]="{'display': 'flex', 'justify-content': 'space-between', 'margin-top': '10px'}">
-                      <p>{{ this.firebase_UploadedStatus}}</p>
-                      <p>{{ this.formatPercentage(this.firebase_UploadingPercentage) }}% Complete</p>
+                  </div>
+  
+                  <p class="label">Upload File (Only 1 file can be attached.)</p>
+                  <div class="uploadingVideoBlockContainer" [ngStyle]="{ 'padding': '20px 0px 10px 0px;'}">
+                    <ng-container *ngIf="this.firebase_UploadingPercentage">
+                      <mat-progress-bar mode="determinate" [value]="this.firebase_UploadingPercentage"></mat-progress-bar> 
+                      <div [ngStyle]="{'display': 'flex', 'justify-content': 'space-between', 'margin-top': '10px'}">
+                        <p>{{ this.firebase_UploadedStatus}}</p>
+                        <p>{{ this.formatPercentage(this.firebase_UploadingPercentage) }}% Complete</p>
+                      </div>
+                      <br/>
+                    </ng-container>
+  
+                    <div style="display: flex; align-items: center;">
+                      <label for="quiz-file-upload" class="custom-file-upload" style="margin-right: 10px;">Upload</label>
+                      <input id="quiz-file-upload" type="file" style="display: none;" (change)="courseFileChanged($event)"/>
+  
+                      <ng-container *ngIf="this.selectedFile">
+                        <p>Attachment File: {{ this.selectedFile.name }}</p>                    
+                      </ng-container>
+  
+                      <ng-container *ngIf="!this.selectedFile">
+                        <p>No Attachment File.</p>                    
+                      </ng-container>
                     </div>
-                    <br/>
-                  </ng-container>
-                </div>
+                  </div>
 
-                <input type="file" (change)="courseFileChanged($event)">
-          
-                <!-- <p-fileUpload #fubauto mode="basic" accept="video/*" maxFileSize="1000000000" 
-                  (onSelect)="courseVideoChanged($event)" [auto]="true" chooseLabel="Browse" multiple>
-                </p-fileUpload> -->
+                </div>
               </div>
             </div>
   
@@ -175,45 +193,59 @@
                 <p class="label">Description</p>
                 <quill-editor [styles]="{height: '200px'}" [(ngModel)]="exerciseDescription"></quill-editor>
 
-                <p class="label">Upload Video (Only 1 video can be attached.)</p>
-                <div class="uploadingVideoBlockContainer" [ngStyle]="{ 'padding': '20px 0px 10px 0px;'}">
-                  <ng-container *ngIf="this.selectedVideo">
-                    <p [ngStyle]="{'margin-bottom': '10px'}">Attachment Video: {{ this.selectedVideo.name }}</p>                    
-                  </ng-container>
+                <div class="uploadFilesContainer">
+                  <p class="label">Upload Video (Only 1 video can be attached.)</p>
+                  <div class="uploadingVideoBlockContainer" [ngStyle]="{ 'padding': '20px 0px 10px 0px;'}">
+                    <ng-container *ngIf="this.vimeo_uploadedVideoPct">
+                      <mat-progress-bar mode="determinate" [value]="this.vimeo_uploadedVideoPct"></mat-progress-bar> 
+                      <div [ngStyle]="{'display': 'flex', 'justify-content': 'space-between', 'margin-top': '10px'}">
+                        <p>{{ this.vimeo_uploadedVideoStatus }}</p>
+                        <p>{{ this.formatPercentage(this.vimeo_uploadedVideoPct) }}% Complete</p>
+                      </div>
+                      <br/>
+                    </ng-container>
 
-                  <ng-container *ngIf="this.vimeo_uploadedVideoPct">
-                    <mat-progress-bar mode="determinate" [value]="this.vimeo_uploadedVideoPct"></mat-progress-bar> 
-                    <div [ngStyle]="{'display': 'flex', 'justify-content': 'space-between', 'margin-top': '10px'}">
-                      <p>{{ this.vimeo_uploadedVideoStatus }}</p>
-                      <p>{{ this.formatPercentage(this.vimeo_uploadedVideoPct) }}% Complete</p>
+                    <div style="display: flex; align-items: center;">
+                      <label for="exercise-video-upload" class="custom-file-upload" style="margin-right: 10px;">Upload</label>
+                      <input id="exercise-video-upload" type="file" style="display: none;" (change)="courseVideoChanged($event)" accept="video/*"/>
+
+                      <ng-container *ngIf="this.selectedVideo">
+                        <p>Attachment Video: {{ this.selectedVideo.name }}</p>                    
+                      </ng-container>
+
+                      <ng-container *ngIf="!this.selectedVideo">
+                        <p>No Attachment Video.</p>                    
+                      </ng-container>
                     </div>
-                    <br/>
-                  </ng-container>
+                  </div>
+
+                  <p class="label">Upload File (Only 1 file can be attached.)</p>
+                  <div class="uploadingVideoBlockContainer" [ngStyle]="{ 'padding': '20px 0px 10px 0px;'}">
+                    <ng-container *ngIf="this.firebase_UploadingPercentage">
+                      <mat-progress-bar mode="determinate" [value]="this.firebase_UploadingPercentage"></mat-progress-bar> 
+                      <div [ngStyle]="{'display': 'flex', 'justify-content': 'space-between', 'margin-top': '10px'}">
+                        <p>{{ this.firebase_UploadedStatus}}</p>
+                        <p>{{ this.formatPercentage(this.firebase_UploadingPercentage) }}% Complete</p>
+                      </div>
+                      <br/>
+                    </ng-container>
+
+                    <div style="display: flex; align-items: center;">
+                      <label for="exercise-file-upload" class="custom-file-upload" style="margin-right: 10px;">Upload</label>
+                      <input id="exercise-file-upload" type="file" style="display: none;" (change)="courseFileChanged($event)"/>
+
+                      <ng-container *ngIf="this.selectedFile">
+                        <p>Attachment File: {{ this.selectedFile.name }}</p>                    
+                      </ng-container>
+
+                      <ng-container *ngIf="!this.selectedFile">
+                        <p>No Attachment File.</p>                    
+                      </ng-container>
+                    </div>
+                  </div>
+
                 </div>
 
-                <input type="file" (change)="courseVideoChanged($event)" accept="video/*"> 
-
-                <p class="label">Upload File (Only 1 file can be attached.)</p>
-                <div class="uploadingVideoBlockContainer" [ngStyle]="{ 'padding': '20px 0px 10px 0px;'}">
-                  <ng-container *ngIf="this.selectedFile">
-                    <p [ngStyle]="{'margin-bottom': '10px'}">Attachment Files: {{ this.selectedFile?.name }}</p>                
-                  </ng-container>
-
-                  <ng-container *ngIf="this.firebase_UploadingPercentage">
-                    <mat-progress-bar mode="determinate" [value]="this.firebase_UploadingPercentage"></mat-progress-bar> 
-                    <div [ngStyle]="{'display': 'flex', 'justify-content': 'space-between', 'margin-top': '10px'}">
-                      <p>{{ this.firebase_UploadedStatus}}</p>
-                      <p>{{ this.formatPercentage(this.firebase_UploadingPercentage) }}% Complete</p>
-                    </div>
-                    <br/>
-                  </ng-container>
-                </div>
-
-                <input type="file" (change)="courseFileChanged($event)">
-          
-                <!-- <p-fileUpload #fubauto mode="basic" accept="video/*" maxFileSize="1000000000" 
-                  (onSelect)="courseVideoChanged($event)" [auto]="true" chooseLabel="Browse" multiple>
-                </p-fileUpload> -->
               </div>
             </div>
   
@@ -237,45 +269,57 @@
                 <p class="label">Description</p>
                 <quill-editor [styles]="{height: '200px'}" [(ngModel)]="assignmentDescription"></quill-editor>
 
-                <p class="label">Upload Video (Only 1 video can be attached.)</p>
-                <div class="uploadingVideoBlockContainer" [ngStyle]="{ 'padding': '20px 0px 10px 0px;'}">
-                  <ng-container *ngIf="this.selectedVideo">
-                    <p [ngStyle]="{'margin-bottom': '10px'}">Attachment Video: {{ this.selectedVideo.name }}</p>                    
-                  </ng-container>
+                <div class="uploadFilesContainer">
+                  <p class="label">Upload Video (Only 1 video can be attached.)</p>
+                  <div class="uploadingVideoBlockContainer" [ngStyle]="{ 'padding': '20px 0px 10px 0px;'}">
+                    <ng-container *ngIf="this.vimeo_uploadedVideoPct">
+                      <mat-progress-bar mode="determinate" [value]="this.vimeo_uploadedVideoPct"></mat-progress-bar> 
+                      <div [ngStyle]="{'display': 'flex', 'justify-content': 'space-between', 'margin-top': '10px'}">
+                        <p>{{ this.vimeo_uploadedVideoStatus }}</p>
+                        <p>{{ this.formatPercentage(this.vimeo_uploadedVideoPct) }}% Complete</p>
+                      </div>
+                      <br/>
+                    </ng-container>
 
-                  <ng-container *ngIf="this.vimeo_uploadedVideoPct">
-                    <mat-progress-bar mode="determinate" [value]="this.vimeo_uploadedVideoPct"></mat-progress-bar> 
-                    <div [ngStyle]="{'display': 'flex', 'justify-content': 'space-between', 'margin-top': '10px'}">
-                      <p>{{ this.vimeo_uploadedVideoStatus }}</p>
-                      <p>{{ this.formatPercentage(this.vimeo_uploadedVideoPct) }}% Complete</p>
+                    <div style="display: flex; align-items: center;">
+                      <label for="assignment-video-upload" class="custom-file-upload" style="margin-right: 10px;">Upload</label>
+                      <input id="assignment-video-upload" type="file" style="display: none;" (change)="courseVideoChanged($event)" accept="video/*"/>
+
+                      <ng-container *ngIf="this.selectedVideo">
+                        <p>Attachment Video: {{ this.selectedVideo.name }}</p>                    
+                      </ng-container>
+
+                      <ng-container *ngIf="!this.selectedVideo">
+                        <p>No Attachment Video.</p>                    
+                      </ng-container>
                     </div>
-                    <br/>
-                  </ng-container>
-                </div>
+                  </div>
 
-                <input type="file" (change)="courseVideoChanged($event)" accept="video/*"> 
+                  <p class="label">Upload File (Only 1 file can be attached.)</p>
+                  <div class="uploadingVideoBlockContainer" [ngStyle]="{ 'padding': '20px 0px 10px 0px;'}">
+                    <ng-container *ngIf="this.firebase_UploadingPercentage">
+                      <mat-progress-bar mode="determinate" [value]="this.firebase_UploadingPercentage"></mat-progress-bar> 
+                      <div [ngStyle]="{'display': 'flex', 'justify-content': 'space-between', 'margin-top': '10px'}">
+                        <p>{{ this.firebase_UploadedStatus}}</p>
+                        <p>{{ this.formatPercentage(this.firebase_UploadingPercentage) }}% Complete</p>
+                      </div>
+                      <br/>
+                    </ng-container>
 
-                <p class="label">Upload File (Only 1 file can be attached.)</p>
-                <div class="uploadingVideoBlockContainer" [ngStyle]="{ 'padding': '20px 0px 10px 0px;'}">
-                  <ng-container *ngIf="this.selectedFile">
-                    <p [ngStyle]="{'margin-bottom': '10px'}">Attachment Files: {{ this.selectedFile?.name }}</p>                
-                  </ng-container>
+                    <div style="display: flex; align-items: center;">
+                      <label for="assignment-file-upload" class="custom-file-upload" style="margin-right: 10px;">Upload</label>
+                      <input id="assignment-file-upload" type="file" style="display: none;" (change)="courseFileChanged($event)"/>
 
-                  <ng-container *ngIf="this.firebase_UploadingPercentage">
-                    <mat-progress-bar mode="determinate" [value]="this.firebase_UploadingPercentage"></mat-progress-bar> 
-                    <div [ngStyle]="{'display': 'flex', 'justify-content': 'space-between', 'margin-top': '10px'}">
-                      <p>{{ this.firebase_UploadedStatus}}</p>
-                      <p>{{ this.formatPercentage(this.firebase_UploadingPercentage) }}% Complete</p>
+                      <ng-container *ngIf="this.selectedFile">
+                        <p>Attachment File: {{ this.selectedFile.name }}</p>                    
+                      </ng-container>
+
+                      <ng-container *ngIf="!this.selectedFile">
+                        <p>No Attachment File.</p>                    
+                      </ng-container>
                     </div>
-                    <br/>
-                  </ng-container>
+                  </div>
                 </div>
-
-                <input type="file" (change)="courseFileChanged($event)">
-          
-                <!-- <p-fileUpload #fubauto mode="basic" accept="video/*" maxFileSize="1000000000" 
-                  (onSelect)="courseVideoChanged($event)" [auto]="true" chooseLabel="Browse" multiple>
-                </p-fileUpload> -->
               </div>
             </div>
   

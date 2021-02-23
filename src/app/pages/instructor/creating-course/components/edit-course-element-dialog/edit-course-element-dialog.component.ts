@@ -1,11 +1,17 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Inject, OnInit, Output, ViewChild } from '@angular/core';
 import { AngularFireStorage, AngularFireUploadTask } from '@angular/fire/storage';
 import { FormBuilder } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { UploadingVideoService } from 'src/app/services/uploading_video/uploading-video.service';
-import { ViewCourseElementDialogComponent } from '../view-course-element-dialog/view-course-element-dialog.component';
+
 import { map,switchMap } from 'rxjs/operators';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+
+import { EmbedVideoService } from 'ngx-embed-video';
+import { UploadingVideoService } from 'src/app/services/uploading_video/uploading-video.service';
+
+import { ViewCourseElementDialogComponent } from '../view-course-element-dialog/view-course-element-dialog.component';
+import { AlertMessageDialogComponent } from 'src/app/shared/dialog/alert-message-dialog/alert-message-dialog.component';
+import { UUID } from 'angular2-uuid';
 
 @Component({
   selector: 'app-edit-course-element-dialog',
@@ -15,21 +21,35 @@ import { HttpEventType, HttpResponse } from '@angular/common/http';
 export class EditCourseElementDialogComponent implements OnInit {
 
   editElementForm;
+  finalDataForEmit;
+  
+  @ViewChild("inputVideoElementRef") inputVideoElementRef: ElementRef;
+  @ViewChild("inputFileElementRef") inputFileElementRef: ElementRef;
 
   constructor(
+    private dialog: MatDialog,
     private formBuilder: FormBuilder,
     private storage: AngularFireStorage,
 
+    private embedService: EmbedVideoService,
     private uploadingVideoService: UploadingVideoService,
     public dialogRef: MatDialogRef<ViewCourseElementDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data:any
   ) { }
-  
-  ngOnInit(): void {
+
+  async ngOnInit(): Promise<void> {
     this.editElementForm = this.formBuilder.group({
       elementTitle: this.data.elementTitle,
       elementDescription: this.data.elementDescription
     })
+
+    this.uploadingVideoService.vimeoLinkObs.subscribe(
+      data => {
+        this.vimeo_uploadedVideoUrl = data;
+      }, error => {
+        throw new Error(error);
+      }
+    );
   }
 
   onNoClick(): void {
@@ -62,13 +82,44 @@ export class EditCourseElementDialogComponent implements OnInit {
     return found;
   }
 
+  generateUUID(){
+    return UUID.UUID();
+  }
+
   replaceVimeoURL(oldURL: string) {
-    const result = oldURL.replace('https://vimeo.com/', 'https://player.vimeo.com/video/');
+    const result = this.embedService.embed(oldURL, {
+      attr: { width: "95%", height: "400px" }
+    });
     return result;
   }
 
-  onSubmit(elementData) {
+  formatPercentage(number) {
+    return parseFloat(number).toFixed(2);
+  }
 
+  onSubmit(elementData) {
+    this.data = { ...this.data, ...elementData };
+    this.finalDataForEmit = this.data;
+
+    if(this.selectedVideo) {
+      this.uploadVimeoVideo(this.selectedVideo, this.data);
+    }
+
+    if(this.selectedFile) {
+      this.uploadFilesToFirebase(this.selectedFile, this.data.type + '_attachment_files', this.data);
+    }
+
+    if(!this.selectedVideo && !this.selectedFile) {
+      this.dialogRef.close({ ...this.data });
+    }
+  }
+
+  getIndexOfVimeoFileInFiles(arrFile: Array<any>) {
+    return arrFile.findIndex((item) => item.fileUploadedURL.includes('https://vimeo.com'))
+  }
+
+  checkIfFileIsExistingInFiles(arrFile: Array<any>) {
+    return arrFile.findIndex((item) => !item.fileUploadedURL.includes('https://vimeo.com'))
   }
 
   // -------------------------------------------------------------------------
@@ -77,16 +128,20 @@ export class EditCourseElementDialogComponent implements OnInit {
   selectedFile;
 
   courseVideoChanged(event) {
-    if(event.target.files[0].type.includes('video')) {
+    if(event.target.files.length !== 0 && event.target.files[0]?.type.includes('video')) {
       this.selectedVideo = event.target.files[0];
       this.vimeo_uploadedVideoName = this.selectedVideo.name;
+    } else if (event.target.files.length !== 0) {
+      this.openAlertMessageDialog("Error: Uploading Attachment Video", "<p>The attached file must be video.</p>");
     }
   }
 
   courseFileChanged(event) {
-    if(!event.target.files[0].type.includes('video')) {
+    if(event.target.files.length !== 0 && !event.target.files[0]?.type.includes('video')) {
       this.selectedFile = event.target.files[0];
-    }
+    } else if (event.target.files.length !== 0) {
+      this.openAlertMessageDialog("Error: Uploading Attachment File", "<p>The attached file must not be video.</p>");
+    } 
   }
 
   // -------------------------------------------------------------------------
@@ -115,6 +170,34 @@ export class EditCourseElementDialogComponent implements OnInit {
 
         this.isFileUploaded = true;
         this.firebase_UploadedStatus = "Uploaded";
+
+        const uploadedFileData = {
+          key: this.generateUUID(),
+          fileUploadedURL,
+          fileUploadedPath,
+          fileType: item.type,
+          fileName: item.name
+        };
+
+        let index = this.checkIfFileIsExistingInFiles(this.data.files);
+
+        if (index === -1) {
+          if (this.isVideoUploaded || !this.selectedVideo) {
+            this.finalDataForEmit.files.push(uploadedFileData);
+            this.dialogRef.close({ ...this.finalDataForEmit });
+          } else {
+            this.finalDataForEmit = { ...data };
+            this.finalDataForEmit.files.push(uploadedFileData);
+          }
+        } else {
+          if (this.isVideoUploaded || !this.selectedVideo) {
+            this.finalDataForEmit.files[index] = { ...uploadedFileData };
+            this.dialogRef.close({ ...this.finalDataForEmit });
+          } else {
+            this.finalDataForEmit = { ...data };
+            this.finalDataForEmit.files[index] = { ...uploadedFileData };
+          }
+        }
       })
     })
   }
@@ -191,7 +274,37 @@ export class EditCourseElementDialogComponent implements OnInit {
             console.log('Upload Error:', error);
             this.uploadStatus = 4;
           }, () => {
-            alert(this.vimeo_uploadedVideoUrl)
+            this.isVideoUploaded = true;
+            this.vimeo_uploadedVideoStatus = 'Uploaded';
+
+            const uploadedFileData = {
+              key: this.generateUUID(),
+              fileUploadedURL: this.vimeo_uploadedVideoUrl,
+              fileUploadedPath: this.vimeo_uploadedVideoUrl,
+              fileType: fileForUpload.type,
+              fileName: fileForUpload.name
+            };
+
+            let index = this.getIndexOfVimeoFileInFiles(this.data.files);
+
+            if (index === -1) {
+              if(this.isVideoUploaded) {
+                this.finalDataForEmit.files.push(uploadedFileData);
+                this.dialogRef.close({ ...this.finalDataForEmit });
+              } else {
+                this.finalDataForEmit = { ...data };
+                this.finalDataForEmit.files.push(uploadedFileData);
+              }
+            } else {
+              if(this.isVideoUploaded) {
+                this.finalDataForEmit.files[index] = { ...uploadedFileData };
+                this.dialogRef.close({ ...this.finalDataForEmit });
+              } else {
+                this.finalDataForEmit = { ...data };
+                this.finalDataForEmit.files[index] = { ...uploadedFileData };
+              }
+            }
+            
           }
         );
     } else {
@@ -207,6 +320,17 @@ export class EditCourseElementDialogComponent implements OnInit {
     const allowed = ['mov', 'wmv', 'avi', 'flv', 'mp4'];
     const videoType = filetype.split('/').pop();
     return allowed.includes(videoType);
+  }
+
+  openAlertMessageDialog(dialogTitle: String, dialogContent: String): void {
+    this.dialog.open(AlertMessageDialogComponent, {
+      width: '500px',
+      data: { dialogTitle, dialogContent }
+    });
+  }
+
+  btnCancel() {
+    this.dialogRef.close();
   }
 
 }

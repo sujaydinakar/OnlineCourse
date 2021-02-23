@@ -35,7 +35,7 @@ import { AdminCourseLevelComponent } from './pages/admin/course-level/admin-cour
 import { AdminCourseLanguageComponent } from './pages/admin/course-language/admin-course-language/admin-course-language.component';
 import { StudentLoginComponent } from './pages/auth/student-login/student-login.component';
 
-const redirectUnauthorizedAdminToLogin = () => redirectUnauthorizedTo(['/admin/login']);
+const redirectUnauthorizedAdminToLogin = () => redirectUnauthorizedTo(['/login']);
 
 const routes: Routes = [
   {
@@ -66,6 +66,10 @@ const routes: Routes = [
         component: TopicDescriptionComponent
       }
     ],
+  },
+  {
+    path: 'login',
+    component: AdminLoginComponent
   },
   {
     path: 'admin/login',

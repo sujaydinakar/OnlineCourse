@@ -50,8 +50,10 @@
           [section_data]="item"
           [section_elements]="item.elements"
           (deleleSectionEvent)="this.btnDeleteSectionClicked($event)"
-          (deleteElementEvent)="this.btnDeleteElementClicked($event)"
+          (updateSectionEvent)="this.btnUpdateSectionClicked($event)"
           (addElementEvent)="this.btnAddElementClicked($event)"
+          (deleteElementEvent)="this.btnDeleteElementClicked($event)"
+          (updateElementEvent)="this.btnUpdateElementClicked($event)"
           (dragDropElementOrderElement)="this.dragDropElementOrder($event)"
         ></app-course-section-block>
       </div>

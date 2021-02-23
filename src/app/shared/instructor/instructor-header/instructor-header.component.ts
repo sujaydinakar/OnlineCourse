@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-instructor-header',
@@ -7,9 +9,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class InstructorHeaderComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private auth: AngularFireAuth,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
+  }
+
+  btnSignOutClicked() {
+    this.auth.signOut();
+    this.router.navigate(['/admin/login']);
   }
 
 }

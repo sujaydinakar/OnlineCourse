@@ -1,4 +1,50 @@
-<div class="adminLoginContainer">
+<div id="signinContainer">
+  <div class="signinBox">
+      <div class="aboveContainer">
+          <h2>Sign In</h2>
+          <p>Log in to your account with one of this form.</p>
+
+          <div class="formContainer">
+              <form [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm.value)">
+                  <input type="email" placeholder="enter email" formControlName="email">
+                  <input type="password" placeholder="enter password" formControlName="password">
+
+                  <div class="checkboxContainer">
+                      <input type="checkbox" id="checkboxSignedIn">
+                      <label for="checkboxSignedIn">Keep me signed in</label>
+                  </div>
+
+                  <button>Sign In</button>
+              </form>
+          </div>
+
+          <div class="helpContainer">
+              <p>Doesn't have any account or forget password?</p>
+              <p>
+                  <span>Contact Us: </span>
+                  <span>
+                      <a href="https://auxswot.com/" target="_blank">auxswot.com</a>
+                  </span>
+              </p>
+          </div>
+      </div>
+      <div class="belowContainer">
+          <p>
+              <span>Terms of use</span>|
+              <span>Privacy</span>|
+              <span>Status</span>
+          </p>
+          <p>© 2021 Auxswot</p>
+      </div>
+  </div>
+
+  <div class="signInContent">
+      <h1>Auxswot Online Course</h1>
+      <p>Continuously build, test, release, and monitor apps for every platform.</p>
+  </div>
+</div>
+
+<!-- <div class="adminLoginContainer">
   <div class="leftSide">
     <div class="containerForMiddle">
       <div class="imageContainer">
@@ -27,4 +73,4 @@
   </div>
 
   <div class="rightSide"></div>
-</div>
+</div> -->

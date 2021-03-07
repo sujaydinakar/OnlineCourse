@@ -1,0 +1,60 @@
+.messageContainer {
+    width: 100%;
+    padding: 20px;
+    background-color: #E6F2F5;
+    display: flex;
+
+    i {
+        color: #007791;
+        margin-right: 20px;
+        margin-top: 7px;
+    }
+
+    p {
+        margin: 0;
+        padding: 0;
+        line-height: 30px;
+    }
+}
+
+.sectionContainer {
+    border: 1px solid #CACBCC;
+    background-color: #F2F3F5;
+    padding: 20px 40px 0px 40px;
+    margin-bottom: 20px;
+
+    .sectionHeader {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        p {
+            margin-right: 10px;
+        }
+
+        button {
+            outline: none;
+            border: none;
+            background-color: transparent;
+            padding: 5px;
+        }
+
+        button:hover {
+            cursor: pointer;
+            background-color: white;
+        }
+
+        .sectionHeader__leftSide {
+            display: flex;
+            align-items: center;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+
+    &:hover {
+        cursor: pointer;
+    }
+}

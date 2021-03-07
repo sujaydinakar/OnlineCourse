@@ -1,0 +1,11 @@
+<button [disabled]="process || disable"  mat-button class="mat-puc" type="submit" [ngClass]="class" (click)="_onPress()">
+    <div class="puc-primary">
+        <mat-spinner *ngIf="process"></mat-spinner>
+
+        <span class="material-icons" style="margin-right: 10px;">
+            add
+        </span>
+
+        <span>{{label}}{{process?'...':''}}</span>
+    </div>
+</button>

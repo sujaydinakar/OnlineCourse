@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth/auth.service';
 
 @Component({
   selector: 'app-instructor-header',
@@ -10,7 +11,7 @@ import { Router } from '@angular/router';
 export class InstructorHeaderComponent implements OnInit {
 
   constructor(
-    private auth: AngularFireAuth,
+    private authService: AuthService,
     private router: Router
   ) { }
 
@@ -18,8 +19,8 @@ export class InstructorHeaderComponent implements OnInit {
   }
 
   btnSignOutClicked() {
-    this.auth.signOut();
-    this.router.navigate(['/admin/login']);
+    this.authService.signout();
+    this.router.navigate(['/login']);
   }
 
 }

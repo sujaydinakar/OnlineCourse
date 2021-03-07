@@ -1,0 +1,145 @@
+.toggled-sidebar {
+  #header {
+    padding-left: $sidebarwidth;
+  }
+}
+  
+#header {
+  min-height: 64px;
+  background-color: #fff;
+  position: -webkit-sticky;
+  position: -moz-sticky;
+  position: -o-sticky;
+  position: -ms-sticky;
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  padding-left: 68px;
+  transition: padding-left 0.3s;
+  z-index: 111;
+  display: flex;
+  align-items: center;
+}
+
+.top-nav {
+  display: block;
+  align-items: center;
+  position: relative;
+  width: 100%;
+}
+
+.nav-content {
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+  background-color: #fff;
+  transition: all 0.3s;
+
+  h3{
+    font-size: 17px;
+    margin: 0;
+    font-weight: 600;
+    font-family: $appFontTitle;
+    &.head-title{
+      font-size: 22px;
+      font-weight: 600;
+      margin: 0;
+      white-space: nowrap;
+    }
+  }
+  
+  .action-list-item {
+    padding: 5px 0;
+  }
+}
+
+.left-nav {
+  display: inline-flex;
+  align-items: center;
+  background: transparent;
+  .campus-select {
+    button {
+      border-radius: 35px;
+    }
+  }
+  .mat-form-field-infix {
+    border: none;
+  }
+  .mat-form-field-wrapper {
+    padding: 0;
+  }
+  .mat-form-field-underline {
+    display: none;
+  }
+  .mat-select-value-text {
+    color: #fafafa;
+    text-transform: capitalize;
+  }
+  .mat-select-arrow {
+    color: #fafafa;
+  }
+  .mat-option-text {
+    text-transform: capitalize;
+  }
+}
+
+.nav-item-list {
+  display: inline-flex;
+  align-items: center;
+  .nav-item {
+    padding: 0;
+    .mat-button {
+      color: $color;
+      min-width: unset;
+      font-size: 14px;
+      font-weight: 400;
+      padding: 0 12px;
+    }
+    .m-menu{
+      &.mat-button{
+        font-family: $appFontTitle !important;
+      }
+    }
+  }
+
+  .nav-item-link {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    .mat-icon {
+      color: rgba(255,255,255,.78);
+      font-size: 30px;
+    }
+    .icon {
+      color: #333;
+      padding: 2px;
+      background-color: #fff;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      i {
+        font-size: 18px;
+      }
+      &.nobg {
+        background-color: transparent;
+        padding: 0;
+        color: #fff;
+        i {
+          font-size: 26px;
+        }
+      }
+    }
+    .avatar {
+      border-radius: 50%;
+      width: 26px;
+      height: 26px;
+      overflow: hidden;
+    }
+    img {
+      width: 100%;
+    }
+  }
+}

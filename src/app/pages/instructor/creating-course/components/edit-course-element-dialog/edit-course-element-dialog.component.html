@@ -3,8 +3,10 @@
 </h2>
 <mat-dialog-content class="mat-typography">
     <div class="dateContainer">
-        <p>Created Date: {{ this.data?.createdAt?.toDate() | date : 'medium' }}</p>
-        <p>Updated Date: {{ this.data?.updatedAt?.toDate() | date : 'medium' }}</p>
+        <p *ngIf=" this.data?.createdAt?.seconds ">Created Date: {{ this.data?.createdAt?.toDate() | date : 'medium' }}</p>
+        <p *ngIf=" this.data?.updatedAt?.seconds ">Updated Date: {{ this.data?.updatedAt?.toDate() | date : 'medium' }}</p>
+        <p *ngIf=" !this.data?.createdAt?.seconds ">Created Date: {{ 'A moment ago.' }}</p>
+        <p *ngIf=" !this.data?.updatedAt?.seconds ">Updated Date: {{ 'A moment ago.' }}</p>
     </div>
 
     <div class="blocksContainer">

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { tabs } from 'src/app/dummy/tabs';
 import { GetGreetingWordsService } from 'src/app/services/generator/get-greeting-words.service';
 import { UserStore } from 'src/app/stores/user.store';
 

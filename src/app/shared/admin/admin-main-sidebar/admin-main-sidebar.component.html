@@ -1,0 +1,162 @@
+<aside class="sidebar">
+    <div class="ac-ln-background"></div>
+    <div class="sidebar-brand" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" [routerLink]="['/']">
+        <div class="sbar-brand-name">
+            <img src="../../../assets/images/logo.png" />
+        </div>
+    </div>
+    <div class="sidebar-header">
+        <div class="header-content center">
+            <button mat-button class="mat-new-file">
+                <img src="../../../assets/images/plus.svg" class="i-svg" />
+                <span>New</span>
+            </button>
+        </div>
+    </div>
+    <div class="sidebar-list-wrapper">
+
+        <div class="list-content">
+            <div class="list-item">
+                <div class="list-item-row" routerLinkActive="active" [routerLink]="['/admin/course-category']">
+                    <div class="icon">
+                        <i class="material-icons">category</i>
+                    </div>
+                    <div class="item-name">
+                        Course Category
+                    </div>
+                </div>
+
+                <!-- <div class="list-item-row" routerLinkActive="active" [routerLink]="['/admin/course-topic']">
+                    <div class="icon">
+                        <i class="material-icons">topic</i>
+                    </div>
+                    <div class="item-name">
+                        Course Topic
+                    </div>
+                </div> -->
+
+                <div class="list-item-row" routerLinkActive="active" [routerLink]="['/admin/level']">
+                    <div class="icon">
+                        <i class="material-icons">equalizer</i>
+                    </div>
+                    <div class="item-name">
+                        Course Level
+                    </div>
+                </div>
+
+                <div class="list-item-row" routerLinkActive="active" [routerLink]="['/admin/language']">
+                    <div class="icon">
+                        <i class="material-icons">language</i>
+                    </div>
+                    <div class="item-name">
+                        Course Language
+                    </div>
+                </div>
+
+                <div class="list-item-row" routerLinkActive="active" [routerLink]="['/admin/slideshow']">
+                    <div class="icon">
+                        <i class="material-icons">aspect_ratio</i>
+                    </div>
+                    <div class="item-name">
+                        Slideshow
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <mat-accordion [multi]="true">
+            <mat-expansion-panel class="mat-file-accordion"
+                [expanded]="expansions.one" (closed)="onClosed(1)" (opened)="onOpened(1)">
+                <mat-expansion-panel-header expandedHeight="58px" collapsedHeight="78px"
+                    [class.active]="expansions?.one">
+                    <mat-panel-title>
+                        CRM
+                    </mat-panel-title>
+                    <mat-panel-description *ngIf="!expansions?.one">
+                        Property, Customer, Agent, Freelances and Report
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <div class="list-content">
+                    <div class="list-item">
+                        <div class="list-item-row" routerLinkActive="active" [routerLink]="['/crm/lead']">
+                            <div class="icon">
+                                <i class="material-icons">supervisor_account</i>
+                            </div>
+                            <div class="item-name">
+                                User
+                            </div>
+                        </div>
+
+                        <div class="list-item-row" routerLinkActive="active" [routerLink]="['/crm/account']">
+                            <div class="icon">
+                                <i class="material-icons">account_circle</i>
+                            </div>
+                            <div class="item-name">
+                                Account
+                            </div>
+                        </div>
+
+                        <div class="list-item-row" routerLinkActive="active" [routerLink]="['/crm/contact']">
+                            <div class="icon">
+                                <i class="material-icons">phone_in_talk</i>
+                            </div>
+                            <div class="item-name">
+                                Contact
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel class="mat-file-accordion"
+                [expanded]="expansions.two" (closed)="onClosed(2)" (opened)="onOpened(2)">
+                <mat-expansion-panel-header expandedHeight="58px" collapsedHeight="78px"
+                    [class.active]="expansions?.two">
+                    <mat-panel-title>
+                        User Manangement
+                    </mat-panel-title>
+                    <mat-panel-description *ngIf="!expansions?.two">
+                        Manage User and Roles
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <div class="list-content">
+                    <div class="list-item">
+                        <div class="list-item-row" routerLinkActive="active" [routerLink]="['/user/data']">
+                            <div class="icon">
+                                <i class="material-icons">account_circle</i>
+                            </div>
+                            <div class="item-name">
+                                Users
+                            </div>
+                        </div>
+                        <div class="list-item-row" routerLinkActive="active" [routerLink]="['/user/roles']">
+                            <div class="icon">
+                                <i class="material-icons">lock</i>
+                            </div>
+                            <div class="item-name">
+                                Roles
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </mat-expansion-panel>
+
+        </mat-accordion>
+    </div>
+
+    <div class="sidebar-footer">
+        <div class="signout" (click)="onLogOut()">
+            <div class="icon">
+                <i class="material-icons"> lock_open </i>
+            </div>
+            <div class="item-name">
+                Sign Out
+            </div>
+        </div>
+        <div class="sidebar-toggle-button" (click)="togglesidebar()">
+            <div class="arrow-icon"></div>
+        </div>
+    </div>
+</aside>

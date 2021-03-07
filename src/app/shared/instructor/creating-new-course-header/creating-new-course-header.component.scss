@@ -1,6 +1,9 @@
 .creatingNewCourseHeaderContainer {
   background-color: #1F4068;
   padding: 15px 30px;
+  width: 100%;
+  position: fixed;
+  z-index: 1000;
 
   display: flex;
   justify-content: space-between;

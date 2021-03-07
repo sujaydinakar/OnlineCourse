@@ -45,6 +45,7 @@ export class CourseSectionBlockComponent implements OnInit {
   @ViewChild("inputLectureVideoElementRef") inputLectureVideoElementRef: ElementRef;
   @ViewChild("inputLectureFileElementRef") inputLectureFileElementRef: ElementRef;
 
+
   btnDeleteSectionClicked(value: string) {
     this.deleleSectionEvent.emit(value);
   }
@@ -80,7 +81,8 @@ export class CourseSectionBlockComponent implements OnInit {
 
     private embedService: EmbedVideoService,
     public uploadingVideoService: UploadingVideoService,
-  ) { }
+  ) {
+   }
 
   async ngOnInit(): Promise<void> {
     this.uploadingVideoService.vimeoLinkObs.subscribe(
@@ -315,8 +317,7 @@ export class CourseSectionBlockComponent implements OnInit {
   }
 
   // -------------------------------------------------------------------------
-
-  courseVideoChanged(event) {
+  async courseVideoChanged(event){
     if(event.target.files.length !== 0 && event.target.files[0]?.type.includes('video')) {
       this.selectedVideo = event.target.files[0];
       this.vimeo_uploadedVideoName = this.selectedVideo.name;

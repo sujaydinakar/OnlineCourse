@@ -1,0 +1,16 @@
+@import './variable.scss';
+@import './my_variable.scss';
+@import './main.scss';
+@import './sidebar.scss';
+@import './header.scss';
+@import './responsive.scss';
+@import './material.scss';
+@import './button.scss';
+
+.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle{
+    border-color: $primary;
+}
+
+.mat-radio-button.mat-accent .mat-radio-inner-circle, .mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element:not(.mat-radio-persistent-ripple), .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-persistent-ripple, .mat-radio-button.mat-accent:active .mat-radio-persistent-ripple {
+    background-color: $primary;
+}

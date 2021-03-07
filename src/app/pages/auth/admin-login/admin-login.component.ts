@@ -36,8 +36,7 @@ export class AdminLoginComponent implements OnInit {
     const { email, password } = formData;
 
     this.auth.signInWithEmailAndPassword(email, password).then((user: any) => {
-      // this.router.navigate(['/admin']);
-      this.location.back();
+      this.router.navigate(['/admin']);
     }).catch((error) => {
       console.log(error)
     });

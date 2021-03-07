@@ -52,8 +52,8 @@
                     </ng-container>
 
                     <div style="display: flex; align-items: center;">
-                      <label for="lecture-video-upload" class="custom-file-upload" style="margin-right: 10px;">Upload</label>
-                      <input id="lecture-video-upload" type="file" style="display: none;" #inputLectureVideoElementRef (change)="courseVideoChanged($event)" accept="video/*"/>
+                      <label for="lecture-video-upload{{section_index}}" class="custom-file-upload" style="margin-right: 10px;">Upload</label>
+                      <input id="lecture-video-upload{{section_index}}" type="file" style="display: none;" (change)="courseVideoChanged($event)" accept="video/*"/>
 
                       <ng-container *ngIf="this.selectedVideo">
                         <p>Attachment Video: {{ this.selectedVideo.name }}</p>                    
@@ -77,8 +77,8 @@
                     </ng-container>
 
                     <div style="display: flex; align-items: center;">
-                      <label for="lecture-file-upload" class="custom-file-upload" style="margin-right: 10px;">Upload</label>
-                      <input id="lecture-file-upload" type="file" style="display: none;" #inputLectureFileElementRef (change)="courseFileChanged($event)"/>
+                      <label for="lecture-file-upload{{section_index}}" class="custom-file-upload" style="margin-right: 10px;">Upload</label>
+                      <input id="lecture-file-upload{{section_index}}" type="file" style="display: none;" (change)="courseFileChanged($event)"/>
 
                       <ng-container *ngIf="this.selectedFile">
                         <p>Attachment Files: {{ this.selectedFile?.name }}</p>                
@@ -132,7 +132,7 @@
   
                     <div style="display: flex; align-items: center;">
                       <label for="quiz-video-upload" class="custom-file-upload" style="margin-right: 10px;">Upload</label>
-                      <input id="quiz-video-upload" type="file" style="display: none;" #inputLectureVideoElementRef (change)="courseVideoChanged($event)" accept="video/*"/>
+                      <input id="quiz-video-upload" type="file" style="display: none;" (change)="courseVideoChanged($event)" accept="video/*"/>
   
                       <ng-container *ngIf="this.selectedVideo">
                         <p>Attachment Video: {{ this.selectedVideo.name }}</p>                    

@@ -1,0 +1,46 @@
+<h2 mat-dialog-title>
+    {{ this.data?.type }}: {{ this.data?.elementTitle }}
+</h2>
+<mat-dialog-content class="mat-typography">
+    <div>
+        <p>Description:</p>
+        <div [innerHTML]="this.data?.elementDescription"></div>
+        <div *ngIf="this.data?.elementDescription === ''">No Description.</div>
+    </div>
+
+    <div style="margin-top: 20px;">
+        <p>Attachment Video:</p>
+
+        <ng-container *ngFor="let item of this.data?.files" style="width: 100% !important;">
+            <!-- <iframe *ngIf="checkIfItIsVimeoLink(item.fileUploadedURL)" [src]="this.replaceVimeoURL(item.fileUploadedURL) | safe:'resourceUrl'" 
+            width="100%" height="500px" frameborder="0" title="hello world" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe> -->
+
+            <div [innerHtml]="this.replaceVimeoURL(item.fileUploadedURL)" style="width: 100%; height: auto;"></div>
+        </ng-container>
+
+        <ul *ngIf="!checkIfAllFilesHasOneVimeoVideo(this.data?.files)">
+            <li>No Attachment Video.</li>
+        </ul>
+    </div>
+
+    <div style="margin-top: 20px;">
+        <p>Attachment Files:</p>
+        <ul>
+            <ng-container *ngFor="let item of this.data?.files">
+                <li *ngIf="!checkIfItIsVimeoLink(item.fileUploadedURL)">
+                    <a href="{{ item.fileUploadedURL }}" target="_blank">
+                        {{ item.fileName || 'Untitled File' }}
+                    </a>
+                </li>
+            </ng-container>
+            
+            <li *ngIf="this.data?.files?.length === 0 || this.data?.files === undefined || !checkIfThereAttachmentFile(this.data?.files)">
+                No Attachment Files.
+            </li>
+        </ul>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <!-- <button mat-button mat-dialog-close>Close</button> -->
+  <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Close</button>
+</mat-dialog-actions>

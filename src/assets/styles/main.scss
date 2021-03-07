@@ -1,0 +1,295 @@
+#page-wrapper {
+    background-color: #edeff1;
+    z-index: 1;
+    // height: 100%;
+    position: relative;
+}
+
+.sticky-block {
+    position: sticky;
+    top: 64px;
+    z-index: 2;
+    background-color: #fff;
+    &.dialog {
+      .head-title {
+        font-size: 18px;
+      }
+      .nav-content {
+        border-bottom: solid 1px #ebebeb;
+      }
+    }
+}
+
+.isBigScreen,
+.isSmallScreen {
+  display: flex;
+}
+
+.charbar {
+  //   position: absolute;
+  z-index: 9999;
+  .mat-drawer-backdrop {
+    position: fixed !important;
+  }
+  .mat-drawer-backdrop.mat-drawer-shown {
+    background-color: rgba(0, 0, 0, 0.3);
+  }
+}
+
+#imgPreview {
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+  color: #ffffff;
+
+  .command-bar {
+    background-color: #333;
+    box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.52);
+    min-height: 46px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 6px 12px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    color: #ffffff;
+    justify-content: space-between;
+    z-index: 100;
+
+    .group-info {
+      .mat-icon {
+        color: #ffffff;
+      }
+    }
+  }
+  .img-lay {
+    padding-top: 60px;
+    width: 100%;
+    height: 100vh;
+    .img-center {
+      width: 100%;
+      margin: auto;
+      display: block;
+      .iframe {
+        width: 80%;
+        height: 100vh;
+        margin: 0 auto;
+        display: block;
+        text-align: center;
+        html {
+          body {
+            text-align: center;
+            img {
+              width: 100%;
+              height: 100%;
+            }
+          }
+        }
+      }
+      iframe {
+        html {
+          body {
+            img {
+              width: 100%;
+              height: 100%;
+            }
+          }
+        }
+        &#iframe {
+          width: 80%;
+          height: 100vh;
+          margin: 0 auto;
+          display: block;
+          text-align: center;
+
+          html {
+            body {
+              img {
+                width: 100%;
+                height: 100%;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+iframe,
+.iframe {
+  body {
+    text-align: center !important;
+  }
+}
+
+.right-click-Menu {
+  padding: 0;
+  min-width: 280px !important;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.28) !important;
+
+  .break {
+    border-bottom: 1px solid #e8eaed;
+    margin: 4px 0;
+    display: block;
+  }
+  button.mat-menu-item {
+    padding: 0 24px;
+    min-height: 38px;
+    line-height: 38px;
+    display: block;
+  }
+  .mat-menu-content {
+    padding: 0 !important;
+  }
+  .mat-menu-item-submenu-trigger::after {
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 5px 0 5px 5px;
+    border-color: transparent transparent transparent currentColor;
+    content: "";
+    display: inline-block;
+    position: absolute;
+    top: 50%;
+    right: 16px;
+    transform: translateY(-50%);
+  }
+}
+
+// -----------------------------------------------------------------
+
+#signinContainer {
+  width: 100%;
+  height: 100vh;
+  padding: 20px;
+
+  display: flex;
+  justify-content: space-between;
+  // align-items: center;
+
+  // background-image: url('./assets/images/background-sign-in-1.jpg');
+  // background-size: cover;
+  // background-repeat: no-repeat;
+
+  background-color: #0F1D51;
+
+  .signinBox {
+    width: 500px;
+    height: 100%;
+    padding: 40px;
+    background-color: white;
+    border-radius: 10px;
+    // box-shadow: 0px 0px 8px rgb(168, 168, 168);
+
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+
+    .aboveContainer {
+      width: 100%;
+
+      h2 {
+        color: $dark-title;
+      }
+
+      p {
+        margin-top: 10px;
+        font-size: 12px;
+        color: $light-p;
+      }
+
+      .formContainer {
+        width: 100%;
+        margin-top: 40px;
+
+        input {
+          width: 100%;
+          padding: 10px;
+          margin-bottom: 20px;
+          outline: none;
+        }
+
+        button {
+          padding: 10px 20px;
+          color: white;
+          font-weight: bold;
+          transition: 0.5s;
+          background-color: crimson;
+          border: none; 
+          outline: none;
+          margin-bottom: 20px;
+
+          &:hover {
+            cursor: pointer;
+            transition: 0.5s;
+            background-color: rgb(194, 19, 54);
+          }
+        }
+
+        .checkboxContainer {
+          display: flex;
+          justify-content: flex-start;
+          align-items: center;
+          margin-bottom: 20px;
+        
+          input[type=checkbox] {
+            width: 10px;
+            margin-right: 10px;
+            margin-bottom: 0px;
+          }
+
+          label {
+            font-size: 14px;
+            color: $light-p;
+          }
+        }
+      }
+    }
+
+    .belowContainer {
+      width: 100%;
+      
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      p {
+        font-size: 12px;
+        color: $light-p;
+
+        span:first-child {
+          margin-left: 0px;
+        }
+
+        span {
+          margin-left: 7px;
+          margin-right: 7px;
+        }
+
+        span:last-child {
+          margin-right: 0px;
+        }
+      }
+    }
+  }
+
+  .signInContent {
+    padding: 40px;
+    text-align: right;
+
+    h1 {
+      color: white;
+    }
+
+    p {
+      color: white;
+      font-size: 14px;
+      margin-top: 10px;
+    }
+  }
+} 

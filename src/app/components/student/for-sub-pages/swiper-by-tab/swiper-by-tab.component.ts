@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthStore } from 'src/app/stores/auth.store';
+import { CourseStore } from 'src/app/stores/course.store';
+import { UserStore } from 'src/app/stores/user.store';
 import { SwiperOptions } from 'swiper';
 
 @Component({
@@ -8,9 +12,17 @@ import { SwiperOptions } from 'swiper';
 })
 export class SwiperByTabComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private authStore: AuthStore,
+    private router: Router,
+    private userStore: UserStore,
+    public courseStore: CourseStore
+  ) { }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
+    await this.userStore.getCurrentLoggedInUser_2((data) => {
+      this.courseStore.getCourses();
+    });
   }
 
   public config: SwiperOptions = {
@@ -26,4 +38,12 @@ export class SwiperByTabComponent implements OnInit {
   };
 
   rate = 5;
+
+  courseClicked(courseKey) {
+    if(this.authStore.isLoggedIn)
+      this.router.navigate(['/student/course/' + courseKey]);
+    else
+      this.router.navigate(['/course/' + courseKey]);
+  }
+
 }

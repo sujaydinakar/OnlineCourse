@@ -15,9 +15,14 @@
 
     #imageContainer {
       height: 72px;
-
+      
       img {
         height: 100%;
+        outline: none;
+
+        &:hover {
+          cursor: pointer;
+        }
       }
     }
 

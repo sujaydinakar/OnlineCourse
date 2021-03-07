@@ -105,6 +105,16 @@
           }
         }
       }
+
+      .linkBackToOrigin {
+        outline: none;
+        color: rgb(66, 177, 247);
+        text-decoration: underline;
+
+        &:hover {
+          cursor: pointer;
+        }
+      }
     }
   
     .rightSide {

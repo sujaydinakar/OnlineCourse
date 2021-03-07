@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CourseStore } from 'src/app/stores/course.store';
 
 @Component({
   selector: 'app-topic-intro-header',
@@ -8,7 +9,9 @@ import { Component, OnInit } from '@angular/core';
 export class TopicIntroHeaderComponent implements OnInit {
   rate = 5;
 
-  constructor() { }
+  constructor(
+    public courseStore: CourseStore
+  ) { }
 
   ngOnInit(): void {
   }

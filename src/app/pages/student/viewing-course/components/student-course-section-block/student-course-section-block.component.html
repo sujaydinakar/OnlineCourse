@@ -1,0 +1,14 @@
+<div class="sectionContainer">
+    <div class="sectionHeader">
+      <div class="sectionHeader__leftSide" (click)="btnViewSectionClicked(section_data, section_index)">
+        <p><span style="font-weight: bold;">Section {{ section_index }}: </span>{{ section_title }}</p>
+      </div>
+    </div>
+
+    <div *ngFor="let jtem of this.section_elements; let j=index;" class="elementBlockContainer" cdkDrag>
+        <app-student-course-element-block [elementData]="jtem" 
+          [section_index]="section_index" 
+          [element_index]="j">
+        </app-student-course-element-block>
+    </div>
+</div>

@@ -1,0 +1,241 @@
+.homeContainer {
+    width: 100%;
+    padding: 20px 10%;
+  
+    .messageContainer {
+      width: 100%;
+      padding: 20px;
+      background-color: #E6F2F5;
+  
+      display: flex;
+  
+      i {
+        color: #007791;
+        margin-right: 20px;
+        margin-top: 7px;
+      }
+  
+      p {
+        margin: 0;
+        padding: 0;
+        line-height: 30px;
+      }
+    }
+  
+    .controllerContainer {
+      display: flex;
+      margin-top: 40px;
+      justify-content: space-between;
+  
+      .searchFilterContainer {
+        display: flex;
+  
+        .searchContainer {
+          display: flex;
+          border: 1px solid #007791;
+          margin-right: 20px;
+  
+          input {
+            width: 300px;
+            border: none;
+            font-size: 15px;
+            padding: 14px;
+          }
+  
+          button {
+            color: white;
+            background-color: #007791;
+            border: none;
+            font-size: 20px;
+            padding: 14px;
+          }
+  
+          input:focus, button:focus, select:focus {
+            outline: none;
+          }
+  
+          button:hover {
+            cursor: pointer;
+            background-color: darken(#007791, 10);
+          }
+        }
+  
+        select {
+          padding: 10px;
+          border: 1px solid #007791;
+  
+          option {
+            padding: 10px;
+          }
+        }
+      }
+  
+      button {
+        transition: 0.5s;
+        color: white;
+        background-color: #EC5252;
+        border: none;
+        font-size: 14px;
+        font-weight: bold;
+        padding: 14px;
+      }
+  
+      button:focus {
+        outline: none;
+      }
+  
+      button:hover {
+        transition: 0.5s;
+        cursor: pointer;
+        background-color:darken( #EC5252, 10);
+      }
+    }
+  
+    .coursesContainer {
+      width: 100%;
+      margin-top: 40px;
+  
+      .courseContainer {
+        outline: none;
+        display: flex;
+        transition: 0.5s;
+        margin-bottom: 20px;
+        border: 1px solid rgb(175, 175, 175);
+        
+        .imageContainer {
+          width: 250px;
+          height: 150px;
+  
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+          }
+        }
+  
+        .descriptionContainer {
+          padding: 20px;
+          width: calc(100% - 250px);
+  
+          display: flex;
+          justify-content: center;
+          align-items: center;
+  
+          div {
+            width: 100%;
+  
+            .first_row {
+              width: 100%;
+  
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+  
+              p {
+                margin: 0;
+              }
+            }
+  
+            .second_row {
+              width: 100%;
+            }
+          }
+        }
+      }
+  
+      .courseContainer:hover {
+        cursor: pointer;
+        transition: 0.5s;
+        box-shadow: 0px 0px 10px rgb(175, 175, 175);
+      }
+    }
+  
+    .resourceCardsContainer {
+      text-align: center;
+  
+      .resourceText {
+        font-size: 25px;
+        margin: 50px 0px;
+      }
+  
+      .for2CardsContainer {
+        display: flex;
+        justify-content: space-between;
+      }
+  
+      .resourceCardContainer {
+        transition: 0.5s;
+        width: 100%;
+        margin-bottom: 30px;
+        border: 1px solid #E7E7E8;
+  
+        display: flex;
+        justify-content: center;
+        align-items: center;
+  
+        .imageContainer {
+          padding: 40px;
+          width: 300px;
+  
+          img {
+            width: 100%;
+          }
+        }
+  
+        .descriptionContainer {
+          max-width: 800px;
+          padding: 0px 20px;
+          text-align: left;
+  
+          .descriptionTitle {
+            font-size: 25px;
+          }
+  
+          .descriptionBody {
+            line-height: 25px;
+            margin: 30px 0px;
+          }
+  
+          .getStarted {
+            color: #007791;
+          }
+  
+          .getStarted:hover {
+            cursor: pointer;
+            text-decoration: underline;
+          }
+        }
+      }
+  
+      .resourceCardContainer:hover {
+        transition: 0.5s;
+        box-shadow: 0px 0px 8px #c5c5c5;
+      }
+    }
+  
+    .instructorResourcesContainer {
+      width: 100%;
+      text-align: center;
+      margin-bottom: 40px;
+  
+      .resourceText {
+        font-size: 25px;
+        margin: 50px 0px;
+      }
+  
+      .instructorResourcesContainer_2 {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+  
+        .instructorResourceContainer {
+  
+          i {
+            color: #888888;
+            font-size: 40px;
+          }
+        }
+      }
+    }
+  }
+  

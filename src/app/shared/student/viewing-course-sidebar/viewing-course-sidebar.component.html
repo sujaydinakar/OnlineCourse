@@ -1,0 +1,28 @@
+<div class="sidebarContainer">
+
+  <div class="groupNavElements">
+    <h3>About This Course</h3>
+
+    <div class="navElement" [routerLink]="['/viewing_course/' + this.courseId + '/course_description']" [routerLinkActive]="['active_creating_course']">
+      <p>Description</p>
+    </div>
+    <div class="navElement" [routerLink]="['/viewing_course/' + this.courseId + '/purchasing_information']" [routerLinkActive]="['active_creating_course']">
+      <p>Purchasing Info.</p>
+    </div>
+  </div>
+
+  <div class="groupNavElements">
+    <h3>Content</h3>
+
+    <div class="navElement" [routerLink]="['/viewing_course/' + this.courseId + '/course_overview']" [routerLinkActive]="['active_creating_course']">
+      <p>Overview</p>
+    </div>
+    <div class="navElement" [routerLink]="['/viewing_course/' + this.courseId + '/course_curriculum']" [routerLinkActive]="['active_creating_course']">
+      <p>Curriculum</p>
+    </div>
+  </div>
+
+  <button>Submit for complete</button>
+
+</div>
+  

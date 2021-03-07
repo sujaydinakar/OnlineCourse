@@ -1,0 +1,70 @@
+@media (min-width: 320px) and (max-width: 1360px) {
+  .traning-wrapper .training-content {
+    .app-onboarding-wide-content {
+      padding: 0;
+      margin: 0;
+    }
+  }
+  .enbutton.primary {
+    padding: 0 14px;
+  }
+  .sidebar {
+    width: 0px;
+    overflow: hidden;
+  }
+  #main {
+    padding-left: 0;
+  }
+  .command-bar {
+    padding: 6px 12px;
+  }
+  .toggled-sidebar #main,
+  .toggled-sidebar .nav-header,
+  .toggled-sidebar #header {
+    padding-left: 0;
+    .top-nav{
+      .nav-content {
+        padding: 0 24px 0 268px;
+
+    }
+    }
+  }
+  .pg-wrap {
+    width: 100%;
+    justify-content: flex-end;
+  }
+  .pg-wrap .search-filter {
+    width: 100%;
+    margin-right: 8px;
+    margin-left: 8px;
+    input {
+      width: 100%;
+    }
+  }
+  .cs-mat-tab-link .mat-tab-link {
+    font-size: 13px;
+    height: 33px;
+    margin: 0 2px;
+  }
+  .mat-tab-nav-bar.mat-primary .mat-ink-bar {
+    display: none;
+  }
+  .head-title {
+    font-size: 18px;
+  }
+  .mat-puc.mat-button {
+    padding: 6px 16px;
+    font-size: 14px;
+  }
+  .nav-header,
+  #header {
+    padding-left: 0px;
+  }
+  .nav-header .app-container,
+  #header .app-container {
+    margin: 0 8px;
+  }
+  .mat-tab-links {
+    flex-wrap: wrap;
+  }
+}

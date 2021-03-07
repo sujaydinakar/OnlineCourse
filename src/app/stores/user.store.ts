@@ -1,4 +1,5 @@
 import { action, observable } from "mobx";
+import { computed } from 'mobx-angular';
 import { Injectable } from "@angular/core";
 import { IUser } from "../models/user.model";
 import { AngularFireAuth } from "@angular/fire/auth";
@@ -15,6 +16,12 @@ export class UserStore {
     private auth: AngularFireAuth,
     private userMapping: UserMappingService
   ) { }
+
+  @computed
+  get isLoggedIn(): boolean {
+    const user = localStorage.getItem('SessionUser');
+    return user != null ? true : false;
+  }
 
   @action
   async getCurrentLoggedInUser() {

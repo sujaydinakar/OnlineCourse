@@ -1,0 +1,64 @@
+.creatingNewCourseHeaderContainer {
+    background-color: #1F4068;
+    padding: 15px 30px;
+    width: 100%;
+    position: fixed;
+    z-index: 1000;
+  
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  
+    .backContainer {
+      color: white;
+  
+      i {
+        margin-right: 10px;
+      }
+    }
+  
+    .backContainer:hover {
+      cursor: pointer;
+    }
+  
+    .backContainer:focus {
+      outline: none;
+    }
+  
+    .controllersContainer {
+      display: flex;
+      align-items: center;
+  
+      .btnSave {
+        border: none;
+        padding: 10px 30px;
+        font-size: 16px;
+        font-weight: bold;
+        margin-right: 20px;
+        background-color: #e43f5a;
+        transition: 0.5s;
+        color: white;
+      }
+  
+      .btnSave:hover {
+        transition: 0.5s;
+        background-color: darken(#e43f5a, 10);
+      }
+  
+      .btnSetting {
+        border: none;
+        font-size: 26px;
+        background-color: transparent;
+        color: white;
+      }
+  
+      button:focus {
+        outline: none;
+      }
+  
+      button {
+        cursor: pointer;
+      }
+    }
+  }
+  

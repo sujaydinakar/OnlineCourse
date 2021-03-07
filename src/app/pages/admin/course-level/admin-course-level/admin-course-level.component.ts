@@ -8,6 +8,7 @@ import { AdminAddCourseLevelComponent } from '../admin-add-course-level/admin-ad
 import { AdminEditCourseLevelComponent } from '../admin-edit-course-level/admin-edit-course-level.component';
 import { AdminConfirmationDialogComponent } from 'src/app/shared/admin/admin-confirmation-dialog/admin-confirmation-dialog.component';
 import { CourseLevelStore } from 'src/app/stores/level.store';
+import { tabs } from 'src/app/dummy/tabs';
 
 @Component({
   selector: 'app-admin-course-level',
@@ -15,6 +16,8 @@ import { CourseLevelStore } from 'src/app/stores/level.store';
   styleUrls: ['./admin-course-level.component.scss']
 })
 export class AdminCourseLevelComponent implements OnInit {
+
+  TABS = tabs.level;
   
   constructor(
     public dialog: MatDialog,

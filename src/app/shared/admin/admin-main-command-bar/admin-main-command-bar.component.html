@@ -1,0 +1,15 @@
+<div class="sticky-block">
+    <div class="command-bar" [ngClass]="tabData && tabData.length>0?'tab-bag':''" *mobxAutorun>
+      <div class="group-command">
+        <h4>{{name}}</h4>
+      </div>
+      <div class="group-info" *ngIf="buttonText">
+        <app-primary-button [process]="process" (onPress)="onPress.emit()" [label]="buttonText"></app-primary-button>
+      </div>
+    </div>
+    <nav mat-tab-nav-bar class="cs-mat-tab-link" *ngIf="tabData && tabData.length>0">
+      <a mat-tab-link [routerLink]="['/' + link.path]" *ngFor="let link of tabData" routerLinkActive
+        #rla="routerLinkActive" [active]="rla.isActive">{{link.label}}
+      </a>
+    </nav>
+</div>

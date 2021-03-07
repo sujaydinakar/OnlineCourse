@@ -63,10 +63,12 @@ export class EditCourseElementDialogComponent implements OnInit {
   checkIfAllFilesHasOneVimeoVideo(arrFile: Array<any>): boolean {
     let found = false;
 
-    arrFile.forEach((item) => {
-      if(this.checkIfItIsVimeoLink(item.fileUploadedURL))
-        found = true;
-    });
+    if (arrFile) {
+      arrFile.forEach((item) => {
+        if(this.checkIfItIsVimeoLink(item.fileUploadedURL))
+          found = true;
+      });
+    }
 
     return found;
   }
@@ -74,10 +76,12 @@ export class EditCourseElementDialogComponent implements OnInit {
   checkIfThereAttachmentFile(files: Array<any>): boolean {
     let found = false;
 
-    files.forEach((item) => {
-      if(!this.checkIfItIsVimeoLink(item.fileUploadedURL))
-        found = true;
-    });
+    if (files) {
+      files.forEach((item) => {
+        if(!this.checkIfItIsVimeoLink(item.fileUploadedURL))
+          found = true;
+      });
+    }
 
     return found;
   }

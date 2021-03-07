@@ -1,0 +1,38 @@
+.section_elementContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    border: 1px solid #CACBCC;
+    padding: 0px 20px;
+    margin-bottom: 20px;
+
+    p {
+        margin-right: 10px;
+    }
+
+    button {
+        outline: none;
+        border: none;
+        background-color: transparent;
+        padding: 5px;
+    }
+
+    button:hover {
+        cursor: pointer;
+        background-color: white;
+    }
+
+    .section_elementContainer__leftSide {
+        display: flex;
+        align-items: center;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+
+    &:hover {
+        cursor: pointer;
+    }
+}

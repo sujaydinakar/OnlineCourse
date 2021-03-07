@@ -52,7 +52,6 @@ export class ViewCourseElementDialogComponent implements OnInit {
     const result = this.embedService.embed(oldURL, {
       attr: { width: "100%", height: "400px" }
     });
-    console.log(result)
     return result;
   }
 }

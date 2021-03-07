@@ -22,20 +22,22 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { HttpClientModule } from '@angular/common/http';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { VimeModule } from '@vime/angular';
+import { MobxAngularModule } from 'mobx-angular';
 
+import { MaterialModule } from './material';
+import { AppComponent } from './app.component';
+import { AppRoutingModule } from './app-routing.module';
 import { environment } from 'src/environments/environment';
 import { ScrollableDirective } from './directives/scrollable.directive';
+import { NgPipesModule } from 'ngx-pipes';
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
 import { MainComponent } from './layout/student/main/main.component';
 import { HeaderComponent } from './shared/student/header/header.component';
 import { FooterComponent } from './shared/student/footer/footer.component';
 import { HomeComponent } from './pages/student/home/home.component';
 import { PageNotFoundComponent } from './shared/page-not-found/page-not-found.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MaterialModule } from './material';
-import { MobxAngularModule } from 'mobx-angular';
+
 import { ImageSwiperComponent } from './components/student/image-swiper/image-swiper.component';
 import { StudentRecommendationComponent } from './components/student/student-recommendation/student-recommendation.component';
 import { StudentsAreViewingComponent } from './components/student/students-are-viewing/students-are-viewing.component';
@@ -105,9 +107,35 @@ import { ViewCourseElementDialogComponent } from './pages/instructor/creating-co
 import { EditCourseSectionDialogComponent } from './pages/instructor/creating-course/components/edit-course-section-dialog/edit-course-section-dialog.component';
 import { ViewCourseSectionDialogComponent } from './pages/instructor/creating-course/components/view-course-section-dialog/view-course-section-dialog.component';
 import { EditCourseElementDialogComponent } from './pages/instructor/creating-course/components/edit-course-element-dialog/edit-course-element-dialog.component';
+
 import { AlertMessageDialogComponent } from './shared/dialog/alert-message-dialog/alert-message-dialog.component';
 import { ConfirmMessageDialogComponent } from './shared/dialog/confirm-message-dialog/confirm-message-dialog.component';
-
+import { AdminMainHeaderComponent } from './shared/admin/admin-main-header/admin-main-header.component';
+import { AdminMainFooterComponent } from './shared/admin/admin-main-footer/admin-main-footer.component';
+import { AdminMainSidebarComponent } from './shared/admin/admin-main-sidebar/admin-main-sidebar.component';
+import { AdminMain3Component } from './layout/admin/admin-main3/admin-main3.component';
+import { AdminMainCommandBarComponent } from './shared/admin/admin-main-command-bar/admin-main-command-bar.component';
+import { PrimaryButtonComponent } from './components/primary-button/primary-button.component';
+import { TabLayoutComponent } from './layout/tab-layout/tab-layout.component';
+import { LoggedInMainComponent } from './layout/student/logged-in-main/logged-in-main.component';
+import { LoggedInMain2Component } from './layout/student/logged-in-main2/logged-in-main2.component';
+import { LoggedInHeaderComponent } from './shared/student/logged-in-header/logged-in-header.component';
+import { StudentHomeComponent } from './pages/student/student-home/student-home.component';
+import { ViewingCourseHeaderComponent } from './shared/student/viewing-course-header/viewing-course-header.component';
+import { ViewingCourseSidebarComponent } from './shared/student/viewing-course-sidebar/viewing-course-sidebar.component';
+import { StudentFooterComponent } from './shared/student/student-footer/student-footer.component';
+import { StudentHeaderComponent } from './shared/student/student-header/student-header.component';
+import { StudentSidebarComponent } from './shared/student/student-sidebar/student-sidebar.component';
+import { StudentViewingCourseComponent } from './layout/student/student-viewing-course/student-viewing-course.component';
+import { StudentDashboardComponent } from './layout/student/student-dashboard/student-dashboard.component';
+import { StudentCurriculumComponent } from './pages/student/viewing-course/student-curriculum/student-curriculum.component';
+import { StudentCourseDescriptionComponent } from './pages/student/viewing-course/student-course-description/student-course-description.component';
+import { StudentPurchasingInformationComponent } from './pages/student/viewing-course/student-purchasing-information/student-purchasing-information.component';
+import { StudentCourseOverviewComponent } from './pages/student/viewing-course/student-course-overview/student-course-overview.component';
+import { StudentCourseSectionBlockComponent } from './pages/student/viewing-course/components/student-course-section-block/student-course-section-block.component';
+import { StudentCourseElementBlockComponent } from './pages/student/viewing-course/components/student-course-element-block/student-course-element-block.component';
+import { ViewStudentCourseElementDialogComponent } from './pages/student/viewing-course/components/view-student-course-element-dialog/view-student-course-element-dialog.component';
+import { ViewStudentCourseSectionDialogComponent } from './pages/student/viewing-course/components/view-student-course-section-dialog/view-student-course-section-dialog.component';
 
 const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
   direction: 'horizontal',
@@ -198,6 +226,32 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     EditCourseSectionDialogComponent,
     AlertMessageDialogComponent,
     ConfirmMessageDialogComponent,
+    AdminMainHeaderComponent,
+    AdminMainFooterComponent,
+    AdminMainSidebarComponent,
+    AdminMain3Component,
+    AdminMainCommandBarComponent,
+    PrimaryButtonComponent,
+    TabLayoutComponent,
+    LoggedInMainComponent,
+    LoggedInMain2Component,
+    LoggedInHeaderComponent,
+    StudentHomeComponent,
+    ViewingCourseHeaderComponent,
+    ViewingCourseSidebarComponent,
+    StudentFooterComponent,
+    StudentHeaderComponent,
+    StudentSidebarComponent,
+    StudentViewingCourseComponent,
+    StudentDashboardComponent,
+    StudentCurriculumComponent,
+    StudentCourseDescriptionComponent,
+    StudentPurchasingInformationComponent,
+    StudentCourseOverviewComponent,
+    StudentCourseSectionBlockComponent,
+    StudentCourseElementBlockComponent,
+    ViewStudentCourseElementDialogComponent,
+    ViewStudentCourseSectionDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -223,7 +277,8 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     TableModule,
     NgxDatatableModule,
     SocialLoginModule,
-    VimeModule
+    VimeModule,
+    NgPipesModule
   ],
   providers: [
     {

@@ -2,11 +2,14 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AngularFireAuthGuard, redirectUnauthorizedTo } from '@angular/fire/auth-guard';
 
-import { AdminMainComponent } from './layout/admin/admin-main/admin-main.component';
-import { InstructorCreatingCourseComponent } from './layout/instructor/instructor-creating-course/instructor-creating-course.component';
-import { InstructorDashboardComponent } from './layout/instructor/instructor-dashboard/instructor-dashboard.component';
 import { MainComponent } from './layout/student/main/main.component';
 import { Main2Component } from './layout/student/main2/main2.component';
+import { AdminMainComponent } from './layout/admin/admin-main/admin-main.component';
+import { AdminMain2Component } from './layout/admin/admin-main2/admin-main2.component';
+import { AdminMain3Component } from './layout/admin/admin-main3/admin-main3.component';
+import { InstructorCreatingCourseComponent } from './layout/instructor/instructor-creating-course/instructor-creating-course.component';
+import { InstructorDashboardComponent } from './layout/instructor/instructor-dashboard/instructor-dashboard.component';
+
 import { AdminAddCategoryComponent } from './pages/admin/course-category/admin-add-category/admin-add-category.component';
 import { AdminCategoryComponent } from './pages/admin/course-category/admin-category/admin-category.component';
 import { AdminHomeComponent } from './pages/admin/admin-home/admin-home.component';
@@ -27,7 +30,6 @@ import { InstructorHomeComponent } from './pages/instructor/instructor-home/inst
 import { HomeComponent } from './pages/student/home/home.component';
 import { ListTopicByCategoryComponent } from './pages/student/list-topic-by-category/list-topic-by-category.component';
 import { TopicDescriptionComponent } from './pages/student/topic-description/topic-description.component';
-import { PageNotFoundComponent } from './shared/page-not-found/page-not-found.component';
 import { AdminLoginComponent } from './pages/auth/admin-login/admin-login.component';
 import { AdminSubcategoryComponent } from './pages/admin/course-subcategory/admin-subcategory/admin-subcategory.component';
 import { AdminCourseTopicComponent } from './pages/admin/course-topic/admin-course-topic/admin-course-topic.component';
@@ -35,11 +37,29 @@ import { AdminCourseLevelComponent } from './pages/admin/course-level/admin-cour
 import { AdminCourseLanguageComponent } from './pages/admin/course-language/admin-course-language/admin-course-language.component';
 import { StudentLoginComponent } from './pages/auth/student-login/student-login.component';
 
-const redirectUnauthorizedAdminToLogin = () => redirectUnauthorizedTo(['/login']);
+import { PageNotFoundComponent } from './shared/page-not-found/page-not-found.component';
+import { TabLayoutComponent } from './layout/tab-layout/tab-layout.component';
+import { StudentGuardGuard } from './guards/student-guard.guard';
+import { SecureUserInnerPagesGuard } from './guards/secure-user-inner-pages.guard';
+import { LoggedInMainComponent } from './layout/student/logged-in-main/logged-in-main.component';
+import { LoggedInMain2Component } from './layout/student/logged-in-main2/logged-in-main2.component';
+import { StudentHomeComponent } from './pages/student/student-home/student-home.component';
+import { StudentDashboardComponent } from './layout/student/student-dashboard/student-dashboard.component';
+import { StudentCurriculumComponent } from './pages/student/viewing-course/student-curriculum/student-curriculum.component';
+import { StudentViewingCourseComponent } from './layout/student/student-viewing-course/student-viewing-course.component';
+import { StudentCourseDescriptionComponent } from './pages/student/viewing-course/student-course-description/student-course-description.component';
+import { StudentPurchasingInformationComponent } from './pages/student/viewing-course/student-purchasing-information/student-purchasing-information.component';
+import { StudentCourseOverviewComponent } from './pages/student/viewing-course/student-course-overview/student-course-overview.component';
+import { AdminGuardGuard } from './guards/admin-guard.guard';
+
+const redirectUnauthorizedUserToLogin = () => redirectUnauthorizedTo(['/login']);
+const redirectUnauthorizedAdminToLogin = () => redirectUnauthorizedTo(['/admin/login']);
 
 const routes: Routes = [
+  // default routes zone
   {
     path: '',
+    canActivate: [SecureUserInnerPagesGuard],
     component: MainComponent,
     children: [
       {
@@ -59,31 +79,32 @@ const routes: Routes = [
   },
   {
     path: '',
+    canActivate: [SecureUserInnerPagesGuard],
     component: Main2Component,
     children: [
       {
-        path: 'topic/:id',
+        path: 'course/:id',
         component: TopicDescriptionComponent
       }
-    ],
+    ]
   },
+  // user login's routes zone
   {
     path: 'login',
-    component: AdminLoginComponent
-  },
-  {
-    path: 'admin/login',
-    component: AdminLoginComponent
-  },
-  {
-    path: 'student/login',
+    canActivate: [SecureUserInnerPagesGuard],
     component: StudentLoginComponent
   },
   {
-    path: 'admin',
-    component: AdminMainComponent,
-    canActivate: [AngularFireAuthGuard],
-    data: { authGuardPipe: redirectUnauthorizedAdminToLogin },
+    path: 'student/login',
+    canActivate: [SecureUserInnerPagesGuard],
+    component: StudentLoginComponent
+  },
+  // student's routes zone
+  {
+    path: 'student',
+    component: LoggedInMainComponent,
+    canActivate: [StudentGuardGuard],
+    data: { authGuardPipe: redirectUnauthorizedUserToLogin },
     children: [
       {
         path: '',
@@ -92,41 +113,84 @@ const routes: Routes = [
       },
       {
         path: 'home',
-        component: AdminHomeComponent,
+        component: HomeComponent,
       },
       {
-        path: 'course-category',
-        component: AdminCategoryComponent,
-      },
-      {
-        path: 'course-subcategory/:key',
-        component: AdminSubcategoryComponent,
-      },
-      {
-        path: 'course-topic/:key1/:key2',
-        component: AdminCourseTopicComponent,
-      },
-      {
-        path: 'level',
-        component: AdminCourseLevelComponent,
-      },
-      {
-        path: 'language',
-        component: AdminCourseLanguageComponent,
-      },
-      {
-        path: 'slideshow',
-        component: AdminSlideshowComponent,
-      },
-      {
-        path: 'instructor',
-        component: AdminInstructorComponent,
+        path: 'category/:id',
+        component: ListTopicByCategoryComponent
       },
     ],
   },
   {
+    path: 'student',
+    component: LoggedInMain2Component,
+    canActivate: [StudentGuardGuard],
+    data: { authGuardPipe: redirectUnauthorizedUserToLogin },
+    children: [
+      {
+        path: 'course/:id',
+        component: TopicDescriptionComponent
+      }
+    ]
+  },
+  {
+    path: 'student',
+    canActivate: [StudentGuardGuard],
+    component: StudentDashboardComponent,
+    children: [
+      {
+        path: 'dashboard',
+        component: StudentHomeComponent
+      }
+    ]
+  },
+  {
+    path: 'viewing_course/:courseId',
+    component: StudentViewingCourseComponent,
+    canActivate: [StudentGuardGuard],
+    data: { authGuardPipe: redirectUnauthorizedUserToLogin },
+    children: [
+      {
+        path: '',
+        redirectTo: 'course_description',
+        pathMatch: 'full'
+      },
+      {
+        path: 'course_description',
+        component: StudentCourseDescriptionComponent
+      },
+      {
+        path: 'purchasing_information',
+        component: StudentPurchasingInformationComponent
+      },
+      {
+        path: 'course_overview',
+        component: StudentCourseOverviewComponent
+      },
+      {
+        path: 'course_curriculum',
+        component: StudentCurriculumComponent
+      },
+    ]
+  },
+  // instructor's routes zone
+  {
     path: 'instructor',
     component: InstructorDashboardComponent,
+    canActivate: [StudentGuardGuard],
+    data: { authGuardPipe: redirectUnauthorizedUserToLogin },
+    children: [
+      {
+        path: '',
+        component: InstructorHomeComponent
+      }
+    ]
+  },
+  {
+    path: 'instructor/dashboard',
+    component: InstructorDashboardComponent,
+    canActivate: [StudentGuardGuard],
+    data: { authGuardPipe: redirectUnauthorizedUserToLogin },
     children: [
       {
         path: '',
@@ -137,8 +201,8 @@ const routes: Routes = [
   {
     path: 'create_course/:courseId',
     component: InstructorCreatingCourseComponent,
-    canActivate: [AngularFireAuthGuard],
-    data: { authGuardPipe: redirectUnauthorizedAdminToLogin },
+    canActivate: [StudentGuardGuard],
+    data: { authGuardPipe: redirectUnauthorizedUserToLogin },
     children: [
       {
         path: '',
@@ -191,6 +255,57 @@ const routes: Routes = [
       }
     ]
   },
+  // admin login's routes zone
+  {
+    path: 'admin/login',
+    component: AdminLoginComponent
+  },
+  // admin's routes zone
+  {
+    path: 'admin',
+    component: AdminMain3Component,
+    canActivate: [AdminGuardGuard],
+    data: { authGuardPipe: redirectUnauthorizedAdminToLogin },
+    children: [
+      {
+        path: '',
+        redirectTo: 'home',
+        pathMatch: 'full'
+      },
+      {
+        path: 'home',
+        component: AdminHomeComponent,
+      },
+      {
+        path: 'course-category',
+        component: TabLayoutComponent,
+        children: [
+          { path: '', redirectTo: 'data', pathMatch: 'full' },
+          { path: 'data', component: AdminCategoryComponent },
+          { path: 'subcategory/:key', component: AdminSubcategoryComponent },
+          { path: 'topic/:key1/:key2', component: AdminCourseTopicComponent },
+        ]
+      },
+      {
+        path: 'level',
+        component: AdminCourseLevelComponent,
+      },
+      {
+        path: 'language',
+        component: AdminCourseLanguageComponent,
+      },
+      {
+        path: 'slideshow',
+        component: AdminSlideshowComponent,
+      },
+      {
+        path: 'instructor',
+        component: AdminInstructorComponent,
+      },
+    ],
+  },
+
+
   {
     path: '**',
     component: PageNotFoundComponent

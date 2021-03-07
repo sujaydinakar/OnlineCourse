@@ -1,0 +1,73 @@
+$sidebarwidth: 256px;
+$header:#393A3D;
+$background:#f2f3f4;
+// $background:#ebebeb;
+$appFont: Roboto,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif, 'Siemreap', cursive;
+$appFontTitle:'Google Sans', -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif, 'Siemreap', cursive;
+//side nav
+// $sidebarbgcolor: #051e34;#
+$sidebarbgcolor: #F3F2F1; //rottanak
+// $sideBorder: #1b3a57;
+$sideBorder: #edebe9; //rottanak
+$sideBackgroundHover:#D5D5D5;
+// $sideColor: #fff; 
+$sideColor: #202124; //rottanak
+$sideExpansion: #EDEBE8;
+// $sideColorAlpha: rgba(255, 255, 255, 0.7);
+$sideColorAlpha: #202124; //rottanaks
+$sideBarActive:#1da1f2;
+$brand: rgba(255, 255, 255, 0.9);
+
+$color:#202124;
+$appprimaryColor:#1a73e8;
+$border:#ebebeb;
+$buttonColor1:#1A6EB0;
+$buttonColor2:#1A6EB0;
+$red:#ff5252;
+$link:#1a73e8;
+$primary:#1F4068;
+$primaryBackground:#039be5;
+$subTitle:rgba(0, 0, 0, 0.54);
+$hoverPrimary:#0078D7;
+
+$crmbackground:#ECEBEA;
+$shadow: 0px 0px 3px 1px rgba(0,0,0,0.13);
+
+
+$sidebarbgcoloractive:#f3f4fa;
+$sidebarcolor:#333;
+$blackBg:rgba(255, 255, 255, 0.9);
+$svgfillcolor:#1da1f2;
+$textInfo:#111;
+$darkPrimary:rgba(0, 0, 0, 0.2);
+$darkPrimaryHover:rgba(255, 255, 255, 0.2);
+$padding:24px;
+$radius:8px;
+$menuItemHover:#1da1f2;
+$tabColor: #476282;
+$tabColorActive: #1B73E8;
+
+$menuActiveColor:rgba(0,0,0,.05);
+
+$piconColor:#393a3d;
+$appsecendaryColor:#F4F5F8;
+$titleColor:#393a3d;
+$descColor:#6b6c72;
+
+@mixin placeholder-color($color) {
+    &.placeholder {
+        color: $color
+    }
+    &:-moz-placeholder {
+        color: $color
+    }
+    &::-webkit-input-placeholder {
+        color: $color
+    }
+    &:-ms-input-placeholder {
+        color: $color
+    }
+}
+
+$margin:24px;
+$radiusBig:12px;

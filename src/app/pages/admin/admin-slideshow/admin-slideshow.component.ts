@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { tabs } from 'src/app/dummy/tabs';
 
 @Component({
   selector: 'app-admin-slideshow',
@@ -7,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminSlideshowComponent implements OnInit {
 
+  TABS = tabs.slideshow;
+
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  openAddSlideshowDialog() {
+
   }
 
 }

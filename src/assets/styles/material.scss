@@ -1,0 +1,109 @@
+.command-bar{
+    background-color: #fff;
+    // box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.12);
+    min-height: 46px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border-top: solid 1px #ebebeb;
+    border-bottom: solid 1px #ebebeb;
+    // padding: 6px 12px;
+    padding: 10px 24px;
+    position: sticky;
+    top: 64px;
+    // position: relative;
+    // top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    transition: padding-left 0.3s;
+    &.tab-bag{
+      border: none;
+    }
+    .group-command{
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      flex: 1;
+      overflow: hidden;
+      // margin: 0 24px;
+      h4{
+        font-family: $appFontTitle;
+        font-weight: 500;
+        font-size: 21px;
+        color: $primary;
+        line-height: normal;
+        margin-bottom: 0px;
+        margin-top: 0px;
+      }
+    }
+    .group-info{
+      .mat-icon{
+        color: #5F6368;
+      }
+    }
+    .mat-path-file{
+    &.mat-path-title{
+        padding: 0 16px;
+        font-size: 18px;
+        font-weight: 400;
+        font-family: $appFontTitle;
+        // max-width: 200px;
+        // overflow: hidden;
+        // text-overflow: ellipsis;
+    }
+    &.path-ellipsis{
+        // max-width: 200px;
+        // overflow: hidden;
+        // text-overflow: ellipsis;
+    }
+    &.mat-button{
+        font-family: $appFontTitle;
+        border-radius: 100px;
+        max-width: 240px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        padding-right: 0;
+        padding-left: 8px;
+        //  max-width: 200px;
+            // overflow: hidden;
+            // text-overflow: ellipsis;
+        
+        .mat-button-wrapper{
+        span{
+            font-size: 18px;
+            font-weight: 400;
+            font-family: $appFontTitle;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 200px;
+            display: inline-block;
+        }
+        }
+    }
+    &:first-child{
+        margin-left:16px;
+    }
+    &:last-child{
+        max-width: 100%;
+    }
+    }
+}
+
+.cs-mat-tab-link {
+  padding: 0 16px;
+  .mat-tab-link {
+    min-width: unset;
+    height: 44px;
+    padding: 0 6px;
+    margin: 0 8px;
+    font-family: $appFontTitle;
+    font-size: 14px;
+    opacity: 1;
+    color: $descColor;
+    &.mat-tab-label-active {
+      color: $primary;
+      opacity: 1;
+    }
+  }
+}

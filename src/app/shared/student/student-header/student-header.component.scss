@@ -1,0 +1,49 @@
+.instructorHeaderContainer {
+    width: 100%;
+    padding: 20px 30px;
+    background-color: white;
+    border-bottom: 1px solid rgb(212, 212, 212);
+  
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  
+    button {
+      border: none;
+      outline: none;
+      background-color: transparent;
+      border: 1px solid white;
+      padding: 10px 20px;
+    }
+  
+    button:hover{
+      cursor: pointer;
+      box-sizing: border-box;
+      border: 1px solid rgb(212, 212, 212);
+    }
+  
+    i {
+      transition: 0.5s;
+      color: grey;
+      font-size: 30px;
+      margin-left: 30px;
+    }
+  
+    i:hover {
+      transition: 0.5s;
+      cursor: pointer;
+      color: darken(grey, 10);
+    }
+  
+    .btnLogOut {
+      background-color: #EC5252; 
+      border: none; 
+      font-weight: bold; 
+      color: white;
+  
+      &:hover {
+        border: none;
+      }
+    }
+  }
+  

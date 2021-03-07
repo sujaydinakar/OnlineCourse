@@ -10,6 +10,7 @@ import { SubCategoryStore } from 'src/app/stores/subcategory.store';
 import { AdminConfirmationDialogComponent } from 'src/app/shared/admin/admin-confirmation-dialog/admin-confirmation-dialog.component';
 import { AdminAddCourseTopicComponent } from '../admin-add-course-topic/admin-add-course-topic.component';
 import { AdminEditCourseTopicComponent } from '../admin-edit-course-topic/admin-edit-course-topic.component';
+import { tabs } from 'src/app/dummy/tabs';
 
 @Component({
   selector: 'app-admin-course-topic',
@@ -20,6 +21,8 @@ export class AdminCourseTopicComponent implements OnInit {
 
   parentCategoryKey;
   parentSubCategoryKey;
+
+  TABS = tabs.admin_course_category;
   
   constructor(
     public dialog: MatDialog,

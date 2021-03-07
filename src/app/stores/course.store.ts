@@ -16,6 +16,7 @@ import { CourseMappingService } from "../services/mapping/course-mapping.service
 @Injectable({providedIn:'root'})
 export class CourseStore {
   @observable public Courses: Array<ICourse>;
+  @observable public ReversedCourses: Array<ICourse>;
   @observable public Course: ICourse;
   @observable public CourseSections: Array<any>;
   @observable public CourseSection: any;
@@ -52,6 +53,7 @@ export class CourseStore {
     try {
       this.afs.collection('courses', ref => ref.where('isDelete', '==', false)).valueChanges().subscribe((data: any) => {
         this.Courses = data
+        this.ReversedCourses = data;
       });
     } catch(error) {
       console.log(error)
@@ -111,6 +113,7 @@ export class CourseStore {
       this.afs.collection('courses').doc(_key).set({
         ...finalData
       }).then(() => {
+
         if(this.tempInsertedSections !== undefined) {
           this.tempInsertedSections.map((item, index) => {
             const key = this.afs.createId();
@@ -119,6 +122,7 @@ export class CourseStore {
             return { ...item, key };
           });
         }
+
       });
 
       this.TempCourse = finalData;
@@ -128,7 +132,7 @@ export class CourseStore {
   }
 
   @action
-  updatedCourse(courseData: ICourse) {
+  async updatedCourse(courseData: ICourse) {
     try {
       this.afs.collection('courses').doc(courseData.key).update({
         ...courseData,
@@ -140,39 +144,63 @@ export class CourseStore {
         
         updatedAt: new Date(),
         updatedBy: this.userStore.User,
-      }).then(() => {
-        this.tempInsertedSections.map((item, index) => {
-          if(!item.key) {
-            const key = this.afs.createId();
-            this.addCourseSection(courseData.key, { ...item, key }, index);
-            return { ...item, key };
-          }
-        });
+      }).then(async () => {
 
-        this.tempUpdatedSections.map((item, index) => {
-          if(item.key) {
-            this.updatedCourseSection(courseData.key, item, index);
-            return { ...item };
-          }
-        });
+        this.tempDeletedSections.forEach(async (item) => await this.deleteCourseSectionBySectionKey(item));
+        this.tempDeletedElements.forEach(async (item) => await this.deleteCourseElementByElementKey(item));
+        
+        await Promise.all(
+          this.tempInsertedSections.map(async (item, index) => {
+            if(item.key === undefined) {
+              const key = this.afs.createId();
 
-        this.tempInsertedElements.map((item, index) => {
-          if (item.key === undefined && item.sectionKey !== undefined) {
-            delete item.temp_sectionKey;
-            const key = this.afs.createId();
-            const data = { ...item, key };
-            this.addCourseElement(courseData.key, item.sectionKey, data);
-            return data;
-          }
-        });
+              await this.addCourseSection(courseData.key, { ...item, key }, index);
+              return { ...item, key };
+            }
+          })
+        )
+
+        await Promise.all(
+          this.tempUpdatedSections.map(async (item, index) => {
+            if(item.key) {
+              await this.updatedCourseSection(courseData.key, item, index);
+              return { ...item };
+            }
+          })
+        )
+
+        await Promise.all(
+          this.tempInsertedElements.map(async (item, index) => {
+            if (item.key === undefined && item.sectionKey !== undefined) {
+              delete item.temp_sectionKey;
+
+              const key = this.afs.createId();
+              const data = { ...item, key };
+
+              await this.addCourseElement(courseData.key, item.sectionKey, data);
+              return data;
+            }
+          })
+        )
+
+        await Promise.all(
+          this.tempUpdatedElements.map(async (item, index) => {
+            if (item.key !== undefined && item.sectionKey !== undefined) {
+              delete item.temp_sectionKey;
   
-        this.tempUpdatedElements.map((item, index) => {
-          if (item.key !== undefined && item.sectionKey !== undefined) {
-            delete item.temp_sectionKey;
-            this.editCourseElement(item);
-            return item;
-          }
-        });
+              await this.editCourseElement(item);
+              return item;
+            }
+          })
+        )
+
+        this.tempDeletedElements = [];
+        this.tempDeletedSections = [];
+        this.tempInsertedElements = [];
+        this.tempInsertedSections = [];
+        this.tempUpdatedElements = [];
+        this.tempUpdatedSections = [];
+
       });
     } catch(error) {
       console.log(error)
@@ -204,17 +232,14 @@ export class CourseStore {
       // console.log(this.tempUpdatedSections)
       // console.log(this.tempDeletedSections)
 
-      this.tempDeletedSections.forEach((item) => this.deleteCourseSectionBySectionKey(item));
-      this.tempDeletedElements.forEach((item) => this.deleteCourseElementByElementKey(item));
-
       this.updatedCourse(this.TempCourse);
     }
   }
 
   @action
-  deleteFileFromFirebase(filePath) {
+  async deleteFileFromFirebase(filePath) {
     try {
-      this.storage.ref(filePath).delete();
+      await this.storage.ref(filePath).delete().toPromise();
     } catch(error) {
       console.log(error)
     }
@@ -223,9 +248,7 @@ export class CourseStore {
   @action 
   async getCourseSections(courseKey: string) {
     try {
-      // const data = pushToArray(await this.afs.firestore.collection('sections').where('courseKey', '==', courseKey).orderBy('order', 'asc').get());
       const data = pushToArray(await this.afs.collection('sections', ref => ref.where('courseKey', '==', courseKey).orderBy('order', 'asc')).get().toPromise());
-      console.log(data)
       this.TempCourseSections = data;
       this.getCourseElementsAndAddToEachSection(courseKey);
     } catch(error) {
@@ -244,13 +267,15 @@ export class CourseStore {
   }
 
   @action 
-  addCourseSection(courseKey: string, sectionData: any, courseIndex: any) {
+  async addCourseSection(courseKey: string, sectionData: any, courseIndex: any) {
     try {
+
       const temp_sectionKey = sectionData.temp_sectionKey;
       delete sectionData.temp_sectionKey;
 
       sectionData = this.courseMapping.mapSection(sectionData);
-      this.afs.collection('sections').doc(sectionData.key).set({
+
+      const finalSectionData = {
         ...sectionData,
   
         courseKey: courseKey,
@@ -265,45 +290,61 @@ export class CourseStore {
         createdBy: this.userStore.User,
         updatedAt: new Date(),
         updatedBy: this.userStore.User,
-      }).then(() => {
-        this.tempInsertedElements.map((item, index) => {
-          if (item.key === undefined && item.temp_sectionKey === temp_sectionKey) {
-            delete item.temp_sectionKey;
-            const key = this.afs.createId();
-            const data = { ...item, key };
-            this.addCourseElement(courseKey, sectionData.key, data);
-            return data;
-          }
-        });
+      };
+
+      await this.afs.collection('sections').doc(sectionData.key).set(finalSectionData).then(async () => {        
+        let sectionIndex = this.TempCourseSections.findIndex((item) => item.temp_sectionKey === temp_sectionKey);
+        let elements = this.TempCourseSections[sectionIndex].elements;
+        this.TempCourseSections[sectionIndex] = { ...finalSectionData, elements };
+
+        return await Promise.all(
+          this.tempInsertedElements.map(async (item, index) => {
+            if (item.key === undefined && item.temp_sectionKey === temp_sectionKey) {
+              delete item.temp_sectionKey;
+
+              const key = this.afs.createId();
+              const data = { ...item, key };
+
+              await this.addCourseElement(courseKey, sectionData.key, data);
+              
+              return data;
+            }
+          })
+        )
       });
+
     } catch(error) {
       console.log(error)
     }
   }
 
   @action
-  updatedCourseSection(courseKey: string, courseSectionData: any, courseIndex: any) {
+  async updatedCourseSection(courseKey: string, courseSectionData: any, courseIndex: any) {
     try {
       let isSectionDeleted = this.tempDeletedSections.some((item) => courseSectionData.key === item.key);
 
       if(!isSectionDeleted) {
         courseSectionData = this.courseMapping.mapSection(courseSectionData);
 
-        this.afs.collection('sections').doc(courseSectionData.key).update({
+        await this.afs.collection('sections').doc(courseSectionData.key).update({
           ...courseSectionData,
 
           updatedAt: new Date(),
           updatedBy: this.userStore.User,
-        }).then(() => {
-          this.tempInsertedElements.map((item, index) => {
-            if (item.key === undefined && item.sectionKey === undefined) {
-              delete item.temp_sectionKey;
-              const key = this.afs.createId();
-              const data = { ...item, key };
-              this.addCourseElement(courseKey, courseSectionData.key, data);
-              return data;
-            }
-          });
+        }).then(async () => {
+
+          return await Promise.all(
+            this.tempInsertedElements.map(async (item, index) => {
+              if (item.key === undefined && item.sectionKey === undefined) {
+                delete item.temp_sectionKey;
+                const key = this.afs.createId();
+                const data = { ...item, key };
+                await this.addCourseElement(courseKey, courseSectionData.key, data);
+                return data;
+              }
+            })
+          )
+
         });
       }
     } catch(error) {
@@ -344,22 +385,26 @@ export class CourseStore {
   }
 
   @action
-  deleteCourseSectionBySectionKey(sectionData: any) {
+  async deleteCourseSectionBySectionKey(sectionData: any) {
     try {
-      this.afs.collection(`sections`).doc(sectionData.key).delete();
-      this.deleteCourseElementBySectionKey(sectionData);
+      await this.afs.collection(`sections`).doc(sectionData.key).delete();
+      await this.deleteCourseElementBySectionKey(sectionData);
     } catch (error) {
       console.log(error)
     }
   }
 
   @action 
-  addCourseElement(courseKey: string, sectionKey: string, elementData: any) {    
+  async addCourseElement(courseKey: string, sectionKey: string, elementData: any) {    
     try {
+
+      const temp_sectionKey = elementData.temp_sectionKey;
+      const temp_elementKey = elementData.temp_elementKey;
+
       delete elementData.temp_sectionKey;
       delete elementData.temp_elementKey;
 
-      this.afs.collection('elements').doc(elementData.key).set({
+      const data = {
         ...elementData,
 
         courseKey: courseKey,
@@ -375,19 +420,31 @@ export class CourseStore {
         createdBy: this.userStore.User,
         updatedAt: new Date(),
         updatedBy: this.userStore.User,
+      };
+
+      await this.afs.collection('elements').doc(elementData.key).set(data).then(() => {
+        let sectionIndex = this.TempCourseSections.findIndex((item) => item.key === sectionKey);
+        let elementIndex;
+
+        if (sectionIndex >= 0)
+          elementIndex = this.TempCourseSections[sectionIndex].elements.findIndex((item) => item.temp_elementKey === temp_elementKey);
+        
+        if (elementIndex >= 0)
+          this.TempCourseSections[sectionIndex].elements[elementIndex] = data;
       });
+
     } catch(error) {
       console.log(error)
     }
   }
 
   @action
-  editCourseElement(elementData: ICourse) {
+  async editCourseElement(elementData: ICourse) {
     try {
        let isElementDeleted = this.tempDeletedElements.some((item) => elementData.key === item.key);
 
       if(!isElementDeleted) {
-        this.afs.collection('elements').doc(elementData.key).update({
+        await this.afs.collection('elements').doc(elementData.key).update({
           ...elementData,
           
           updatedAt: new Date(),
@@ -437,18 +494,19 @@ export class CourseStore {
 
       this.TempCourseSections.map((item) => {
         let temp_elements = [];
-        let temp_element;
         item.elements = temp_elements;
         
         data.forEach((jtem) => {
           if(item.key === jtem.sectionKey) {
-            temp_element = this.courseMapping.mapElement(jtem);
-            temp_elements.push(temp_element);
+            temp_elements.push(jtem);
           }
         });
 
         return item;
       });
+
+      console.log(this.TempCourseSections)
+
     } catch(error) {
       console.log(error)
     }
@@ -473,9 +531,9 @@ export class CourseStore {
     try {
       const data = pushToArray(await this.afs.collection('elements', ref => ref.where('sectionKey', '==', section.key)).get().toPromise());
 
-      data.forEach((elementData) => {
+      data.forEach(async (elementData) => {
         let isInDeletedList = this.tempDeletedElements.some((item) => item.key === elementData.key)
-        !isInDeletedList ? this.deleteCourseElementByElementKey(elementData) : '';
+        !isInDeletedList ? await this.deleteCourseElementByElementKey(elementData) : '';
       });
 
     } catch (error) {
@@ -484,12 +542,13 @@ export class CourseStore {
   }
 
   @action
-  deleteCourseElementByElementKey(elementData: any) {
+  async deleteCourseElementByElementKey(elementData: any) {
     try {
-      this.afs.collection(`elements`).doc(elementData.key).delete();
-      elementData.files?.forEach((item) => {
+      await this.afs.collection(`elements`).doc(elementData.key).delete();
+
+      elementData.files?.forEach(async (item) => {
         if (item.fileUploadedURL.includes('firebasestorage'))
-          this.deleteFileFromFirebase(item.fileUploadedPath);
+          await this.deleteFileFromFirebase(item.fileUploadedPath);
       });
     } catch (error) {
       console.log(error)

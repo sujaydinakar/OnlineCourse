@@ -4,7 +4,7 @@
   <div class="swiperContainer">
     <swiper [config]="config">
 
-      <div class="swiperContainer_block" *ngFor="let item of this.categoryStore.Categories" [routerLink]="['/category/' + item.key]">
+      <div class="swiperContainer_block" *ngFor="let item of this.categoryStore.Categories" (click)="courseCategoryClicked(item.key)">
         <div class="imageContainer">
           <img src="{{ item.categoryImageUrl }}">
         </div>

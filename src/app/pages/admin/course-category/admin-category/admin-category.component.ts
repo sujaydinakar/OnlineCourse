@@ -7,6 +7,7 @@ import { CategoryStore } from 'src/app/stores/category.store';
 import { AdminAddCategoryComponent } from '../admin-add-category/admin-add-category.component';
 import { AdminEditCategoryComponent } from '../admin-edit-category/admin-edit-category.component';
 import { AdminConfirmationDialogComponent } from 'src/app/shared/admin/admin-confirmation-dialog/admin-confirmation-dialog.component';
+import { tabs } from 'src/app/dummy/tabs';
 
 @Component({
   selector: 'app-admin-category',
@@ -70,4 +71,8 @@ export class AdminCategoryComponent implements OnInit {
       this.categoryStore.fetchCategoryDataMore()
     }
   }
+
+  TABS: any[] = tabs.admin_course_category;
+
+  create(data: any) { }
 }

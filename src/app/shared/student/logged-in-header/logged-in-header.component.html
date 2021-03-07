@@ -1,0 +1,80 @@
+<div class="headerContainer__fixed">
+
+    <div id="headerContainer">
+      <div id="imageContainer">
+        <img src='./assets/logo/logo.png' [routerLink]="['/student/home']">
+      </div>
+  
+      <div id="categoryContainer">
+        <p class="categoryContainer__title">
+          Categories</p>
+  
+        <div class="mainCategoryContainer">
+  
+          <div class="category_dialog">
+            <ul>
+              <li *ngFor="let item of this.categoryStore.Categories">
+                <div class="itemContainer">
+                  <p>{{ item.name }}</p>
+                  <span class="material-icons">
+                    keyboard_arrow_right
+                  </span>
+                </div>
+  
+                <div class="subcategory_dialog">
+                  <ul>
+                    <li *ngFor="let jtem of subcategoryStore.SubCategories">
+                      
+                      <ng-container *ngIf="jtem?.category.key === item?.key">
+                        <div class="itemContainer">
+                          <p>{{ jtem.name }}</p>
+                          <span class="material-icons">
+                            keyboard_arrow_right
+                          </span>
+                        </div>
+    
+                        <div class="topic_dialog">
+                          <ul>
+                            <li>
+                              <div class="itemContainer">
+                                <p>All {{ jtem.name }} Topics</p>
+                              </div>
+                            </li>
+                            <li *ngFor="let ktem of this.topicStore.Topics">
+                              <ng-container *ngIf="ktem?.subcategory.key === jtem?.key">
+                                <div class="itemContainer">
+                                  <p>{{ ktem.name }}</p>
+                                </div>
+                              </ng-container>
+                            </li>
+                          </ul>
+                        </div>
+                      </ng-container>
+  
+                    </li>
+                  </ul>
+                </div>
+              </li>
+            </ul>
+          </div>
+  
+        </div>
+      </div>
+  
+      <div id="searchContainer">
+        <button>
+          <span class="material-icons">
+            search
+          </span>
+        </button>
+        <input type="text" placeholder="search for anything">
+      </div>
+  
+      <div id="userAuthContainer">
+        <button class="btnLogin" [routerLink]="['/student/dashboard']">Student</button>
+        <button class="btnLogin" [routerLink]="['/instructor/dashboard']">Instructor</button>
+        <button class="btnSignup" (click)="btnSignOutClicked()">Sign Out</button>
+      </div>
+    </div>
+  
+  </div>

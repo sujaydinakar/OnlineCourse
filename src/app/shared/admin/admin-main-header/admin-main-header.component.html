@@ -1,0 +1,19 @@
+<header id="header">
+    <nav class="top-nav">
+        <div class="nav-content">
+            <div class="left-nav">
+                <div class="nav-item-list">
+                    <div class="nav-item" style="margin-left: -12px">
+                        <button mat-button (click)="togglesidebar()">
+                            <mat-icon class="mat-18">menu</mat-icon>
+                        </button>
+                    </div>
+                    <div class="isSmallScreen" *ngIf="ismobile"></div>
+                    <div class="isBigScreen" *ngIf="!ismobile"></div>
+                </div>
+            </div>
+
+            <h3 style="margin-right: 48px;">Hello World</h3>
+        </div>
+    </nav>
+</header>

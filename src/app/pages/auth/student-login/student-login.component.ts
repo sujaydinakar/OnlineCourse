@@ -6,6 +6,7 @@ import { UserStore } from 'src/app/stores/user.store';
 
 import { SocialAuthService, SocialUser } from "angularx-social-login";
 import { FacebookLoginProvider, GoogleLoginProvider } from "angularx-social-login";
+import { AuthService } from 'src/app/services/auth/auth.service';
 
 @Component({
   selector: 'app-student-login',
@@ -18,11 +19,10 @@ export class StudentLoginComponent implements OnInit {
 
   constructor(
     public userStore: UserStore,
-    private authService: SocialAuthService,
+    // private authService: SocialAuthService,
+    private authService2: AuthService,
 
     public formBuilder: FormBuilder,
-    private auth: AngularFireAuth,
-    private router: Router
   ) {
     this.loginForm = this.formBuilder.group({
       email: new FormControl('', [Validators.required, , Validators.email]),
@@ -34,32 +34,23 @@ export class StudentLoginComponent implements OnInit {
   loggedIn: boolean;
 
   ngOnInit() {
-    this.authService.authState.subscribe((user) => {
-      this.user = user;
-      this.loggedIn = (user != null);
-    });
+    // this.authService.authState.subscribe((user) => {
+    //   this.user = user;
+    //   this.loggedIn = (user != null);
+    // });
   }
 
   onSubmit(formData) {
     const { email, password } = formData;
-
-    this.auth.signInWithEmailAndPassword(email, password).then((user: any) => {
-      this.router.navigate(['/admin']);
-    }).catch((error) => {
-      console.log(error)
-    });
+    this.authService2.signin(email, password);
   }
 
   loginWithGoogle() {
-    this.authService.signIn(GoogleLoginProvider.PROVIDER_ID);
+    // this.authService.signIn(GoogleLoginProvider.PROVIDER_ID);
   }
 
   loginWithFacebook() {
-    this.authService.signIn(FacebookLoginProvider.PROVIDER_ID);
-  }
-
-  signOut(): void {
-    this.authService.signOut();
+    // this.authService.signIn(FacebookLoginProvider.PROVIDER_ID);
   }
 
 }

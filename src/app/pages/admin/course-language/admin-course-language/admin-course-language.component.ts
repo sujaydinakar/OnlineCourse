@@ -9,6 +9,7 @@ import { AdminAddCourseLanguageComponent } from '../admin-add-course-language/ad
 import { AdminEditCourseLanguageComponent } from '../admin-edit-course-language/admin-edit-course-language.component';
 import { AdminConfirmationDialogComponent } from 'src/app/shared/admin/admin-confirmation-dialog/admin-confirmation-dialog.component';
 import { CourseLanguageStore } from 'src/app/stores/language.store';
+import { tabs } from 'src/app/dummy/tabs';
 
 
 @Component({
@@ -17,6 +18,8 @@ import { CourseLanguageStore } from 'src/app/stores/language.store';
   styleUrls: ['./admin-course-language.component.scss']
 })
 export class AdminCourseLanguageComponent implements OnInit {
+
+  TABS = tabs.language;
 
   constructor(
     public dialog: MatDialog,

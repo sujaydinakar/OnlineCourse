@@ -1,8 +1,6 @@
 <div class="categoryContainer">
-  <div class="adminPagesHeader">
-    <h1>Course Category</h1>
-    <button mat-raised-button color="primary" (click)="openAddCourseCategoryDialog()">Add Course Category</button>
-  </div>
+  <app-admin-main-command-bar [tabData]="TABS" [name]="'Course Category'" 
+  [buttonText]="'Add New Category'" (onPress)="openAddCourseCategoryDialog()"></app-admin-main-command-bar>
 
   <ng-container *ngIf="this.categoryStore.loading">
     <p-skeleton styleClass="p-mb-2"></p-skeleton> <br>
@@ -70,9 +68,9 @@
 
           <ng-container *ngIf="this.categoryStore.data.length != 0">
             <tr *ngFor="let item of this.categoryStore.data; let i=index;">
-              <td [routerLink]="['/admin/course-subcategory/' + item.key]">{{ i + 1 }}</td>
-              <td style="text-align: left;" [routerLink]="['/admin/course-subcategory/' + item.key]">{{ item?.name }}</td>
-              <td style="text-align: left;" [routerLink]="['/admin/course-subcategory/' + item.key]">{{ item?.kh_name }}</td>
+              <td [routerLink]="['/admin/course-category/subcategory/' + item.key]">{{ i + 1 }}</td>
+              <td style="text-align: left;" [routerLink]="['/admin/course-category/subcategory/' + item.key]">{{ item?.name }}</td>
+              <td style="text-align: left;" [routerLink]="['/admin/course-category/subcategory/' + item.key]">{{ item?.kh_name }}</td>
               <td>{{ item?.order }}</td>
               <td>{{ item?.status?.text }}</td>
               <!-- <td>{{ item?.updatedRef | getDoc : 'full_name' | async }}</td> -->

@@ -1,0 +1,75 @@
+.pageContent {
+    padding: 20px 40px;
+
+    .courseTitleContainer {
+        width: 100%;
+
+        p, h1 {
+            margin: 0;
+        }
+
+        p {
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+    }
+
+    .courseDescriptionContainer {
+        width: 100%;
+        margin-top: 20px;
+    
+        p {
+            margin: 0;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+    }
+
+    .questionAndAnswerBoxContainer {
+        width: 100%;
+        height: auto;
+        padding: 20px 40px;
+        color: white;
+        border-radius: 20px;
+        background-color: cadetblue;
+    }
+
+    .profileInstructorContainer {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+
+        .profileImageContainer {
+            width: 200px;
+            height: 200px;
+            border-radius: 100px;
+            overflow: hidden;
+
+            img {
+                width: 100%;
+                height: 100%;
+            }
+        }
+
+        .profileDescriptionContainer {
+            width: calc(100% - 200px);
+            padding-left: 20px;
+
+            .instructorName {
+                margin: 0;
+                margin-bottom: 5px;
+            }
+
+            .instructorPosition {
+                margin: 0;
+                margin-bottom: 20px;
+            }
+
+            .instructorDescription {
+                margin: 0;
+                margin-bottom: 20px;
+                font-size: 14px;
+            }
+        }
+    }
+}

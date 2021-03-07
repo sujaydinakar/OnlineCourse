@@ -73,63 +73,15 @@
     </div>
     <div class="coursesBlockContainer">
 
-      <div class="courseBlockContainer">
+      <div class="courseBlockContainer" *ngFor="let item of this.courseStore.Courses">
         <div class="imageContainer">
-          <img src="./assets/images/js.jpg">
+          <img src="{{ item.courseImageUrl }}">
         </div>
 
         <div class="descriptionContainer">
-          <h2>The Modern JavaScript Bootcamp</h2>
-          <p>Learn JavaScript by building real-world apps. Includes 3 real-world projects, 80 programming challenges, and ES6/ES7!</p>
-          <p>Andrew Mead</p>
-
-          <div class="ratingContainer">
-            <bar-rating [(rate)]="rate" [max]="5" [showText]="false" [titles]="['Bad', 'Mediocre' , 'Good', 'Excellent', 'Awesome']"></bar-rating>
-          </div>
-        </div>
-      </div>
-
-      <div class="courseBlockContainer">
-        <div class="imageContainer">
-          <img src="./assets/images/js.jpg">
-        </div>
-
-        <div class="descriptionContainer">
-          <h2>The Modern JavaScript Bootcamp</h2>
-          <p>Learn JavaScript by building real-world apps. Includes 3 real-world projects, 80 programming challenges, and ES6/ES7!</p>
-          <p>Andrew Mead</p>
-
-          <div class="ratingContainer">
-            <bar-rating [(rate)]="rate" [max]="5" [showText]="false" [titles]="['Bad', 'Mediocre' , 'Good', 'Excellent', 'Awesome']"></bar-rating>
-          </div>
-        </div>
-      </div>
-
-      <div class="courseBlockContainer">
-        <div class="imageContainer">
-          <img src="./assets/images/js.jpg">
-        </div>
-
-        <div class="descriptionContainer">
-          <h2>The Modern JavaScript Bootcamp</h2>
-          <p>Learn JavaScript by building real-world apps. Includes 3 real-world projects, 80 programming challenges, and ES6/ES7!</p>
-          <p>Andrew Mead</p>
-
-          <div class="ratingContainer">
-            <bar-rating [(rate)]="rate" [max]="5" [showText]="false" [titles]="['Bad', 'Mediocre' , 'Good', 'Excellent', 'Awesome']"></bar-rating>
-          </div>
-        </div>
-      </div>
-
-      <div class="courseBlockContainer">
-        <div class="imageContainer">
-          <img src="./assets/images/js.jpg">
-        </div>
-
-        <div class="descriptionContainer">
-          <h2>The Modern JavaScript Bootcamp</h2>
-          <p>Learn JavaScript by building real-world apps. Includes 3 real-world projects, 80 programming challenges, and ES6/ES7!</p>
-          <p>Andrew Mead</p>
+          <h2>{{ item.title }}</h2>
+          <p>{{ item.subtitle }}</p>
+          <p>{{ item?.createdBy?.displayName }}</p>
 
           <div class="ratingContainer">
             <bar-rating [(rate)]="rate" [max]="5" [showText]="false" [titles]="['Bad', 'Mediocre' , 'Good', 'Excellent', 'Awesome']"></bar-rating>

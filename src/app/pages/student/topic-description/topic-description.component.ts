@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { CourseStore } from 'src/app/stores/course.store';
 
 @Component({
   selector: 'app-topic-description',
@@ -7,9 +9,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TopicDescriptionComponent implements OnInit {
 
-  constructor() { }
-
-  ngOnInit(): void {
+  constructor(
+    private route: ActivatedRoute,
+    public courseStore: CourseStore
+  ) { }
+  
+  ngOnInit() {
+    this.route.paramMap.subscribe(params => {
+      var id = params.get('id');
+      this.courseStore.getCourseByKey(id);
+      this.courseStore.getCourseSections(id);
+    });
   }
 
 }

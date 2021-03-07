@@ -1,13 +1,14 @@
 <div class="swiperContainer">
   <swiper [config]="config">
-    <div class="swiperContainer_block" [routerLink]="['/topic/1']">
-      <div class="imageContainer">
-        <img src="./assets/images/js.jpg">
+
+    <div class="swiperContainer_block" *ngFor="let item of this.courseStore.ReversedCourses?.reverse()" (click)="courseClicked(item.key)">
+      <div class="imageContainer" [routerLink]="['/course/' + item.key]">
+        <img src={{item.courseImageUrl}}>
       </div>
 
       <div class="contentContainer">
-        <h4>The Complete JavaScript Course 2020: From Zero to Expert!</h4>
-        <p>Andrew Mead</p>
+        <h4>{{item.title}}</h4>
+        <p>{{item.createdBy?.displayName}}</p>
 
         <div class="ratingContainer">
           <bar-rating [(rate)]="rate" [max]="5" [showText]="false" [titles]="['Bad', 'Mediocre' , 'Good', 'Excellent', 'Awesome']"></bar-rating>
@@ -15,75 +16,5 @@
       </div>
     </div>
 
-    <div class="swiperContainer_block">
-      <div class="imageContainer">
-        <img src="./assets/images/js.jpg">
-      </div>
-
-      <div class="contentContainer">
-        <h4>The Complete JavaScript Course 2020: From Zero to Expert!</h4>
-        <p>Andrew Mead</p>
-
-        <div class="ratingContainer">
-          <bar-rating [(rate)]="rate" [max]="5" [showText]="false" [titles]="['Bad', 'Mediocre' , 'Good', 'Excellent', 'Awesome']"></bar-rating>
-        </div>
-      </div>
-    </div>
-    <div class="swiperContainer_block">
-      <div class="imageContainer">
-        <img src="./assets/images/js.jpg">
-      </div>
-
-      <div class="contentContainer">
-        <h4>The Complete JavaScript Course 2020: From Zero to Expert!</h4>
-        <p>Andrew Mead</p>
-
-        <div class="ratingContainer">
-          <bar-rating [(rate)]="rate" [max]="5" [showText]="false" [titles]="['Bad', 'Mediocre' , 'Good', 'Excellent', 'Awesome']"></bar-rating>
-        </div>
-      </div>
-    </div>
-    <div class="swiperContainer_block">
-      <div class="imageContainer">
-        <img src="./assets/images/js.jpg">
-      </div>
-
-      <div class="contentContainer">
-        <h4>The Complete JavaScript Course 2020: From Zero to Expert!</h4>
-        <p>Andrew Mead</p>
-
-        <div class="ratingContainer">
-          <bar-rating [(rate)]="rate" [max]="5" [showText]="false" [titles]="['Bad', 'Mediocre' , 'Good', 'Excellent', 'Awesome']"></bar-rating>
-        </div>
-      </div>
-    </div>
-    <div class="swiperContainer_block">
-      <div class="imageContainer">
-        <img src="./assets/images/js.jpg">
-      </div>
-
-      <div class="contentContainer">
-        <h4>The Complete JavaScript Course 2020: From Zero to Expert!</h4>
-        <p>Andrew Mead</p>
-
-        <div class="ratingContainer">
-          <bar-rating [(rate)]="rate" [max]="5" [showText]="false" [titles]="['Bad', 'Mediocre' , 'Good', 'Excellent', 'Awesome']"></bar-rating>
-        </div>
-      </div>
-    </div>
-    <div class="swiperContainer_block">
-      <div class="imageContainer">
-        <img src="./assets/images/js.jpg">
-      </div>
-
-      <div class="contentContainer">
-        <h4>The Complete JavaScript Course 2020: From Zero to Expert!</h4>
-        <p>Andrew Mead</p>
-
-        <div class="ratingContainer">
-          <bar-rating [(rate)]="rate" [max]="5" [showText]="false" [titles]="['Bad', 'Mediocre' , 'Good', 'Excellent', 'Awesome']"></bar-rating>
-        </div>
-      </div>
-    </div>
   </swiper>
 </div>

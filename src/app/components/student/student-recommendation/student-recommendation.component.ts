@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthStore } from 'src/app/stores/auth.store';
 import { SwiperOptions } from 'swiper';
 
 @Component({
@@ -11,7 +13,9 @@ export class StudentRecommendationComponent implements OnInit {
 
   rate = 3.6;
 
-  constructor() { }
+  constructor(
+
+  ) { }
 
   ngOnInit(): void {
 
@@ -28,4 +32,5 @@ export class StudentRecommendationComponent implements OnInit {
     pagination: false,
     spaceBetween: 20
   };
+
 }

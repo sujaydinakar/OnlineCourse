@@ -1,0 +1,54 @@
+.sidebarContainer {
+    width: 100%;
+  
+    .groupNavElements {
+      margin-bottom: 40px;
+  
+      h3 {
+        margin-left: 26px;
+      }
+  
+      .navElement {
+        padding: 10px 20px;
+        border-left: 6px solid #F2F3F5;
+  
+        p {
+          padding: 0;
+          margin: 0;
+        }
+      }
+  
+      .navElement:focus {
+        outline: none;
+      }
+  
+      .navElement:hover {
+        cursor: pointer;
+        background-color: rgb(223, 223, 223);
+      }
+    }
+  
+    button {
+      width: 80%;
+      border: none;
+      padding: 20px 30px;
+      font-size: 16px;
+      font-weight: bold;
+      margin-right: 20px;
+      margin-left: 26px;
+      background-color: #e43f5a;
+      transition: 0.5s;
+      color: white;
+    }
+  
+    button:hover {
+      cursor: pointer;
+      transition: 0.5s;
+      background-color: darken(#e43f5a, 10);
+    }
+  
+    button:focus {
+      outline: none;
+    }
+  }
+  

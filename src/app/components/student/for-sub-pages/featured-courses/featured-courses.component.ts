@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CourseStore } from 'src/app/stores/course.store';
 import { SwiperOptions } from 'swiper';
 
 @Component({
@@ -9,7 +10,9 @@ import { SwiperOptions } from 'swiper';
 export class FeaturedCoursesComponent implements OnInit {
   rate = 5;
 
-  constructor() { }
+  constructor(
+    public courseStore: CourseStore
+  ) { }
 
   ngOnInit(): void {
   }

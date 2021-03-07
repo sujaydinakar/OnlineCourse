@@ -3,30 +3,17 @@
     <h2>What you'll learn</h2>
 
     <div class="descriptionsContainer">
-      <div class="descriptionContainer">
-        <span class="material-icons">done</span><p>Learn to use Python professionally, learning both Python 2 and Python 3!</p>
+
+      <div class="descriptionContainer" *ngFor="let item of this.courseStore.TempCourse?.arrStudentObjective">
+        <span class="material-icons">done</span>
+        <p>{{ item }}</p>
       </div>
-      <div class="descriptionContainer">
-        <span class="material-icons">done</span><p>Learn advanced Python features, like the collections module and how to work with timestamps!</p>
+
+      <div class="descriptionContainer" *ngIf="this.courseStore.TempCourse?.arrStudentObjective || this.courseStore.TempCourse?.arrStudentObjective.length === 0">
+        <span class="material-icons">done</span>
+        <p>No Objective.</p>
       </div>
-      <div class="descriptionContainer">
-        <span class="material-icons">done</span><p>Understand complex topics, like decorators.</p>
-      </div>
-      <div class="descriptionContainer">
-        <span class="material-icons">done</span><p>Get an understanding of how to create GUIs in the Jupyter Notebook system!</p>
-      </div>
-      <div class="descriptionContainer">
-        <span class="material-icons">done</span><p>Create games with Python, like Tic Tac Toe and Blackjack!</p>
-      </div>
-      <div class="descriptionContainer">
-        <span class="material-icons">done</span><p>Learn to use Object Oriented Programming with classes!</p>
-      </div>
-      <div class="descriptionContainer">
-        <span class="material-icons">done</span><p>Understand how to use both the Jupyter Notebook and create .py files</p>
-      </div>
-      <div class="descriptionContainer">
-        <span class="material-icons">done</span><p>Build a complete understanding of Python from the ground up!</p>
-      </div>
+
     </div>
   </div>
 
@@ -35,52 +22,21 @@
 
     <mat-accordion>
 
-      <mat-expansion-panel (opened)="true" (closed)="false">
+      <mat-expansion-panel (opened)="true" (closed)="false" *ngFor="let item of this.courseStore.TempCourseSections">
         <mat-expansion-panel-header>
           <mat-panel-title>
-            Self aware panel
+            {{ item.sectionTitle }}
           </mat-panel-title>
           <mat-panel-description>
-            Currently.
+            {{ item.sectionObjective | shorten: 40: '...' }}
           </mat-panel-description>
         </mat-expansion-panel-header>
-        <p>I'm visible because I am open</p>
-      </mat-expansion-panel>
-
-      <mat-expansion-panel (opened)="true" (closed)="false">
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            Self aware panel
-          </mat-panel-title>
-        </mat-expansion-panel-header>
-        <p>I'm visible because I am open</p>
-      </mat-expansion-panel>
-
-      <mat-expansion-panel (opened)="true" (closed)="false">
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            Self aware panel
-          </mat-panel-title>
-        </mat-expansion-panel-header>
-        <p>I'm visible because I am open</p>
-      </mat-expansion-panel>
-
-      <mat-expansion-panel (opened)="true" (closed)="false">
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            Self aware panel
-          </mat-panel-title>
-        </mat-expansion-panel-header>
-        <p>I'm visible because I am open</p>
-      </mat-expansion-panel>
-
-      <mat-expansion-panel (opened)="true" (closed)="false">
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            Self aware panel
-          </mat-panel-title>
-        </mat-expansion-panel-header>
-        <p>I'm visible because I am open</p>
+        <p *ngIf="item?.elements?.length === 0">No Content.</p>
+        <ul>
+          <li *ngFor="let item of item.elements">
+            {{ item.elementTitle }}
+          </li>
+        </ul>
       </mat-expansion-panel>
 
     </mat-accordion>
@@ -89,26 +45,25 @@
   <div class="requirementBlockContainer">
     <h2>Requirement</h2>
 
-    <ul>
-      <li>Access to a computer with an internet connection.</li>
-      <li>Access to a computer with an internet connection.</li>
-      <li>Access to a computer with an internet connection.</li>
-      <li>Access to a computer with an internet connection.</li>
+    <ul *ngIf="this.courseStore.TempCourse?.arrStudentRequirement">
+      <li *ngFor="let item of this.courseStore.TempCourse?.arrStudentRequirement">
+        {{item}}
+      </li>
+    </ul>
+
+    <ul *ngIf="this.courseStore.TempCourse?.arrStudentRequirement || this.courseStore.TempCourse?.arrStudentRequirement.length === 0">
+      <li>
+        No Requirement.
+      </li>
     </ul>
   </div>
 
   <div class="descriptionBlockContainer">
     <h2>Description</h2>
 
-    <p>
-      Become a Python Programmer and learn one of employer's most requested skills of 2020! This is the most comprehensive, yet straight-forward, course for the Python programming
-      language on Udemy! Whether you have never programmed before, already know basic syntax, or want to learn about the advanced features of Python, this course is for you! In
-      this course we will teach you Python 3. With over 100 lectures and more than 21 hours of video this comprehensive course leaves no stone unturned! This course includes
-      quizzes, tests, coding exercises and homework assignments as well as 3 major projects to create a Python project portfolio! Learn how to use Python for real-world tasks,
-      such as working with PDF Files, sending emails, reading Excel files, Scraping websites for informations, working with image files, and much more! This course will teach you
-      Python in a practical manner, with every lecture comes a full coding screencast and a corresponding code notebook! Learn in whatever manner is best for you! We will start by
-      helping you get Python installed on your computer, regardless of your operating system, whether its Linux, MacOS, or Windows, we've got you covered.
-    </p>
+    <div [innerHTML]="this.courseStore.TempCourse?.description">
+
+    </div>
   </div>
 
   <div class="instructorsContainer">
